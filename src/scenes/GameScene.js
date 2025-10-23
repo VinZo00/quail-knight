@@ -122,7 +122,7 @@ export default class GameScene extends Phaser.Scene {
 
         // --- Punteggio ---
         this.score = 0;
-        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', color: '#000' });
         this.gameOver = false;
 
         // --- Joystick touch ---
