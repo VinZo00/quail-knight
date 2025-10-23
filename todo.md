@@ -1,17 +1,17 @@
 # TODO Phaser Game
 
 ## Fase 0 · Setup progetto
-- [ ] Crea struttura cartelle
+- [x] Crea struttura cartelle
   - `/public/assets/{maps,tilesets,sprites,ui,audio}`
   - `/src/{scenes,systems,entities}`
-- [ ] Installa dipendenze
+- [x] Installa dipendenze
   - `npm i phaser`
   - opzionale: `npm i phaser3-rex-plugins`
-- [ ] Configura Vite (accesso da mobile)
+- [x] Configura Vite (accesso da mobile)
   - `vite.config.js → server: { host: true, port: 5173 }`
-- [ ] `index.html` minimale con canvas e `<script type="module" src="/src/main.js">`
-- [ ] `main.js` con config Phaser (Scale.FIT, pixelArt, Arcade), scene registrate
-- [ ] ✅ Done when: `npm run dev` avvia e vedi una scena vuota
+- [x] `index.html` minimale con canvas e `<script type="module" src="/src/main.js">`
+- [x] `main.js` con config Phaser (Scale.FIT, pixelArt, Arcade), scene registrate
+- [x] ✅ Done when: `npm run dev` avvia e vedi una scena vuota
 
 ## Fase 1 · Asset & Tilemap
 - [ ] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)

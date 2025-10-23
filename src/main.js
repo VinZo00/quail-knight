@@ -13,6 +13,9 @@ const config = {
         arcade: { gravity: { y: 300 }, debug: false }
     },
     scene: [MenuScene, GameScene],
+		render: {
+			pixelArt: true
+		},
 		plugins: {
         scene: [
             { key: 'rexVirtualJoystick', plugin: VirtualJoystickPlugin, mapping: 'rexVirtualJoystick' }

@@ -1,0 +1,108 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "mappa-ufficiale.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
+        "#terrain_atlas": {
+            "scaleInDock": 1
+        },
+        "dist/maps/map.json": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 531.5,
+                "y": 413.5
+            }
+        },
+        "dist/maps/map.json#1_terrain": {
+            "scaleInDock": 1
+        },
+        "dist/maps/map.json#3_plants": {
+            "scaleInDock": 1
+        },
+        "dist/maps/map.tmj": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 492.5,
+                "y": 683.5
+            }
+        },
+        "dist/maps/map.tmj#1_terrain": {
+            "scaleInDock": 0.33
+        },
+        "dist/maps/map.tmj#3_plants": {
+            "scaleInDock": 2
+        },
+        "mappa-ufficiale.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320.66666666666663,
+                "y": 319.33333333333326
+            }
+        },
+        "mappa-ufficiale.tmx#terrain_atlas": {
+            "scaleInDock": 1
+        },
+        "mappa.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 531.5,
+                "y": 413.5
+            }
+        },
+        "mappa.tmx#1_terrain": {
+            "scaleInDock": 1
+        },
+        "mappa.tmx#3_plants": {
+            "scaleInDock": 1
+        },
+        "mappa.tmx#terrain_atlas": {
+            "scaleInDock": 0.75
+        }
+    },
+    "last.imagePath": "C:/Users/vince/Downloads/tilesets_edit/tilesets_edit",
+    "map.height": 20,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 20,
+    "openFiles": [
+        "mappa-ufficiale.tmx"
+    ],
+    "project": "Mappa.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "mappa-ufficiale.tmx",
+        "mappa.tmx",
+        "dist/maps/map.tmj"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

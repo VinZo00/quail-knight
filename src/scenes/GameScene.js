@@ -7,12 +7,12 @@ export default class GameScene extends Phaser.Scene {
 
     preload() {
 			  // this.load.setBaseURL('https://cdn.phaserfiles.com/v385');
-        this.load.image('sky', 'images/sky.png');
-        this.load.image('ground', 'images/platform.png');
-        this.load.image('star', 'images/star.png');
-        this.load.image('bomb', 'images/bomb.png');
-        this.load.spritesheet('dude', 'images/swordsman.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('idle', 'images/swordsman-idle.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.image('sky', 'sprites/sky.png');
+        this.load.image('ground', 'sprites/platform.png');
+        this.load.image('star', 'sprites/star.png');
+        this.load.image('bomb', 'sprites/bomb.png');
+        this.load.spritesheet('dude', 'sprites/swordsman.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('idle', 'sprites/swordsman-idle.png', { frameWidth: 64, frameHeight: 64 });
     }
 
     create() {
