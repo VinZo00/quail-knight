@@ -14,12 +14,12 @@
 - [x] ✅ Done when: `npm run dev` avvia e vedi una scena vuota
 
 ## Fase 1 · Asset & Tilemap
-- [ ] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)
-- [ ] Tileset città (strade, erba, case) → `public/assets/tilesets/city.png`
+- [x] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)
+- [x] Tileset città (strade, erba, case) → `public/assets/tilesets/city.png`
 - [ ] Mappa in Tiled (layer: ground, walls) → `public/assets/maps/city.json`
 - [ ] Imposta collisioni in Tiled: proprietà tile `collides=true` per muri/case
 - [ ] Sprite: `player.png` (4 direzioni), `quail.png`, `quail_big.png`, `npc.png`
-- [ ] UI & audio: `ui/heart.png`, `audio/pet.wav`, `audio/hit.wav`
+- [x] UI & audio: `ui/heart.png`, `audio/pet.wav`, `audio/hit.wav`
 - [ ] ✅ Done when: la mappa si carica, i layer appaiono in gioco
 
 ## Fase 2 · Scene & Flow
