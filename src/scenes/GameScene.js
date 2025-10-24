@@ -33,11 +33,11 @@ export default class GameScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 				this.player.setSize(20, 30);
 				// this.player.setOffset(12, 14);
-				
+
         // Nessun salto, nessuna gravità
         this.player.body.setAllowGravity(false);
 
-        // --- Animazioni ---
+				// --- Animazioni ---
        // Verso giù
 				this.anims.create({
 						key: 'down',
@@ -71,36 +71,36 @@ export default class GameScene extends Phaser.Scene {
 				});
 
 				// Idle verso giù
-			this.anims.create({
-					key: 'idle-down',
-					frames: this.anims.generateFrameNumbers('idle', { start: 0, end: 11 }),
-					frameRate: 2,
-					repeat: -1
-			});
+				this.anims.create({
+						key: 'idle-down',
+						frames: this.anims.generateFrameNumbers('idle', { start: 0, end: 11 }),
+						frameRate: 2,
+						repeat: -1
+				});
 
-			// Idle verso sinistra
-			this.anims.create({
-					key: 'idle-left',
-					frames: this.anims.generateFrameNumbers('idle', { start: 12, end: 23 }),
-					frameRate: 2,
-					repeat: -1
-			});
+				// Idle verso sinistra
+				this.anims.create({
+						key: 'idle-left',
+						frames: this.anims.generateFrameNumbers('idle', { start: 12, end: 23 }),
+						frameRate: 2,
+						repeat: -1
+				});
 
-			// Idle verso destra
-			this.anims.create({
-					key: 'idle-right',
-					frames: this.anims.generateFrameNumbers('idle', { start: 24, end: 35 }),
-					frameRate: 2,
-					repeat: -1
-			});
+				// Idle verso destra
+				this.anims.create({
+						key: 'idle-right',
+						frames: this.anims.generateFrameNumbers('idle', { start: 24, end: 35 }),
+						frameRate: 2,
+						repeat: -1
+				});
 
-			// Idle verso su
-			this.anims.create({
-					key: 'idle-up',
-					frames: this.anims.generateFrameNumbers('idle', { start: 36, end: 39 }),
-					frameRate: 2,
-					repeat: -1
-			});
+				// Idle verso su
+				this.anims.create({
+						key: 'idle-up',
+						frames: this.anims.generateFrameNumbers('idle', { start: 36, end: 39 }),
+						frameRate: 2,
+						repeat: -1
+				});
 
 
         // --- Input ---
