@@ -12,6 +12,7 @@
 - [x] `index.html` minimale con canvas e `<script type="module" src="/src/main.js">`
 - [x] `main.js` con config Phaser (Scale.FIT, pixelArt, Arcade), scene registrate
 - [x] ✅ Done when: `npm run dev` avvia e vedi una scena vuota
+- [ ] Inserire barra di avanzamento prima del menu
 
 ## Fase 1 · Asset & Tilemap
 - [x] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)
