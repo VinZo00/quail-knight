@@ -10,7 +10,7 @@ const config = {
     height: 600,
     physics: {
         default: 'arcade',
-        arcade: { gravity: { y: 300 }, debug: false }
+        arcade: { gravity: { y: 300 }, debug: true }
     },
     scene: [MenuScene, GameScene],
 		render: {

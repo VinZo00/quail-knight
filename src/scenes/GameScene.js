@@ -31,7 +31,9 @@ export default class GameScene extends Phaser.Scene {
         // --- Player ---
         this.player = this.physics.add.sprite(100, 450, 'dude');
         this.player.setCollideWorldBounds(true);
-
+				this.player.setSize(20, 30);
+				// this.player.setOffset(12, 14);
+				
         // Nessun salto, nessuna gravità
         this.player.body.setAllowGravity(false);
 
