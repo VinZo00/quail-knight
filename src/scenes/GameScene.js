@@ -9,20 +9,20 @@ export default class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sky', 'sprites/sky.png');
         this.load.image('ground', 'sprites/platform.png');
         this.load.image('star', 'sprites/star.png');
         this.load.image('bomb', 'sprites/bomb.png');
+
         this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
-    }
+
+				this.load.image('terrain', 'tilesets/terrain_atlas.png');
+				this.load.tilemapTiledJSON('map', 'maps/mappa.json');
+		}
 
     create() {
-        // --- Background ---
-        this.add.image(400, 300, 'sky');
-
         // --- Disattivare gravità globale ---
         this.physics.world.gravity.y = 0;
 
@@ -34,12 +34,13 @@ export default class GameScene extends Phaser.Scene {
 
         // --- Player ---
         this.player = this.physics.add.sprite(100, 450, 'player');
+        this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
+				
         this.player.setCollideWorldBounds(true);
 				this.player.setSize(20, 30);
-				// this.player.setOffset(12, 14);
-
-        // Nessun salto, nessuna gravità
+				// Nessun salto, nessuna gravità
         this.player.body.setAllowGravity(false);
+				// this.player.setOffset(12, 14);
 
 				// --- Animazioni ---
 				const animations = [
@@ -82,20 +83,26 @@ export default class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // --- Stelle ---
-        this.stars = this.physics.add.group({
-            key: 'star',
-            repeat: 2,
-            setXY: { x: 12, y: 0, stepX: 70 }
-        });
+        // this.stars = this.physics.add.group({
+        //     key: 'star',
+        //     repeat: 2,
+        //     setXY: { x: 12, y: 0, stepX: 70 }
+        // });
         // this.stars.children.iterate(child => child.setBounce(0)); // no rimbalzo
 
         // --- Bombe ---
         this.bombs = this.physics.add.group();
 
         // --- Collider ---
-        this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
-        this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
+				// this.physics.add.collider(this.player, this.platforms, () => {
+				// 	console.log('Collisione con piattaforma');
+				// });
+				// this.physics.add.collider(this.player, this.star, () => {
+				// 	console.log('Collisione con piattaforma');
+				// });
+
+        // this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
+        // this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
 
         // --- Punteggio ---
         this.score = 0;
@@ -115,10 +122,24 @@ export default class GameScene extends Phaser.Scene {
         this.cursorKeys = this.joystick.createCursorKeys();
 
 				this.lastDirection = 'down';
-    }
+
+				// --- Map ---
+				let map = this.add.tilemap('map');
+				let tiles = map.addTilesetImage('terrain_atlas', 'terrain');
+				
+				let bottomLayer = map.createLayer('bottom', tiles, 0, 0).setDepth(-1);
+				let topLayer = map.createLayer('top', tiles, 0, 0);
+
+				topLayer.setCollisionByProperty({collision:true});
+				this.physics.add.collider(this.player, topLayer);
+		}
 
 			update() {
 					if (this.gameOver) return;
+
+					this.physics.world.collide(this.player, this.star, () => {
+							console.log('Collisione (controllo manuale)');
+					});
 
 					// PULSANTI PER MUOVERE IL PERSONAGGIO
 					const moving = this.cursors.left.isDown || this.cursors.right.isDown ||
@@ -138,8 +159,6 @@ export default class GameScene extends Phaser.Scene {
 					const speed = this.currentSpeed ?? this.speed;
 					let velocityX = 0;
 					let velocityY = 0;
-
-					console.log(speed);
 
 					const left = this.cursors.left.isDown || (this.cursorKeys && this.cursorKeys.left.isDown);
 					const right = this.cursors.right.isDown || (this.cursorKeys && this.cursorKeys.right.isDown);

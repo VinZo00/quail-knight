@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "dist/maps/mappa-ufficiale.json",
+    "activeFile": "public/maps/mappa.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -96,6 +96,26 @@
         },
         "mappa.tmx#terrain_atlas": {
             "scaleInDock": 0.75
+        },
+        "public/maps/mappa.json": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 457.99999999999994,
+                "y": 347.33333333333326
+            }
+        },
+        "public/maps/mappa.json#1_terrain": {
+            "scaleInDock": 1
+        },
+        "public/maps/mappa.json#3_plants": {
+            "scaleInDock": 1
+        },
+        "public/maps/mappa.json#terrain_atlas": {
+            "scaleInDock": 0.75
         }
     },
     "last.imagePath": "C:/Users/vince/Downloads/tilesets_edit/tilesets_edit",
@@ -105,12 +125,13 @@
     "map.tileWidth": 32,
     "map.width": 20,
     "openFiles": [
-        "dist/maps/mappa-ufficiale.json",
-        "dist/maps/map.json"
+        "public/maps/mappa.json",
+        "public/maps/mappa.json"
     ],
     "project": "Mappa.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "public/maps/mappa.json",
         "dist/maps/map.json",
         "dist/maps/mappa-ufficiale.json",
         "mappa-ufficiale.tmx",
