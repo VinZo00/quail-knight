@@ -121,6 +121,7 @@ export default class GameScene extends Phaser.Scene {
 			update() {
 					if (this.gameOver) return;
 
+					// PULSANTI PER MUOVERE IL PERSONAGGIO
 					const moving = this.cursors.left.isDown || this.cursors.right.isDown ||
 												this.cursors.up.isDown || this.cursors.down.isDown ||
 												(this.cursorKeys && (this.cursorKeys.left.isDown || this.cursorKeys.right.isDown ||
@@ -133,6 +134,7 @@ export default class GameScene extends Phaser.Scene {
 					this.handleAttack(moving);
 			}
 
+			// MUOVI CON PULSANTI
 			handleMovement(moving = false) {
 					const speed = this.currentSpeed ?? this.speed;
 					let velocityX = 0;
@@ -166,6 +168,7 @@ export default class GameScene extends Phaser.Scene {
 					}
 			}
 
+			// ATTACCA CON SPACE
 			handleAttack(moving = false) {
 					if (this.isAttacking) return;
 					if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
@@ -173,6 +176,7 @@ export default class GameScene extends Phaser.Scene {
 					}
 			}
 
+			// ATTACCO
 			attack(moving = false) {
 					this.isAttacking = true;
 
