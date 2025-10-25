@@ -3,6 +3,9 @@ import Phaser from 'phaser'
 export default class GameScene extends Phaser.Scene {
     constructor() {
         super({ key: 'GameScene' });
+
+				// Player speed
+				this.speed = 160;
     }
 
     preload() {
@@ -11,8 +14,10 @@ export default class GameScene extends Phaser.Scene {
         this.load.image('ground', 'sprites/platform.png');
         this.load.image('star', 'sprites/star.png');
         this.load.image('bomb', 'sprites/bomb.png');
-        this.load.spritesheet('dude', 'sprites/swordsman.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('idle', 'sprites/swordsman-idle.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
     }
 
     create() {
@@ -29,7 +34,7 @@ export default class GameScene extends Phaser.Scene {
         this.platforms.create(750, 220, 'ground');
 
         // --- Player ---
-        this.player = this.physics.add.sprite(100, 450, 'dude');
+        this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setCollideWorldBounds(true);
 				this.player.setSize(20, 30);
 				// this.player.setOffset(12, 14);
@@ -38,70 +43,41 @@ export default class GameScene extends Phaser.Scene {
         this.player.body.setAllowGravity(false);
 
 				// --- Animazioni ---
-       // Verso giù
-				this.anims.create({
-						key: 'down',
-						frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 7 }),
-						frameRate: 10,
-						repeat: -1
-				});
+				const animations = [
+						// Movimento
+						{ key: 'down', sheet: 'player', start: 0, end: 7, frameRate: 10, repeat: -1 },
+						{ key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 10, repeat: -1 },
+						{ key: 'right', sheet: 'player', start: 16, end: 23, frameRate: 10, repeat: -1 },
+						{ key: 'up', sheet: 'player', start: 24, end: 31, frameRate: 10, repeat: -1 },
 
-				// Verso sinistra
-				this.anims.create({
-						key: 'left',
-						frames: this.anims.generateFrameNumbers('dude', { start: 8, end: 15 }),
-						frameRate: 10,
-						repeat: -1
-				});
+						// Idle
+						{ key: 'idle-down', sheet: 'player-idle', start: 0, end: 11, frameRate: 2, repeat: -1 },
+						{ key: 'idle-left', sheet: 'player-idle', start: 12, end: 23, frameRate: 2, repeat: -1 },
+						{ key: 'idle-right', sheet: 'player-idle', start: 24, end: 35, frameRate: 2, repeat: -1 },
+						{ key: 'idle-up', sheet: 'player-idle', start: 36, end: 39, frameRate: 2, repeat: -1 },
 
-				// Verso destra
-				this.anims.create({
-						key: 'right',
-						frames: this.anims.generateFrameNumbers('dude', { start: 16, end: 23 }),
-						frameRate: 10,
-						repeat: -1
-				});
+						// Attacco fermo
+						{ key: 'attack-down', sheet: 'player-attack', start: 0, end: 7, frameRate: 10, repeat: 0 },
+						{ key: 'attack-left', sheet: 'player-attack', start: 8, end: 15, frameRate: 10, repeat: 0 },
+						{ key: 'attack-right', sheet: 'player-attack', start: 16, end: 23, frameRate: 10, repeat: 0 },
+						{ key: 'attack-up', sheet: 'player-attack', start: 24, end: 31, frameRate: 10, repeat: 0 },
 
-				// Verso su
-				this.anims.create({
-						key: 'up',
-						frames: this.anims.generateFrameNumbers('dude', { start: 24, end: 31 }),
-						frameRate: 10,
-						repeat: -1
-				});
+						// Attacco camminando
+						{ key: 'attack-walk-down', sheet: 'player-attack-walk', start: 0, end: 7, frameRate: 10, repeat: 0 },
+						{ key: 'attack-walk-left', sheet: 'player-attack-walk', start: 8, end: 15, frameRate: 10, repeat: 0 },
+						{ key: 'attack-walk-right', sheet: 'player-attack-walk', start: 16, end: 23, frameRate: 10, repeat: 0 },
+						{ key: 'attack-walk-up', sheet: 'player-attack-walk', start: 24, end: 31, frameRate: 10, repeat: 0 },
+				];
 
-				// Idle verso giù
-				this.anims.create({
-						key: 'idle-down',
-						frames: this.anims.generateFrameNumbers('idle', { start: 0, end: 11 }),
-						frameRate: 2,
-						repeat: -1
+				// Creazione animazioni
+				animations.forEach(anim => {
+						this.anims.create({
+								key: anim.key,
+								frames: this.anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
+								frameRate: anim.frameRate,
+								repeat: anim.repeat
+						});
 				});
-
-				// Idle verso sinistra
-				this.anims.create({
-						key: 'idle-left',
-						frames: this.anims.generateFrameNumbers('idle', { start: 12, end: 23 }),
-						frameRate: 2,
-						repeat: -1
-				});
-
-				// Idle verso destra
-				this.anims.create({
-						key: 'idle-right',
-						frames: this.anims.generateFrameNumbers('idle', { start: 24, end: 35 }),
-						frameRate: 2,
-						repeat: -1
-				});
-
-				// Idle verso su
-				this.anims.create({
-						key: 'idle-up',
-						frames: this.anims.generateFrameNumbers('idle', { start: 36, end: 39 }),
-						frameRate: 2,
-						repeat: -1
-				});
-
 
         // --- Input ---
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -142,37 +118,80 @@ export default class GameScene extends Phaser.Scene {
 				this.lastDirection = 'down';
     }
 
-		update() {
-				if (this.gameOver) return;
+			update() {
+					if (this.gameOver) return;
 
-				const speed = 160;
-				let velocityX = 0;
-				let velocityY = 0;
+					const moving = this.cursors.left.isDown || this.cursors.right.isDown ||
+												this.cursors.up.isDown || this.cursors.down.isDown ||
+												(this.cursorKeys && (this.cursorKeys.left.isDown || this.cursorKeys.right.isDown ||
+																							this.cursorKeys.up.isDown || this.cursorKeys.down.isDown));
 
-				const left = this.cursors.left.isDown || this.cursorKeys.left.isDown;
-				const right = this.cursors.right.isDown || this.cursorKeys.right.isDown;
-				const up = this.cursors.up.isDown || this.cursorKeys.up.isDown;
-				const down = this.cursors.down.isDown || this.cursorKeys.down.isDown;
+					// Movimento
+					this.handleMovement(moving);
 
-				if (left) velocityX = -speed;
-				if (right) velocityX = speed;
-				if (up) velocityY = -speed;
-				if (down) velocityY = speed;
+					// Attacco
+					this.handleAttack(moving);
+			}
 
-				this.player.setVelocity(velocityX, velocityY);
+			handleMovement(moving = false) {
+					const speed = this.currentSpeed ?? this.speed;
+					let velocityX = 0;
+					let velocityY = 0;
 
-				// Animazione
-				if (velocityX !== 0 || velocityY !== 0) {
-						if (velocityX < 0) this.player.anims.play('left', true), this.lastDirection = 'left';
-						else if (velocityX > 0) this.player.anims.play('right', true), this.lastDirection = 'right';
-						else if (velocityY < 0) this.player.anims.play('up', true), this.lastDirection = 'up';
-						else if (velocityY > 0) this.player.anims.play('down', true), this.lastDirection = 'down';
-				} else {
-						// Idle
-						this.player.setVelocity(0,0);
-						this.player.anims.play(`idle-${this.lastDirection}`, true);
-				}
-		}
+					console.log(speed);
+
+					const left = this.cursors.left.isDown || (this.cursorKeys && this.cursorKeys.left.isDown);
+					const right = this.cursors.right.isDown || (this.cursorKeys && this.cursorKeys.right.isDown);
+					const up = this.cursors.up.isDown || (this.cursorKeys && this.cursorKeys.up.isDown);
+					const down = this.cursors.down.isDown || (this.cursorKeys && this.cursorKeys.down.isDown);
+
+					if (left) velocityX = -speed;
+					if (right) velocityX = speed;
+					if (up) velocityY = -speed;
+					if (down) velocityY = speed;
+
+					this.player.setVelocity(velocityX, velocityY);
+
+					// Animazioni solo se NON sta attaccando
+					if (!this.isAttacking) {
+							if (velocityX !== 0 || velocityY !== 0) {
+									if (velocityX < 0) this.player.anims.play('left', true), this.lastDirection = 'left';
+									else if (velocityX > 0) this.player.anims.play('right', true), this.lastDirection = 'right';
+									else if (velocityY < 0) this.player.anims.play('up', true), this.lastDirection = 'up';
+									else if (velocityY > 0) this.player.anims.play('down', true), this.lastDirection = 'down';
+							} else {
+									this.player.setVelocity(0, 0);
+									this.player.anims.play(`idle-${this.lastDirection}`, true);
+							}
+					}
+			}
+
+			handleAttack(moving = false) {
+					if (this.isAttacking) return;
+					if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+							this.attack(moving);
+					}
+			}
+
+			attack(moving = false) {
+					this.isAttacking = true;
+
+					if (moving) {
+							this.currentSpeed = this.speed * 0.5;
+					} else {
+							this.player.setVelocity(0, 0);
+					}
+
+					const animKey = moving ? `attack-walk-${this.lastDirection}` : `attack-${this.lastDirection}`;
+					this.player.anims.play(animKey, false);
+
+					this.player.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
+							if (animation.key === animKey) {
+									this.isAttacking = false;
+									this.currentSpeed = this.speed;
+							}
+					});
+			}
 
 
     collectStar(player, star) {
