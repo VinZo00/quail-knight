@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "public/maps/mappa.json",
+    "activeFile": "mappa-ufficiale.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -70,8 +70,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 320.66666666666663,
-                "y": 319.33333333333326
+                "x": 305.99999999999994,
+                "y": 374
             }
         },
         "mappa-ufficiale.tmx#terrain_atlas": {
@@ -104,8 +104,8 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 457.99999999999994,
-                "y": 347.33333333333326
+                "x": 320.66666666666663,
+                "y": 319.33333333333326
             }
         },
         "public/maps/mappa.json#1_terrain": {
@@ -126,15 +126,15 @@
     "map.width": 20,
     "openFiles": [
         "public/maps/mappa.json",
-        "public/maps/mappa.json"
+        "mappa-ufficiale.tmx"
     ],
     "project": "Mappa.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "public/maps/mappa.json",
+        "mappa-ufficiale.tmx",
         "dist/maps/map.json",
         "dist/maps/mappa-ufficiale.json",
-        "mappa-ufficiale.tmx",
         "mappa.tmx",
         "dist/maps/map.tmj"
     ],

@@ -132,6 +132,17 @@ export default class GameScene extends Phaser.Scene {
 
 				topLayer.setCollisionByProperty({collision:true});
 				this.physics.add.collider(this.player, topLayer);
+				this.physics.add.overlap(this.player, topLayer);
+
+				topLayer.setTileLocationCallback(6, 9, 1, 1, () => {
+					console.log('Sono sul pomodoro!');
+					topLayer.setTileLocationCallback(6, 9, 1, 1, null);
+				})
+
+				// --- Camera ---
+				this.cameras.main.startFollow(this.player);
+				this.physics.world.setBounds(0,0, map.widthInPixels, map.heightInPixels);
+
 		}
 
 			update() {
