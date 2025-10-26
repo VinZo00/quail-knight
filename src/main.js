@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import BootScene from './scenes/BootScene';
+import LoadScene from './scenes/LoadScene';
 import MenuScene from './scenes/MenuScene';
 import GameScene from './scenes/GameScene';
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
@@ -10,9 +12,12 @@ const config = {
     height: 600,
     physics: {
         default: 'arcade',
-        arcade: { gravity: { y: 300 }, debug: true }
+        arcade: { debug: true }
     },
-    scene: [MenuScene, GameScene],
+		scale: {
+			autoCenter: Phaser.Scale.CENTER_BOTH,
+		},
+    scene: [BootScene,LoadScene,MenuScene,GameScene],
 		render: {
 			pixelArt: true
 		},

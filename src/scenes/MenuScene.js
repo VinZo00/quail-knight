@@ -36,6 +36,8 @@ export default class MenuScene extends Phaser.Scene {
 
 				// AUDIO
 				const introMusic = this.sound.add('intro', { loop: true });
+
+				// @todo mettere play
 				// introMusic.play();
 
 				const audioBtn = this.add.image(50, 50, 'audio').setScale(.3).setInteractive();
@@ -54,20 +56,25 @@ export default class MenuScene extends Phaser.Scene {
 
         playButton.on('pointerdown', () => {
 						introMusic.stop();
-            this.scene.start('GameScene');
+            this.scene.start('LoadScene');
         });
     }
 		update() {
+			this.moveBg();
+		}
+
+		// Move the background in menu
+		moveBg() {
 			this.bg.x += this.dir * this.vel;
 			const centerX = this.scale.width / 2;
-				if ((this.bg.x > centerX + 20 || this.bg.x < centerX - 20) && !this.waiting) {
-					this.waiting = true;
-					this.dir = 0;
+			if ((this.bg.x > centerX + 20 || this.bg.x < centerX - 20) && !this.waiting) {
+				this.waiting = true;
+				this.dir = 0;
 
-					setTimeout(() => {
-						this.dir = (this.bg.x > centerX) ? -1 : 1;
-						this.waiting = false;
-					}, 500);
-				}
+				setTimeout(() => {
+					this.dir = (this.bg.x > centerX) ? -1 : 1;
+					this.waiting = false;
+				}, 500);
+			}
 		}
 }

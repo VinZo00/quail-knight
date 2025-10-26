@@ -3,24 +3,7 @@ import Phaser from 'phaser'
 export default class GameScene extends Phaser.Scene {
     constructor() {
         super({ key: 'GameScene' });
-
-				// Player speed
-				this.speed = 160;
     }
-
-    preload() {
-        this.load.image('ground', 'sprites/platform.png');
-        this.load.image('star', 'sprites/star.png');
-        this.load.image('bomb', 'sprites/bomb.png');
-
-        this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
-
-				this.load.image('terrain', 'tilesets/terrain_atlas.png');
-				this.load.tilemapTiledJSON('map', 'maps/mappa.json');
-		}
 
     create() {
         // --- Disattivare gravità globale ---
@@ -167,6 +150,7 @@ export default class GameScene extends Phaser.Scene {
 
 			// MUOVI CON PULSANTI
 			handleMovement(moving = false) {
+					this.speed = 160;
 					const speed = this.currentSpeed ?? this.speed;
 					let velocityX = 0;
 					let velocityY = 0;

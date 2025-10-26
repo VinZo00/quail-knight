@@ -15,8 +15,8 @@
 - [ ] Inserire barra di avanzamento prima del menu
 
 ## Fase 1 · Asset & Tilemap
-- [x] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)
-- [x] Tileset città (strade, erba, case) → `public/assets/tilesets/city.png`
+- [ ] Scegli risoluzione (tile 16×16 o 32×32; zoom camera coerente)
+- [ ] Tileset città (strade, erba, case) → `public/assets/tilesets/city.png`
 - [ ] Mappa in Tiled (layer: ground, walls) → `public/assets/maps/city.json`
 - [ ] Imposta collisioni in Tiled: proprietà tile `collides=true` per muri/case
 - [ ] Sprite: `player.png` (4 direzioni), `quail.png`, `quail_big.png`, `npc.png`
