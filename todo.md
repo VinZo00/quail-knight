@@ -16,3 +16,5 @@
 ## Fine del gioco
 - [ ] Creare logo, sistemare menu
 - [ ] Creare una bella mappa e creare i vari personaggi
+- [ ] Tutto deve essere responsivo su mobile
+- [ ] Creare apk
