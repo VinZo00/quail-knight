@@ -9,39 +9,16 @@ export default class GameScene extends Phaser.Scene {
 		// this.addAudios();
 		this.createMap();
 		// this.createGroups();
-		// this.createExit();
-
 		// --- Player ---
-		this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player');
+		this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
 		this.player.setCollideWorldBounds(true);
 		this.player.setSize(20, 30);
-		// Nessun salto, nessuna gravità
-		this.player.body.setAllowGravity(false);
+		// this.player.body.setAllowGravity(false);
 		// this.player.setOffset(12, 14);
 
 		this.bindKeys();
-
-		// --- Bombe ---
-		this.bombs = this.physics.add.group();
-
-		// --- Punteggio ---
-		this.score = 0;
-		this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', color: '#000' });
-		this.gameOver = false;
-
-		// --- Joystick touch ---
-		// @ts-ignore
-		this.joystick = this.rexVirtualJoystick.add(this, {
-			x: 100,
-			y: 500,
-			radius: 50,
-			base: this.add.circle(0, 0, 50, 0x888888, 0.5),
-			thumb: this.add.circle(0, 0, 25, 0xffffff, 0.8)
-		});
-
-		this.cursorKeys = this.joystick.createCursorKeys();
 
 		this.lastDirection = 'down';
 
@@ -51,6 +28,7 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
 
+		this.createHud();
 		this.createCamera();
 		this.createAnims();
 	}
@@ -81,7 +59,7 @@ export default class GameScene extends Phaser.Scene {
 		const tiles = map.addTilesetImage('terrain_atlas', 'terrain');
 
 		const bottomLayer = map.createLayer('bottom', tiles).setDepth(-1);
-		const topLayer = map.createLayer('top', tiles);
+		const topLayer = map.createLayer('top', tiles).setDepth(2);
 		const collision = map.createLayer('collision', tiles);
 		
 		collision.setCollisionByExclusion([-1]);
@@ -97,18 +75,35 @@ export default class GameScene extends Phaser.Scene {
 		this.topLayer = topLayer;
 		this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+	  // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 	}
 
 	// PULSANTI
 	bindKeys() {
 		this.cursors = this.input.keyboard.createCursorKeys();
+
+		// @ts-ignore
+		this.joystick = this.rexVirtualJoystick.add(this, {
+			x: 100,
+			y: 500,
+			radius: 50,
+			base: this.add.circle(0, 0, 50, 0x888888, 0.5),
+			thumb: this.add.circle(0, 0, 25, 0xffffff, 0.8)
+		});
+		this.cursorKeys = this.joystick.createCursorKeys();
 	}
 
-	// EXIT
-	// createExit() {
-	// 	this.exit = this.add.sprite(47.5 * 16, 28.5 * 16, 'exit');
-  //   this.exit.alpha = 0;
-	// }
+	// PUNTEGGIO
+	createHud() {
+		this.ui = this.add.container(0, 0);
+		this.score = 0;
+		const font = { fontFamily: 'monospace', fontSize: '16px', color: '#fff' };
+		this.hp1 = this.add.image(16, 16, 'atlas', 'hearts/hearts-1').setOrigin(0,0);
+		this.scoreText = this.add.text(80, 16, 'SCORE: 0', font).setOrigin(0,0);
+
+		this.ui.add([this.hp1, this.scoreText]);
+		this.gameOver = false;
+	}
 
 	// CREA CAMERA
 	createCamera() {
@@ -216,18 +211,5 @@ export default class GameScene extends Phaser.Scene {
 				this.currentSpeed = this.speed;
 			}
 		});
-	}
-
-	collectStar(player, star) {
-		star.disableBody(true, true);
-		this.score += 40;
-		this.scoreText.setText('Score: ' + this.score);
-	}
-
-	hitBomb(player, bomb) {
-		this.physics.pause();
-		player.setTint(0xff0000);
-		player.anims.play('turn');
-		this.gameOver = true;
 	}
 }
