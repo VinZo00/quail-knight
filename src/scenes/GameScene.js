@@ -6,7 +6,10 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		// this.addAudios();
 		this.createMap();
+		// this.createGroups();
+		// this.createExit();
 
 		// --- Player ---
 		this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player');
@@ -18,45 +21,7 @@ export default class GameScene extends Phaser.Scene {
 		this.player.body.setAllowGravity(false);
 		// this.player.setOffset(12, 14);
 
-		// --- Animazioni ---
-		const animations = [
-			// Movimento
-			{ key: 'down', sheet: 'player', start: 0, end: 7, frameRate: 10, repeat: -1 },
-			{ key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 10, repeat: -1 },
-			{ key: 'right', sheet: 'player', start: 16, end: 23, frameRate: 10, repeat: -1 },
-			{ key: 'up', sheet: 'player', start: 24, end: 31, frameRate: 10, repeat: -1 },
-
-			// Idle
-			{ key: 'idle-down', sheet: 'player-idle', start: 0, end: 11, frameRate: 2, repeat: -1 },
-			{ key: 'idle-left', sheet: 'player-idle', start: 12, end: 23, frameRate: 2, repeat: -1 },
-			{ key: 'idle-right', sheet: 'player-idle', start: 24, end: 35, frameRate: 2, repeat: -1 },
-			{ key: 'idle-up', sheet: 'player-idle', start: 36, end: 39, frameRate: 2, repeat: -1 },
-
-			// Attacco fermo
-			{ key: 'attack-down', sheet: 'player-attack', start: 0, end: 7, frameRate: 10, repeat: 0 },
-			{ key: 'attack-left', sheet: 'player-attack', start: 8, end: 15, frameRate: 10, repeat: 0 },
-			{ key: 'attack-right', sheet: 'player-attack', start: 16, end: 23, frameRate: 10, repeat: 0 },
-			{ key: 'attack-up', sheet: 'player-attack', start: 24, end: 31, frameRate: 10, repeat: 0 },
-
-			// Attacco camminando
-			{ key: 'attack-walk-down', sheet: 'player-attack-walk', start: 0, end: 7, frameRate: 10, repeat: 0 },
-			{ key: 'attack-walk-left', sheet: 'player-attack-walk', start: 8, end: 15, frameRate: 10, repeat: 0 },
-			{ key: 'attack-walk-right', sheet: 'player-attack-walk', start: 16, end: 23, frameRate: 10, repeat: 0 },
-			{ key: 'attack-walk-up', sheet: 'player-attack-walk', start: 24, end: 31, frameRate: 10, repeat: 0 },
-		];
-
-		// Creazione animazioni
-		animations.forEach(anim => {
-			this.anims.create({
-				key: anim.key,
-				frames: this.anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
-				frameRate: anim.frameRate,
-				repeat: anim.repeat
-			});
-		});
-
-		// --- Input ---
-		this.cursors = this.input.keyboard.createCursorKeys();
+		this.bindKeys();
 
 		// --- Bombe ---
 		this.bombs = this.physics.add.group();
@@ -86,9 +51,8 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
 
-		// --- Camera ---
-		this.cameras.main.startFollow(this.player);
-
+		this.createCamera();
+		this.createAnims();
 	}
 
 	update() {
@@ -113,12 +77,12 @@ export default class GameScene extends Phaser.Scene {
 
 	// CREA MAPPA
 	createMap() {
-		let map = this.add.tilemap('map');
-		let tiles = map.addTilesetImage('terrain_atlas', 'terrain');
+    const map = this.make.tilemap({ key: 'map' });
+		const tiles = map.addTilesetImage('terrain_atlas', 'terrain');
 
-		let bottomLayer = map.createLayer('bottom', tiles).setDepth(-1);
-		let topLayer = map.createLayer('top', tiles);
-		let collision = map.createLayer('collision', tiles);
+		const bottomLayer = map.createLayer('bottom', tiles).setDepth(-1);
+		const topLayer = map.createLayer('top', tiles);
+		const collision = map.createLayer('collision', tiles);
 		
 		collision.setCollisionByExclusion([-1]);
 		topLayer.setCollisionByProperty({ collision: true });
@@ -133,6 +97,63 @@ export default class GameScene extends Phaser.Scene {
 		this.topLayer = topLayer;
 		this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+	}
+
+	// PULSANTI
+	bindKeys() {
+		this.cursors = this.input.keyboard.createCursorKeys();
+	}
+
+	// EXIT
+	// createExit() {
+	// 	this.exit = this.add.sprite(47.5 * 16, 28.5 * 16, 'exit');
+  //   this.exit.alpha = 0;
+	// }
+
+	// CREA CAMERA
+	createCamera() {
+		// this.cameras.main.roundPixels = true;
+    // this.cameras.main.setZoom(3.5);
+		this.cameras.main.startFollow(this.player);
+	}
+
+	// ANIMAZIONI
+	createAnims() {
+		const animations = [
+			// Movimento
+			{ key: 'down', sheet: 'player', start: 0, end: 7, frameRate: 10, repeat: -1 },
+			{ key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 10, repeat: -1 },
+			{ key: 'right', sheet: 'player', start: 16, end: 23, frameRate: 10, repeat: -1 },
+			{ key: 'up', sheet: 'player', start: 24, end: 31, frameRate: 10, repeat: -1 },
+
+			// Idle
+			{ key: 'idle-down', sheet: 'player-idle', start: 0, end: 11, frameRate: 2, repeat: -1 },
+			{ key: 'idle-left', sheet: 'player-idle', start: 12, end: 23, frameRate: 2, repeat: -1 },
+			{ key: 'idle-right', sheet: 'player-idle', start: 24, end: 35, frameRate: 2, repeat: -1 },
+			{ key: 'idle-up', sheet: 'player-idle', start: 36, end: 39, frameRate: 2, repeat: -1 },
+
+			// Attacco fermo
+			{ key: 'attack-down', sheet: 'player-attack', start: 0, end: 7, frameRate: 10, repeat: 0 },
+			{ key: 'attack-left', sheet: 'player-attack', start: 8, end: 15, frameRate: 10, repeat: 0 },
+			{ key: 'attack-right', sheet: 'player-attack', start: 16, end: 23, frameRate: 10, repeat: 0 },
+			{ key: 'attack-up', sheet: 'player-attack', start: 24, end: 31, frameRate: 10, repeat: 0 },
+
+			// Attacco camminando
+			{ key: 'attack-walk-down', sheet: 'player-attack-walk', start: 0, end: 7, frameRate: 10, repeat: 0 },
+			{ key: 'attack-walk-left', sheet: 'player-attack-walk', start: 8, end: 15, frameRate: 10, repeat: 0 },
+			{ key: 'attack-walk-right', sheet: 'player-attack-walk', start: 16, end: 23, frameRate: 10, repeat: 0 },
+			{ key: 'attack-walk-up', sheet: 'player-attack-walk', start: 24, end: 31, frameRate: 10, repeat: 0 },
+		];
+
+		animations.forEach(anim => {
+			this.anims.create({
+				key: anim.key,
+				frames: this.anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
+				frameRate: anim.frameRate,
+				repeat: anim.repeat
+			});
+		});
+
 	}
 
 	// MUOVI CON PULSANTI
