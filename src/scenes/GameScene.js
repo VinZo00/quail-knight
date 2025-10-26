@@ -6,6 +6,16 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+    this.scene.launch('UIScene');              // avvia la scena HUD
+    this.scene.bringToTop('UIScene');          // porta sopra
+
+    this.score = 0;
+		this.gameOver = false;
+
+    // ogni volta che cambia lo score:
+    // this.score += 10;
+    this.game.events.emit('scoreChanged', this.score);
+
 		// this.addAudios();
 		this.createMap();
 		// this.createGroups();
@@ -27,7 +37,6 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
 
-		this.createHud();
 		this.createCamera();
 		this.createAnims();
 	}
@@ -74,41 +83,23 @@ export default class GameScene extends Phaser.Scene {
 		this.topLayer = topLayer;
 		this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-	  this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 	}
 
 	// PULSANTI
 	bindKeys() {
 		this.cursors = this.input.keyboard.createCursorKeys();
-
-		// @ts-ignore
-		this.joystick = this.rexVirtualJoystick.add(this, {
-			x: 100,
-			y: 500,
-			radius: 50,
-			base: this.add.circle(0, 0, 50, 0x888888, 0.5),
-			thumb: this.add.circle(0, 0, 25, 0xffffff, 0.8)
+		this.cursorKeys = null;
+		this.game.events.once('ui_ready', (payload) => {
+			this.cursorKeys = payload.cursorKeys;
 		});
-		this.cursorKeys = this.joystick.createCursorKeys();
-	}
-
-	// PUNTEGGIO
-	createHud() {
-		this.ui = this.add.container(0, 0);
-		this.score = 0;
-		const font = { fontFamily: 'monospace', fontSize: '16px', color: '#fff' };
-		this.hp1 = this.add.image(16, 16, 'atlas', 'hearts/hearts-1').setOrigin(0,0);
-		this.scoreText = this.add.text(80, 16, 'SCORE: 0', font).setOrigin(0,0);
-
-		this.ui.add([this.hp1, this.scoreText]);
-		this.gameOver = false;
 	}
 
 	// CREA CAMERA
 	createCamera() {
-		// this.cameras.main.roundPixels = true;
-    this.cameras.main.setZoom(1.5);
-		this.cameras.main.startFollow(this.player);
+		this.cam = this.cameras.main;
+    this.cam.setZoom(1.5);
+		this.cam.startFollow(this.player);
+		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
 
 	// ANIMAZIONI
