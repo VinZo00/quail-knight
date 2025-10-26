@@ -6,7 +6,22 @@ export default class LoadScene extends Phaser.Scene {
   }
 
   preload() {
-    // --- Testo "Caricamento..." ---
+		// --- Load bar ---
+		this.loadBar();
+
+    // --- Caricamento risorse (tutte le tue) ---
+    this.loadImages();
+    this.loadSprite();
+    this.loadMap();
+    this.loadAudio();
+  }
+
+  create() {
+    this.scene.start('GameScene');
+  }
+
+	loadBar() {
+		// --- Testo "Caricamento..." ---
     const loadingText = this.add.text(
       this.scale.width / 2,
       this.scale.height / 2 - 40,
@@ -32,34 +47,31 @@ export default class LoadScene extends Phaser.Scene {
       progressBox.destroy();
       loadingText.setText('Pronto!');
     });
-
-    // --- Caricamento risorse (tutte le tue) ---
-    this.loadAssets();
-  }
-
-  create() {
-    // Dopo il caricamento → vai alla scena di gioco
-    this.scene.start('GameScene');
-  }
+	}
 
   // --- Raggruppo tutte le risorse ---
-  loadAssets() {
-    // Immagini
+	// Immagini
+	loadImages() {
     this.load.image('ground', 'sprites/platform.png');
     this.load.image('star', 'sprites/star.png');
     this.load.image('bomb', 'sprites/bomb.png');
+	}
 
-    // Spritesheet del player
+	// Spritesheet del player
+  loadSprite() {
     this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
+  }
 
-    // Tilemap
+	// Tilemap
+	loadMap() {
     this.load.image('terrain', 'tilesets/terrain_atlas.png');
     this.load.tilemapTiledJSON('map', 'maps/mappa.json');
+	}
 
-    // Suoni (opzionali)
+	loadAudio() {
     // this.load.audio('music', 'audio/menu-intro.mp3');
-  }
+	}
 }

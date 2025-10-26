@@ -58,8 +58,15 @@ export default class MenuScene extends Phaser.Scene {
 						introMusic.stop();
             this.scene.start('LoadScene');
         });
+
+				this.cursors = this.input.keyboard.createCursorKeys();
     }
+
+
 		update() {
+			if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+				this.scene.start('LoadScene');
+			}
 			this.moveBg();
 		}
 
