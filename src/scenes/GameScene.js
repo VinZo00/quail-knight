@@ -15,7 +15,6 @@ export default class GameScene extends Phaser.Scene {
 
 		this.player.setCollideWorldBounds(true);
 		this.player.setSize(20, 30);
-		// this.player.body.setAllowGravity(false);
 		// this.player.setOffset(12, 14);
 
 		this.bindKeys();
@@ -75,7 +74,7 @@ export default class GameScene extends Phaser.Scene {
 		this.topLayer = topLayer;
 		this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-	  // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+	  this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 	}
 
 	// PULSANTI
@@ -108,7 +107,7 @@ export default class GameScene extends Phaser.Scene {
 	// CREA CAMERA
 	createCamera() {
 		// this.cameras.main.roundPixels = true;
-    // this.cameras.main.setZoom(3.5);
+    this.cameras.main.setZoom(1.5);
 		this.cameras.main.startFollow(this.player);
 	}
 
