@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "mappa-ufficiale.tmx",
+    "activeFile": "public/maps/mappa.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -102,7 +102,7 @@
                 3
             ],
             "scale": 0.75,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
                 "x": 320.66666666666663,
                 "y": 319.3333333333333
@@ -115,7 +115,7 @@
             "scaleInDock": 1
         },
         "public/maps/mappa.json#terrain_atlas": {
-            "scaleInDock": 0.75
+            "scaleInDock": 1.5
         }
     },
     "last.imagePath": "C:/Users/vince/Downloads/tilesets_edit/tilesets_edit",
@@ -126,7 +126,7 @@
     "map.width": 20,
     "openFiles": [
         "public/maps/mappa.json",
-        "mappa-ufficiale.tmx"
+        "public/maps/mappa.json"
     ],
     "project": "Mappa.tiled-project",
     "property.type": "string",
