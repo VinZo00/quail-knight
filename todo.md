@@ -1,7 +1,7 @@
 # TODO Phaser Game
 
 ## Fix
-- [ ] Fixare tasti pc, usare WASD
+- [x] Fixare tasti pc, usare WASD
   
 ## Prossimo step
 - [ ] Personaggi sprite che si muovono (anche randomici)

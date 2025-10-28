@@ -49,13 +49,15 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		// PULSANTI PER MUOVERE IL PERSONAGGIO
-		const moving = this.cursors.left.isDown || this.cursors.right.isDown ||
-			this.cursors.up.isDown || this.cursors.down.isDown ||
+		// @ts-ignore
+		const moving = this.keys.left.isDown || this.keys.right.isDown ||
+		// @ts-ignore
+			this.keys.up.isDown || this.keys.down.isDown ||
 			(this.cursorKeys && (this.cursorKeys.left.isDown || this.cursorKeys.right.isDown ||
 				this.cursorKeys.up.isDown || this.cursorKeys.down.isDown));
 
 		// Movimento
-		this.handleMovement(moving);
+		this.handleMovement();
 
 		// Attacco
 		this.handleAttack(moving);
@@ -87,7 +89,14 @@ export default class GameScene extends Phaser.Scene {
 
 	// PULSANTI
 	bindKeys() {
-		this.cursors = this.input.keyboard.createCursorKeys();
+		// @ts-ignore
+		this.keys = this.input.keyboard.addKeys({
+				up: Phaser.Input.Keyboard.KeyCodes.W,
+				down: Phaser.Input.Keyboard.KeyCodes.S,
+				left: Phaser.Input.Keyboard.KeyCodes.A,
+				right: Phaser.Input.Keyboard.KeyCodes.D,
+				attack: Phaser.Input.Keyboard.KeyCodes.K
+		});
 		this.cursorKeys = null;
 		this.game.events.once('ui_ready', (payload) => {
 			this.cursorKeys = payload.cursorKeys;
@@ -142,16 +151,20 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// MUOVI CON PULSANTI
-	handleMovement(moving = false) {
+	handleMovement() {
 		this.speed = 160;
 		const speed = this.currentSpeed ?? this.speed;
 		let velocityX = 0;
 		let velocityY = 0;
 
-		const left = this.cursors.left.isDown || (this.cursorKeys && this.cursorKeys.left.isDown);
-		const right = this.cursors.right.isDown || (this.cursorKeys && this.cursorKeys.right.isDown);
-		const up = this.cursors.up.isDown || (this.cursorKeys && this.cursorKeys.up.isDown);
-		const down = this.cursors.down.isDown || (this.cursorKeys && this.cursorKeys.down.isDown);
+		// @ts-ignore
+		const left = this.keys.left.isDown || (this.cursorKeys && this.cursorKeys.left.isDown);
+		// @ts-ignore
+		const right = this.keys.right.isDown || (this.cursorKeys && this.cursorKeys.right.isDown);
+		// @ts-ignore
+		const up = this.keys.up.isDown || (this.cursorKeys && this.cursorKeys.up.isDown);
+		// @ts-ignore
+		const down = this.keys.down.isDown || (this.cursorKeys && this.cursorKeys.down.isDown);
 
 		if (left) velocityX = -speed;
 		if (right) velocityX = speed;
@@ -177,7 +190,8 @@ export default class GameScene extends Phaser.Scene {
 	// ATTACCA CON SPACE
 	handleAttack(moving = false) {
 		if (this.isAttacking) return;
-		if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+		// @ts-ignore
+		if (Phaser.Input.Keyboard.JustDown(this.keys.attack)) {
 			this.attack(moving);
 		}
 	}
