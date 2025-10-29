@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import NPC from '../entities/NPC.js';  // ricordati il .js
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {
@@ -23,9 +24,26 @@ export default class GameScene extends Phaser.Scene {
 		// this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
 		this.player = this.physics.add.sprite(150, 300, 'player').setDepth(1);
 
-		this.antonio = this.physics.add.sprite(180, 250, 'player').setDepth(1);
-		this.antonio.setImmovable(false).setPushable(false);
-		this.antonio.setSize(20, 30);
+		this.antonioNPC = new NPC(this, 180, 250, 'player', {
+			dialogueText: "HEY puttanella",
+			interactionDistance: 60,
+			animIdleKeys: {
+				up: 'idle-up',
+				down: 'idle-down',
+				left: 'idle-left',
+				right: 'idle-right'
+			},
+			movementTween: {
+				x: 500,
+				duration: 10000,
+				yoyo: true,
+				repeat: -1,
+				onStart: sprite => sprite.anims.play('right', true),
+				onRepeat: sprite => sprite.anims.play('right', true),
+				onYoyo: sprite => sprite.anims.play('left', true)
+			}
+		});
+
 
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
@@ -51,33 +69,12 @@ export default class GameScene extends Phaser.Scene {
 		// --- Collision ---
 		this.physics.add.collider(this.player, this.collision);
 		this.physics.add.collider(this.player, this.topLayer);
-		// this.physics.add.collider(this.player, this.antonio);
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
-
-		this.isNearAntonio = false;
-
-		// testo del dialogo
-		this.npcMessage = this.add.text(0, 0, "", {
-				font: "16px Arial",
-				color: "#ffffff",
-				backgroundColor: "#000000"
-		});
-		this.npcMessage.setOrigin(0.5);
-		this.npcMessage.setDepth(10);
-		this.npcMessage.setVisible(false);
-
-		// overlap per controllare la vicinanza
-		this.physics.add.overlap(this.player, this.antonio, () => {
-				this.isNearAntonio = true;
-		});
-
-
 
 
 		this.createCamera();
 		this.createAnims();
-		this.npcMovement();
 	}
 
 	update() {
@@ -87,28 +84,19 @@ export default class GameScene extends Phaser.Scene {
 			console.log('Collisione (controllo manuale)');
 		});
 
-// Controllo distanza (se ci allontaniamo)
-const distance = Phaser.Math.Distance.Between(
-    this.player.x, this.player.y,
-    this.antonio.x, this.antonio.y
-);
+		this.antonioNPC.updateProximity(this.player);
 
-if (distance > 50) {
-    this.isNearAntonio = false;
-}
+  // spazio per interazione
+  // @ts-ignore
+  if (this.antonioNPC.isNear && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
+    this.antonioNPC.interact(this.player);
+  }
 
-// Mostra il testo sopra l’NPC
-if (this.npcMessage.visible) {
-    this.npcMessage.x = this.antonio.x;
-    this.npcMessage.y = this.antonio.y - 40;
-}
-
-// Se siamo vicini e premiamo spazio
-// @ts-ignore
-if (this.isNearAntonio && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
-    this.showAntonioDialogue();
-}
-
+  // aggiorna posizione del messaggio sopra NPC
+  if (this.npcMessage.visible) {
+    this.npcMessage.x = this.antonioNPC.sprite.x;
+    this.npcMessage.y = this.antonioNPC.sprite.y - 40;
+  }
 
 
 
@@ -210,17 +198,6 @@ if (this.isNearAntonio && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
 				direction = dy > 0 ? 'down' : 'up';
 		}
 
-		// Gioca l'animazione corrispondente
-		this.antonio.anims.play(`idle-${direction}`, true);
-
-    // dopo 2 secondi, sparisce e riprende a muoversi
-    this.time.addEvent({
-        delay: 2000,
-        callback: () => {
-            this.npcMessage.setVisible(false);
-            this.npcMovement(); // riavvia il loop di movimento
-        }
-    });
 	}
 
 	// ANIMAZIONI
@@ -262,19 +239,6 @@ if (this.isNearAntonio && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
 
 	}
 
-	// MOVIMENTO NPC
-	npcMovement() { 
-		this.tweens.add({ 
-			targets: this.antonio, 
-			x: 500,
-			duration: 10000,
-			yoyo: true,
-			repeat: -1,
-			onYoyo: () => this.antonio.anims.play('left', true),
-			onRepeat: () => this.antonio.anims.play('right', true),
-			onStart: () => this.antonio.anims.play('right', true) 
-		}); 
-	}
 	// npcMovement() {
 	// 		const antonio = this.antonio;
 	// 		if (!antonio) return;

@@ -5,6 +5,7 @@
   
 ## Prossimo step
 - [x] Personaggi sprite che si muovono (anche randomici)
+- [ ] Migliorare Classe NPC (da guardala bene)
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 
 ## Da implementare
