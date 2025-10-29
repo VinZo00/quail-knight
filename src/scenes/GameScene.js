@@ -88,8 +88,8 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		if (this.npcMessage.visible) {
-				this.npcMessage.x = this.player.x;
-				this.npcMessage.y = this.player.y - 40;
+				this.npcMessage.x = this.antonio.x;
+				this.npcMessage.y = this.antonio.y - 40;
 		}
 
 
