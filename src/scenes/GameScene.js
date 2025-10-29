@@ -7,8 +7,8 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-    this.scene.launch('UIScene');              // avvia la scena HUD
-    this.scene.bringToTop('UIScene');          // porta sopra
+    this.scene.launch('UIScene'); 
+    this.scene.bringToTop('UIScene'); 
 
     this.score = 0;
 		this.gameOver = false;
@@ -20,11 +20,26 @@ export default class GameScene extends Phaser.Scene {
 		// this.addAudios();
 		this.createMap();
 		// this.createGroups();
+		
 		// --- Player ---
 		// this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
 		this.player = this.physics.add.sprite(150, 300, 'player').setDepth(1);
+		this.player.setCollideWorldBounds(true);
+		this.player.setSize(20, 30);
+
+		// @todo creare un array di npcs 
+		this.npcs = [];
+
+		// Testo che apparirà sugli npcs
+		this.npcMessageStyle = {
+				font: "16px Arial",
+				color: "#3a10d1ff",
+				backgroundColor: "#ffffff",
+				align: "center"
+		};
 
 		this.antonioNPC = new NPC(this, 180, 250, 'player', {
+			name: 'Antonio',
 			dialogueText: "HEY puttanella",
 			interactionDistance: 60,
 			animIdleKeys: {
@@ -47,24 +62,9 @@ export default class GameScene extends Phaser.Scene {
 
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
-		this.player.setCollideWorldBounds(true);
-		this.player.setSize(20, 30);
-		// this.player.setOffset(12, 14);
-
 		this.bindKeys();
 
 		this.lastDirection = 'down';
-
-		// Testo che apparirà sopra il player
-		this.npcMessage = this.add.text(0, 0, "HEY puttanella", {
-				font: "16px Arial",
-				color: "#ff0000",
-				backgroundColor: "#ffffff"
-		});
-		this.npcMessage.setOrigin(0.5);
-		this.npcMessage.setDepth(10);
-		this.npcMessage.setVisible(false);
-
 
 		// --- Collision ---
 		this.physics.add.collider(this.player, this.collision);
@@ -86,30 +86,16 @@ export default class GameScene extends Phaser.Scene {
 
 		this.antonioNPC.updateProximity(this.player);
 
-  // spazio per interazione
-  // @ts-ignore
-  if (this.antonioNPC.isNear && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
-    this.antonioNPC.interact(this.player);
-  }
-
-  // aggiorna posizione del messaggio sopra NPC
-  if (this.npcMessage.visible) {
-    this.npcMessage.x = this.antonioNPC.sprite.x;
-    this.npcMessage.y = this.antonioNPC.sprite.y - 40;
-  }
-
-
-
-
-		// const distance = Phaser.Math.Distance.Between(
-		// 	this.player.x, this.player.y,
-		// 	this.antonio.x, this.antonio.y
-		// );
-
-		// if (distance < 40) {
-		// 	console.log('Sei vicino ad Antonio!');
-		// }
-
+		// spazio per interazione
+		// @ts-ignore
+		if (this.antonioNPC.isNear && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
+			this.antonioNPC.interact(this.player);
+		}
+		// aggiorna posizione del messaggio sopra NPC
+		if (this.antonioNPC.npcMessage.visible) {
+			this.antonioNPC.npcMessage.x = this.antonioNPC.sprite.x;
+			this.antonioNPC.npcMessage.y = this.antonioNPC.sprite.y - 40;
+		}
 
 		// PULSANTI PER MUOVERE IL PERSONAGGIO
 		// @ts-ignore
@@ -175,31 +161,6 @@ export default class GameScene extends Phaser.Scene {
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
 
-	showAntonioDialogue() {
-    // ferma il tween
-    this.tweens.killTweensOf(this.antonio);
-
-    // mostra il messaggio
-    this.npcMessage.setText("Ciao, sono Antonio!");
-    this.npcMessage.setVisible(true);
-
-    // piccolo idle (NPC guarda in basso, ad esempio)
-		const dx = this.player.x - this.antonio.x;
-		const dy = this.player.y - this.antonio.y;
-
-		let direction = 'down';
-
-		// controlla quale asse è più "dominante"
-		if (Math.abs(dx) > Math.abs(dy)) {
-				// player è a sinistra o a destra
-				direction = dx > 0 ? 'right' : 'left';
-		} else {
-				// player è sopra o sotto
-				direction = dy > 0 ? 'down' : 'up';
-		}
-
-	}
-
 	// ANIMAZIONI
 	createAnims() {
 		const animations = [
@@ -238,60 +199,6 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 	}
-
-	// npcMovement() {
-	// 		const antonio = this.antonio;
-	// 		if (!antonio) return;
-
-	// 		const startX = antonio.x;
-	// 		const startY = antonio.y;
-
-	// 		const scene = this;
-
-	// 		function goRight() {
-	// 				antonio.anims.play('right', true);
-	// 				scene.tweens.add({
-	// 						targets: antonio,
-	// 						x: startX + 100,
-	// 						duration: 1000,
-	// 						onComplete: goDown
-	// 				});
-	// 		}
-
-	// 		function goDown() {
-	// 				antonio.anims.play('down', true);
-	// 				scene.tweens.add({
-	// 						targets: antonio,
-	// 						y: startY + 100,
-	// 						duration: 1000,
-	// 						onComplete: goLeft
-	// 				});
-	// 		}
-
-	// 		function goLeft() {
-	// 				antonio.anims.play('left', true);
-	// 				scene.tweens.add({
-	// 						targets: antonio,
-	// 						x: startX,
-	// 						duration: 1000,
-	// 						onComplete: goUp
-	// 				});
-	// 		}
-
-	// 		function goUp() {
-	// 				antonio.anims.play('up', true);
-	// 				scene.tweens.add({
-	// 						targets: antonio,
-	// 						y: startY,
-	// 						duration: 1000,
-	// 						onComplete: goRight
-	// 				});
-	// 		}
-
-	// 		goRight();
-	// }
-
-
 
 	// MUOVI CON PULSANTI
 	handleMovement() {

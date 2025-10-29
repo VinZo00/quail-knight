@@ -7,8 +7,17 @@ export default class NPC {
     // Sprite e fisica
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
     this.sprite.setImmovable(true);
-    this.sprite.body.setAllowGravity(false);
+    // this.sprite.body.setAllowGravity(false);
     this.sprite.setSize(20, 30);
+
+		this.name = config.name;
+
+		// Message
+		this.npcMessage = scene.add.text(0, 0, "", scene.npcMessageStyle);
+		this.npcMessage.setOrigin(0.5);
+		this.npcMessage.setDepth(10);
+		this.npcMessage.setVisible(false);
+
 
     // Config personalizzabili
     this.interactionDistance = config.interactionDistance ?? 50;
@@ -48,6 +57,7 @@ export default class NPC {
   startMovement() {
     if (!this.movementTweenConfig) return;
 
+		console.log('startato');
     const cfg = this.movementTweenConfig;
 
     this.scene.tweens.add({
@@ -81,18 +91,17 @@ export default class NPC {
     this.showDialogue();
   }
 
-  showDialogue() {
-    // Mostra il testo sopra l'NPC
-    this.scene.npcMessage.setText(this.dialogueText);
-    this.scene.npcMessage.setVisible(true);
+		showDialogue() {
+			this.npcMessage.setText(`${this.name}: ${this.dialogueText}`);
+			this.npcMessage.setVisible(true);
+			// Nascondi dopo 2 secondi e riprendi movimento
+			this.scene.time.addEvent({
+					delay: 2000,
+					callback: () => {
+							this.npcMessage.setVisible(false);
+							this.startMovement();
+					}
+			});
+		}
 
-    // Nascondi dopo 2 secondi e riprendi movimento
-    this.scene.time.addEvent({
-      delay: 2000,
-      callback: () => {
-        this.scene.npcMessage.setVisible(false);
-        this.startMovement(); // riprende il movimento
-      }
-    });
-  }
 }
