@@ -6,6 +6,7 @@
 ## Prossimo step
 - [x] Personaggi sprite che si muovono (anche randomici)
 - [ ] Migliorare Classe NPC (da guardala bene)
+- [ ] Gridengine vedere come poterlo utilizzare
 - [ ] NPC Rallentano dopo dialogo
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 
