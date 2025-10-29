@@ -34,9 +34,8 @@ export default class NPC {
     this.isNear = false;
 
     // Tween di default (loop orizzontale)
-    if (this.movementTweenConfig) {
-      this.startMovement();
-    }
+    this.movementTween = null;
+    if (this.movementTweenConfig) this.startMovement();
   }
 
   // Verifica vicinanza
@@ -50,19 +49,24 @@ export default class NPC {
 
   // Ferma il movimento del NPC
   stopMovement() {
-    this.scene.tweens.killTweensOf(this.sprite);
+    if (this.movementTween) this.movementTween.pause();
   }
 
   // Avvia il tween di movimento
   startMovement() {
     if (!this.movementTweenConfig) return;
 
-		console.log('startato');
-    const cfg = this.movementTweenConfig;
+    // se esiste ed è in pausa, riprendi
+    if (this.movementTween && this.movementTween.paused) {
+			if (this.lastAnim) this.sprite.anims.play(this.lastAnim, true);
+      this.movementTween.resume();
+      return;
+    }
 
-    this.scene.tweens.add({
+    const cfg = this.movementTweenConfig;
+    this.movementTween = this.scene.tweens.add({
       targets: this.sprite,
-      ...cfg, // spread del tween config
+      ...cfg,
       onStart: cfg.onStart ? () => cfg.onStart(this.sprite) : undefined,
       onRepeat: cfg.onRepeat ? () => cfg.onRepeat(this.sprite) : undefined,
       onYoyo: cfg.onYoyo ? () => cfg.onYoyo(this.sprite) : undefined,
@@ -73,6 +77,7 @@ export default class NPC {
   interact(player) {
     if (!this.isNear) return;
 
+		this.lastAnim = this.sprite.anims.currentAnim.key;
     this.stopMovement();
 
     // Determina la direzione verso il player
