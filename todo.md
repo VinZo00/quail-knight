@@ -4,7 +4,7 @@
 - [x] Fixare tasti pc, usare WASD
   
 ## Prossimo step
-- [ ] Personaggi sprite che si muovono (anche randomici)
+- [x] Personaggi sprite che si muovono (anche randomici)
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 
 ## Da implementare

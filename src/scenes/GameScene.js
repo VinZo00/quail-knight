@@ -54,22 +54,24 @@ export default class GameScene extends Phaser.Scene {
 		// this.physics.add.collider(this.player, this.antonio);
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
-		this.messageShown = false;
 
-		this.physics.add.overlap(this.player, this.antonio, () => {
-			if (!this.messageShown) {
-				this.npcMessage.setVisible(true);
-				this.messageShown = true;
+		this.isNearAntonio = false;
 
-				this.time.addEvent({
-					delay: 2000,
-					callback: () => {
-						this.npcMessage.setVisible(false);
-						this.messageShown = false;
-					}
-				});
-			}
+		// testo del dialogo
+		this.npcMessage = this.add.text(0, 0, "", {
+				font: "16px Arial",
+				color: "#ffffff",
+				backgroundColor: "#000000"
 		});
+		this.npcMessage.setOrigin(0.5);
+		this.npcMessage.setDepth(10);
+		this.npcMessage.setVisible(false);
+
+		// overlap per controllare la vicinanza
+		this.physics.add.overlap(this.player, this.antonio, () => {
+				this.isNearAntonio = true;
+		});
+
 
 
 
@@ -85,10 +87,29 @@ export default class GameScene extends Phaser.Scene {
 			console.log('Collisione (controllo manuale)');
 		});
 
-		if (this.npcMessage.visible) {
-			this.npcMessage.x = this.antonio.x;
-			this.npcMessage.y = this.antonio.y - 30;
-		}
+// Controllo distanza (se ci allontaniamo)
+const distance = Phaser.Math.Distance.Between(
+    this.player.x, this.player.y,
+    this.antonio.x, this.antonio.y
+);
+
+if (distance > 50) {
+    this.isNearAntonio = false;
+}
+
+// Mostra il testo sopra l’NPC
+if (this.npcMessage.visible) {
+    this.npcMessage.x = this.antonio.x;
+    this.npcMessage.y = this.antonio.y - 40;
+}
+
+// Se siamo vicini e premiamo spazio
+// @ts-ignore
+if (this.isNearAntonio && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
+    this.showAntonioDialogue();
+}
+
+
 
 
 
@@ -149,7 +170,8 @@ export default class GameScene extends Phaser.Scene {
 				down: Phaser.Input.Keyboard.KeyCodes.S,
 				left: Phaser.Input.Keyboard.KeyCodes.A,
 				right: Phaser.Input.Keyboard.KeyCodes.D,
-				attack: Phaser.Input.Keyboard.KeyCodes.K
+				attack: Phaser.Input.Keyboard.KeyCodes.K,
+				talk: Phaser.Input.Keyboard.KeyCodes.T
 		});
 		this.cursorKeys = null;
 		this.game.events.once('ui_ready', (payload) => {
@@ -163,6 +185,42 @@ export default class GameScene extends Phaser.Scene {
     this.cam.setZoom(1.5);
 		this.cam.startFollow(this.player);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+	}
+
+	showAntonioDialogue() {
+    // ferma il tween
+    this.tweens.killTweensOf(this.antonio);
+
+    // mostra il messaggio
+    this.npcMessage.setText("Ciao, sono Antonio!");
+    this.npcMessage.setVisible(true);
+
+    // piccolo idle (NPC guarda in basso, ad esempio)
+		const dx = this.player.x - this.antonio.x;
+		const dy = this.player.y - this.antonio.y;
+
+		let direction = 'down';
+
+		// controlla quale asse è più "dominante"
+		if (Math.abs(dx) > Math.abs(dy)) {
+				// player è a sinistra o a destra
+				direction = dx > 0 ? 'right' : 'left';
+		} else {
+				// player è sopra o sotto
+				direction = dy > 0 ? 'down' : 'up';
+		}
+
+		// Gioca l'animazione corrispondente
+		this.antonio.anims.play(`idle-${direction}`, true);
+
+    // dopo 2 secondi, sparisce e riprende a muoversi
+    this.time.addEvent({
+        delay: 2000,
+        callback: () => {
+            this.npcMessage.setVisible(false);
+            this.npcMovement(); // riavvia il loop di movimento
+        }
+    });
 	}
 
 	// ANIMAZIONI
