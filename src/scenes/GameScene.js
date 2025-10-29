@@ -27,9 +27,6 @@ export default class GameScene extends Phaser.Scene {
 		this.antonio.setImmovable(false).setPushable(false);
 		this.antonio.setSize(20, 30);
 
-		// Movimento npc
-		this.npcMovement();
-
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
 		this.player.setCollideWorldBounds(true);
@@ -46,9 +43,9 @@ export default class GameScene extends Phaser.Scene {
 				color: "#ff0000",
 				backgroundColor: "#ffffff"
 		});
-		this.npcMessage.setOrigin(0.5); // centrato
-		this.npcMessage.setDepth(10); // sopra tutto
-		this.npcMessage.setVisible(false); // nascosto all’inizio
+		this.npcMessage.setOrigin(0.5);
+		this.npcMessage.setDepth(10);
+		this.npcMessage.setVisible(false);
 
 
 		// --- Collision ---
@@ -60,24 +57,25 @@ export default class GameScene extends Phaser.Scene {
 		this.messageShown = false;
 
 		this.physics.add.overlap(this.player, this.antonio, () => {
-				if (!this.messageShown) {
-						this.npcMessage.setVisible(true);
-						this.messageShown = true;
+			if (!this.messageShown) {
+				this.npcMessage.setVisible(true);
+				this.messageShown = true;
 
-						this.time.addEvent({
-								delay: 2000, // millisecondi
-								callback: () => {
-										this.npcMessage.setVisible(false);
-										this.messageShown = false;
-								}
-						});
-				}
+				this.time.addEvent({
+					delay: 2000,
+					callback: () => {
+						this.npcMessage.setVisible(false);
+						this.messageShown = false;
+					}
+				});
+			}
 		});
 
 
 
 		this.createCamera();
 		this.createAnims();
+		this.npcMovement();
 	}
 
 	update() {
@@ -88,8 +86,8 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		if (this.npcMessage.visible) {
-				this.npcMessage.x = this.antonio.x;
-				this.npcMessage.y = this.antonio.y - 40;
+			this.npcMessage.x = this.antonio.x;
+			this.npcMessage.y = this.antonio.y - 30;
 		}
 
 
@@ -207,18 +205,70 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// MOVIMENTO NPC
-	npcMovement() {
-		this.tweens.add({
-			targets: this.antonio,
+	npcMovement() { 
+		this.tweens.add({ 
+			targets: this.antonio, 
 			x: 500,
-			duration: 5000,
+			duration: 10000,
 			yoyo: true,
 			repeat: -1,
 			onYoyo: () => this.antonio.anims.play('left', true),
 			onRepeat: () => this.antonio.anims.play('right', true),
-			onStart: () => this.antonio.anims.play('right', true)
-		});
+			onStart: () => this.antonio.anims.play('right', true) 
+		}); 
 	}
+	// npcMovement() {
+	// 		const antonio = this.antonio;
+	// 		if (!antonio) return;
+
+	// 		const startX = antonio.x;
+	// 		const startY = antonio.y;
+
+	// 		const scene = this;
+
+	// 		function goRight() {
+	// 				antonio.anims.play('right', true);
+	// 				scene.tweens.add({
+	// 						targets: antonio,
+	// 						x: startX + 100,
+	// 						duration: 1000,
+	// 						onComplete: goDown
+	// 				});
+	// 		}
+
+	// 		function goDown() {
+	// 				antonio.anims.play('down', true);
+	// 				scene.tweens.add({
+	// 						targets: antonio,
+	// 						y: startY + 100,
+	// 						duration: 1000,
+	// 						onComplete: goLeft
+	// 				});
+	// 		}
+
+	// 		function goLeft() {
+	// 				antonio.anims.play('left', true);
+	// 				scene.tweens.add({
+	// 						targets: antonio,
+	// 						x: startX,
+	// 						duration: 1000,
+	// 						onComplete: goUp
+	// 				});
+	// 		}
+
+	// 		function goUp() {
+	// 				antonio.anims.play('up', true);
+	// 				scene.tweens.add({
+	// 						targets: antonio,
+	// 						y: startY,
+	// 						duration: 1000,
+	// 						onComplete: goRight
+	// 				});
+	// 		}
+
+	// 		goRight();
+	// }
+
 
 
 	// MUOVI CON PULSANTI
