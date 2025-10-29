@@ -20,7 +20,16 @@ export default class GameScene extends Phaser.Scene {
 		this.createMap();
 		// this.createGroups();
 		// --- Player ---
-		this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
+		// this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
+		this.player = this.physics.add.sprite(150, 300, 'player').setDepth(1);
+
+		this.antonio = this.physics.add.sprite(180, 250, 'player').setDepth(1);
+		this.antonio.setImmovable(false).setPushable(false);
+		this.antonio.setSize(20, 30);
+
+		// Movimento npc
+		this.npcMovement();
+
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
 		this.player.setCollideWorldBounds(true);
@@ -31,11 +40,41 @@ export default class GameScene extends Phaser.Scene {
 
 		this.lastDirection = 'down';
 
+		// Testo che apparirà sopra il player
+		this.npcMessage = this.add.text(0, 0, "HEY puttanella", {
+				font: "16px Arial",
+				color: "#ff0000",
+				backgroundColor: "#ffffff"
+		});
+		this.npcMessage.setOrigin(0.5); // centrato
+		this.npcMessage.setDepth(10); // sopra tutto
+		this.npcMessage.setVisible(false); // nascosto all’inizio
+
+
 		// --- Collision ---
 		this.physics.add.collider(this.player, this.collision);
 		this.physics.add.collider(this.player, this.topLayer);
+		// this.physics.add.collider(this.player, this.antonio);
 		this.physics.add.overlap(this.player, this.topLayer);
 		this.physics.add.overlap(this.player, this.collision);
+		this.messageShown = false;
+
+		this.physics.add.overlap(this.player, this.antonio, () => {
+				if (!this.messageShown) {
+						this.npcMessage.setVisible(true);
+						this.messageShown = true;
+
+						this.time.addEvent({
+								delay: 2000, // millisecondi
+								callback: () => {
+										this.npcMessage.setVisible(false);
+										this.messageShown = false;
+								}
+						});
+				}
+		});
+
+
 
 		this.createCamera();
 		this.createAnims();
@@ -47,6 +86,23 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.world.collide(this.player, this.star, () => {
 			console.log('Collisione (controllo manuale)');
 		});
+
+		if (this.npcMessage.visible) {
+				this.npcMessage.x = this.player.x;
+				this.npcMessage.y = this.player.y - 40;
+		}
+
+
+
+		// const distance = Phaser.Math.Distance.Between(
+		// 	this.player.x, this.player.y,
+		// 	this.antonio.x, this.antonio.y
+		// );
+
+		// if (distance < 40) {
+		// 	console.log('Sei vicino ad Antonio!');
+		// }
+
 
 		// PULSANTI PER MUOVERE IL PERSONAGGIO
 		// @ts-ignore
@@ -149,6 +205,21 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 	}
+
+	// MOVIMENTO NPC
+	npcMovement() {
+		this.tweens.add({
+			targets: this.antonio,
+			x: 500,
+			duration: 5000,
+			yoyo: true,
+			repeat: -1,
+			onYoyo: () => this.antonio.anims.play('left', true),
+			onRepeat: () => this.antonio.anims.play('right', true),
+			onStart: () => this.antonio.anims.play('right', true)
+		});
+	}
+
 
 	// MUOVI CON PULSANTI
 	handleMovement() {
