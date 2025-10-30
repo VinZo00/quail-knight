@@ -95,10 +95,10 @@ export default class NPC {
 				up: [18, 23]
 			},
 			idle: {
-				down: [24, 25],
-				left: [26, 27],
-				right: [28, 29],
-				up: [30, 31]
+				down: [0, 12],
+				left: [13, 24],
+				right: [25, 36],
+				up: [37, 40]
 			}
 		};
 		for (let type in anims) {

@@ -49,18 +49,19 @@ export default class GameScene extends Phaser.Scene {
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
 
-		const antonio = new NPC(this, 180, 250, 'player', {
+		const antonio = new NPC(this, 180, 250, 'antonio', {
 			name: 'Antonio',
-			dialogueText: 'Hey how are you?',
+			dialogueText: 'Mi sa che stasera non esco',
 			movementType: 'x', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
 			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		});
+
 		const giovanni = new NPC(this, 200, 300, 'player', {
 			name: 'Giovanni',
-			// dialogueText: 'Hey how are you?',
+			dialogueText: 'oggi mi sento proprio gay',
 			movementType: 'idle', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
