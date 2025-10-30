@@ -28,37 +28,7 @@ export default class GameScene extends Phaser.Scene {
 		this.player.setSize(20, 30);
 
 		// @todo creare un array di npcs 
-		this.npcs = [];
-
-		// Testo che apparirà sugli npcs
-		this.npcMessageStyle = {
-				font: "16px Arial",
-				color: "#3a10d1ff",
-				backgroundColor: "#ffffff",
-				align: "center"
-		};
-
-		this.antonioNPC = new NPC(this, 180, 250, 'player', {
-			name: 'Antonio',
-			dialogueText: "HEY puttanella",
-			interactionDistance: 60,
-			animIdleKeys: {
-				up: 'idle-up',
-				down: 'idle-down',
-				left: 'idle-left',
-				right: 'idle-right'
-			},
-			movementTween: {
-				x: 500,
-				duration: 10000,
-				yoyo: true,
-				repeat: -1,
-				onStart: sprite => sprite.anims.play('right', true),
-				onRepeat: sprite => sprite.anims.play('right', true),
-				onYoyo: sprite => sprite.anims.play('left', true)
-			}
-		});
-
+		// this.npcs = [];
 
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
@@ -75,6 +45,33 @@ export default class GameScene extends Phaser.Scene {
 
 		this.createCamera();
 		this.createAnims();
+
+		// INSERISCO NPCS
+		this.npcGroup = this.add.group();
+
+		const antonio = new NPC(this, 180, 250, 'player', {
+			name: 'Antonio',
+			dialogueText: 'Hey how are you?',
+			movementType: 'x', // 'x' | 'y' | 'idle'
+			distance: 100,     // px
+			speed: 50,         // px/s
+			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
+			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
+		});
+		const giovanni = new NPC(this, 200, 300, 'player', {
+			name: 'Giovanni',
+			// dialogueText: 'Hey how are you?',
+			movementType: 'idle', // 'x' | 'y' | 'idle'
+			distance: 100,     // px
+			speed: 50,         // px/s
+			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
+			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
+		});
+
+		this.npcGroup.add(antonio.sprite);
+		this.npcGroup.add(giovanni.sprite);
+		this.physics.add.collider(this.player, this.npcGroup);
+
 	}
 
 	update() {
@@ -83,19 +80,6 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.world.collide(this.player, this.star, () => {
 			console.log('Collisione (controllo manuale)');
 		});
-
-		this.antonioNPC.updateProximity(this.player);
-
-		// spazio per interazione
-		// @ts-ignore
-		if (this.antonioNPC.isNear && Phaser.Input.Keyboard.JustDown(this.keys.talk)) {
-			this.antonioNPC.interact(this.player);
-		}
-		// aggiorna posizione del messaggio sopra NPC
-		if (this.antonioNPC.npcMessage.visible) {
-			this.antonioNPC.npcMessage.x = this.antonioNPC.sprite.x;
-			this.antonioNPC.npcMessage.y = this.antonioNPC.sprite.y - 40;
-		}
 
 		// PULSANTI PER MUOVERE IL PERSONAGGIO
 		// @ts-ignore

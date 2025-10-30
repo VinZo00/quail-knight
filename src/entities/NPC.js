@@ -7,106 +7,169 @@ export default class NPC {
     // Sprite e fisica
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
     this.sprite.setImmovable(true);
-    // this.sprite.body.setAllowGravity(false);
     this.sprite.setSize(20, 30);
 
+		// Dati base
+    this.baseX = x;
+    this.baseY = y;
+
+		// Nome
 		this.name = config.name;
 
-		// Message
-		this.npcMessage = scene.add.text(0, 0, "", scene.npcMessageStyle);
-		this.npcMessage.setOrigin(0.5);
-		this.npcMessage.setDepth(10);
-		this.npcMessage.setVisible(false);
+		// Dialogo
+		this.dialogueTexts = config.dialogueText;
 
+    // Testo/fumetto molto semplice
+		// @todo cambiare grafica
+    const messageStyle = {
+      font: '12px Arial',
+      color: '#3a10d1ff',
+      backgroundColor: '#ffffff',
+      align: 'center',
+      padding: { x: 6, y: 4 },
+    };
+    const nameStyle = {
+      font: '12px Arial',
+      color: '#000',
+      align: 'center',
+      padding: { x: 6, y: 4 },
+    };
 
-    // Config personalizzabili
-    this.interactionDistance = config.interactionDistance ?? 50;
-    this.dialogueText = config.dialogueText ?? "Ciao!";
-    this.animIdleKeys = config.animIdleKeys || {
+    this.npcMessage = scene.add.text(0, 0, '', messageStyle)
+      .setOrigin(0.5)
+      .setDepth(10)
+      .setVisible(false);
+
+    this.npcName = scene.add.text(0, 0, '', nameStyle)
+      .setOrigin(0.5)
+			.setText(this.name)
+      .setDepth(10);
+
+    // Distanza dal player
+    this.interactionDistance = 60;
+    this.isNear = false;
+    this.currentText = '';
+
+		// Animazioni se è idle
+    this.animIdleKeys = {
       up: "idle-up",
       down: "idle-down",
       left: "idle-left",
       right: "idle-right"
     };
-    this.movementTweenConfig = config.movementTween ?? null; // opzionale
 
-    // Stato
-    this.isNear = false;
-
-    // Tween di default (loop orizzontale)
+		// Movimento
     this.movementTween = null;
-    if (this.movementTweenConfig) this.startMovement();
-  }
 
-  // Verifica vicinanza
-  updateProximity(player) {
-    const d = Phaser.Math.Distance.Between(
-      player.x, player.y,
-      this.sprite.x, this.sprite.y
-    );
-    this.isNear = (d <= this.interactionDistance);
-  }
-
-  // Ferma il movimento del NPC
-  stopMovement() {
-    if (this.movementTween) this.movementTween.pause();
-  }
-
-  // Avvia il tween di movimento
-  startMovement() {
-    if (!this.movementTweenConfig) return;
-
-    // se esiste ed è in pausa, riprendi
-    if (this.movementTween && this.movementTween.paused) {
-			if (this.lastAnim) this.sprite.anims.play(this.lastAnim, true);
-      this.movementTween.resume();
-      return;
+    const movementType = config.movementType ?? 'idle';       // 'x' | 'y' | 'idle'
+    const distance = Number(config.distance ?? 0);            // in px
+    const speed = Number(config.speed ?? 0);                  // px/s
+    const startDir = config.startDir ?? 'pos';                // 'pos'|'neg'
+    const idleDir = config.idleDir ?? 'down';                 // idle-* da mostrare se fermo
+		
+    if (movementType === 'x' && distance > 0 && speed > 0) {
+      this.patrolX(distance, speed, startDir);
+    } else if (movementType === 'y' && distance > 0 && speed > 0) {
+      this.patrolY(distance, speed, startDir);
+    } else {
+      this.sprite.anims.play(this.animIdleKeys[idleDir] ?? 'idle-down', true);
     }
 
-    const cfg = this.movementTweenConfig;
+		this.onSceneUpdate = this.onSceneUpdate.bind(this);
+		this.scene.events.on('update', this.onSceneUpdate);
+  }
+
+  // ---------------------------------------------------------------------------
+  // CONTATTO CON PLAYER
+  // ---------------------------------------------------------------------------
+	updateProximity(player) {
+		const d = Phaser.Math.Distance.Between(player.x, player.y, this.sprite.x, this.sprite.y);
+		const wasNear = this.isNear;
+
+		this.isNear = (d <= this.interactionDistance);
+		if (this.isNear && !wasNear) {
+			this.currentText = this.pickDialogueText();
+			this.npcMessage.setText(this.currentText);
+			this.npcMessage.setVisible(true);
+		} else if (!this.isNear && wasNear) {
+			this.npcMessage.setVisible(false);
+			this.currentText = null;
+		}
+
+		if (this.npcMessage.visible) {
+			this.npcMessage.x = this.sprite.x;
+			this.npcMessage.y = this.sprite.y - 40;
+		}
+	}
+
+  // ---------------------------------------------------------------------------
+  // MOVIMENTO
+  // ---------------------------------------------------------------------------
+  patrolX(distance, speed, startDir) {
+    const to = startDir === 'pos' ? this.baseX + distance : this.baseX - distance;
+    const duration = (distance / speed) * 1000;
+
+    // +1 destra, -1 sinistra
+    let dir = to > this.baseX ? 1 : -1;
+
+    this.movementTween?.stop();
     this.movementTween = this.scene.tweens.add({
       targets: this.sprite,
-      ...cfg,
-      onStart: cfg.onStart ? () => cfg.onStart(this.sprite) : undefined,
-      onRepeat: cfg.onRepeat ? () => cfg.onRepeat(this.sprite) : undefined,
-      onYoyo: cfg.onYoyo ? () => cfg.onYoyo(this.sprite) : undefined,
+      x: to,
+      duration,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+      onStart:  () => this.sprite.anims.play(dir > 0 ? 'right' : 'left', true),
+      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'right' : 'left', true); },
+      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'right' : 'left', true); },
     });
   }
 
-  // Interazione quando il player preme il tasto
-  interact(player) {
-    if (!this.isNear) return;
+  patrolY(distance, speed, startDir) {
+    const to = startDir === 'pos' ? this.baseY + distance : this.baseY - distance;
+    const duration = (distance / speed) * 1000;
 
-		this.lastAnim = this.sprite.anims.currentAnim.key;
-    this.stopMovement();
+    // +1 giù, -1 su
+    let dir = to > this.baseY ? 1 : -1;
 
-    // Determina la direzione verso il player
-    const dx = player.x - this.sprite.x;
-    const dy = player.y - this.sprite.y;
-    let dir = "down";
-    if (Math.abs(dx) > Math.abs(dy)) {
-      dir = dx > 0 ? "right" : "left";
-    } else {
-      dir = dy > 0 ? "down" : "up";
-    }
-
-    this.sprite.anims.play(this.animIdleKeys[dir], true);
-
-    // Mostra dialogo
-    this.showDialogue();
+    this.movementTween?.stop();
+    this.movementTween = this.scene.tweens.add({
+      targets: this.sprite,
+      y: to,
+      duration,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+      onStart:  () => this.sprite.anims.play(dir > 0 ? 'down' : 'up', true),
+      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'down' : 'up', true); },
+      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'down' : 'up', true); },
+    });
   }
 
-		showDialogue() {
-			this.npcMessage.setText(`${this.name}: ${this.dialogueText}`);
-			this.npcMessage.setVisible(true);
-			// Nascondi dopo 2 secondi e riprendi movimento
-			this.scene.time.addEvent({
-					delay: 2000,
-					callback: () => {
-							this.npcMessage.setVisible(false);
-							this.startMovement();
-					}
-			});
+  // ---------------------------------------------------------------------------
+  // DIALOGO / PROSSIMITÀ
+  // ---------------------------------------------------------------------------
+	pickDialogueText() {
+		if (Array.isArray(this.dialogueTexts) && this.dialogueTexts.length > 0) {
+			return Phaser.Utils.Array.GetRandom(this.dialogueTexts);
 		}
+		return typeof this.dialogueTexts === 'string' ? this.dialogueTexts : '...';
+	}
 
+	// ---------------------------------------------------------------------------
+  // DOVE MOSTRARE NOME E MESSAGGIO
+  // ---------------------------------------------------------------------------
+	onSceneUpdate(time, delta) {
+		this.npcName.x = this.sprite.x;
+		this.npcName.y = this.sprite.y - 20;
+
+		const player = this.scene.player;
+		if (player) this.updateProximity(player);
+
+		if (this.npcMessage.visible) {
+			this.npcMessage.x = this.sprite.x;
+			this.npcMessage.y = this.sprite.y - 40;
+		}
+	}
 }
