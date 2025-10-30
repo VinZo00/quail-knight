@@ -5,6 +5,7 @@ export default class NPC {
     this.scene = scene;
 
     // Sprite e fisica
+		this.spriteKey = spriteKey;
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
     this.sprite.setImmovable(true);
     this.sprite.setSize(20, 30);
@@ -67,6 +68,9 @@ export default class NPC {
     const startDir = config.startDir ?? 'pos';                // 'pos'|'neg'
     const idleDir = config.idleDir ?? 'down';                 // idle-* da mostrare se fermo
 		
+		// Animazioni interne
+		// this.createAnims();
+
     if (movementType === 'x' && distance > 0 && speed > 0) {
       this.patrolX(distance, speed, startDir);
     } else if (movementType === 'y' && distance > 0 && speed > 0) {
@@ -78,6 +82,39 @@ export default class NPC {
 		this.onSceneUpdate = this.onSceneUpdate.bind(this);
 		this.scene.events.on('update', this.onSceneUpdate);
   }
+
+	// ---------------------------------------------------------------------------
+  // CREA ANIMAZIONI
+  // ---------------------------------------------------------------------------
+  createAnims() {
+		const anims = {
+			walk: {
+				down: [0, 5],
+				left: [6, 11],
+				right: [12, 17],
+				up: [18, 23]
+			},
+			idle: {
+				down: [24, 25],
+				left: [26, 27],
+				right: [28, 29],
+				up: [30, 31]
+			}
+		};
+		for (let type in anims) {
+			for (let dir in anims[type]) {
+				const key = `${this.spriteKey}-${type}-${dir}`;
+				if (!this.scene.anims.exists(key)) {
+					this.scene.anims.create({
+						key,
+						frames: this.scene.anims.generateFrameNumbers(this.spriteKey, { start: anims[type][dir][0], end: anims[type][dir][1] }),
+						frameRate: 10,
+						repeat: type === 'walk' ? -1 : 0
+					});
+				}
+			}
+		}
+	}
 
   // ---------------------------------------------------------------------------
   // CONTATTO CON PLAYER

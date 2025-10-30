@@ -61,13 +61,12 @@ export default class LoadScene extends Phaser.Scene {
 		
 		// Spritesheet del player
     this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('antonio', 'sprites/antonio.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
 
 		// Aggiungiamo ANTONIO
-		this.load.spritesheet('antonio', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('antonio', 'sprites/antonio.png', { frameWidth: 64, frameHeight: 64 });
   }
 
 	// Tilemap

@@ -8,6 +8,7 @@
 - [x] Migliorare Classe NPC (da guardala bene)
 - [x] NPC Rallentano dopo dialogo
 - [ ] Come differenzio lo spritesheet di un npc? 
+- [ ] Gestire meglio le animazioni, anche con il player
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 
 ## Da implementare
