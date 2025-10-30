@@ -49,10 +49,10 @@ export default class GameScene extends Phaser.Scene {
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
 
-		const antonio = new NPC(this, 180, 250, 'player', {
+		const antonio = new NPC(this, 180, 250, 'antonio', {
 			name: 'Antonio',
 			dialogueText: 'Hey how are you?',
-			movementType: 'x', // 'x' | 'y' | 'idle'
+			movementType: 'idle', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
@@ -67,6 +67,7 @@ export default class GameScene extends Phaser.Scene {
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
 			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		});
+		this.createCharacterAnims();
 
 		this.npcGroup.add(antonio.sprite);
 		this.npcGroup.add(giovanni.sprite);
@@ -171,6 +172,26 @@ export default class GameScene extends Phaser.Scene {
 			{ key: 'attack-walk-left', sheet: 'player-attack-walk', start: 8, end: 15, frameRate: 10, repeat: 0 },
 			{ key: 'attack-walk-right', sheet: 'player-attack-walk', start: 16, end: 23, frameRate: 10, repeat: 0 },
 			{ key: 'attack-walk-up', sheet: 'player-attack-walk', start: 24, end: 31, frameRate: 10, repeat: 0 },
+		];
+
+		animations.forEach(anim => {
+			this.anims.create({
+				key: anim.key,
+				frames: this.anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
+				frameRate: anim.frameRate,
+				repeat: anim.repeat
+			});
+		});
+
+	}
+	// ANIMAZIONI
+	createCharacterAnims() {
+		const animations = [
+			// Movimento
+			{ key: 'antonio-down', sheet: 'antonio', start: 0, end: 5, frameRate: 10, repeat: -1 },
+			{ key: 'antonio-left', sheet: 'antonio', start: 6, end: 11, frameRate: 10, repeat: -1 },
+			{ key: 'antonio-right', sheet: 'antonio', start: 17, end: 22, frameRate: 10, repeat: -1 },
+			{ key: 'antonio-up', sheet: 'antonio', start: 23, end: 28, frameRate: 10, repeat: -1 },
 		];
 
 		animations.forEach(anim => {
