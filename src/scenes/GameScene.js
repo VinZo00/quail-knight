@@ -24,8 +24,7 @@ export default class GameScene extends Phaser.Scene {
 		// --- Player ---
 		// this.player = this.physics.add.sprite(this.map.widthInPixels / 2, this.map.heightInPixels / 2, 'player').setDepth(1);
 		this.player = this.physics.add.sprite(150, 300, 'player').setDepth(1);
-		this.player.setCollideWorldBounds(true);
-		this.player.setSize(20, 30);
+		this.player.setCollideWorldBounds(true).setSize(20, 30).setScale(0.7);
 
 		// @todo creare un array di npcs 
 		// this.npcs = [];
@@ -49,28 +48,28 @@ export default class GameScene extends Phaser.Scene {
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
 
-		const antonio = new NPC(this, 180, 250, 'antonio', {
-			name: 'Antonio',
-			dialogueText: 'Mi sa che stasera non esco',
-			movementType: 'x', // 'x' | 'y' | 'idle'
-			distance: 100,     // px
-			speed: 50,         // px/s
-			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
-		});
+		// const antonio = new NPC(this, 180, 250, 'antonio', {
+		// 	name: 'Antonio',
+		// 	dialogueText: 'Mi sa che stasera non esco',
+		// 	movementType: 'x', // 'x' | 'y' | 'idle'
+		// 	distance: 100,     // px
+		// 	speed: 50,         // px/s
+		// 	startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
+		// 	// idleDir: 'right',   // opzionale: se fermo, quale idle usare
+		// });
 
-		const giovanni = new NPC(this, 200, 300, 'player', {
+		const giovanni = new NPC(this, 250, 300, 'antonio', {
 			name: 'Giovanni',
 			dialogueText: 'oggi mi sento proprio gay',
 			movementType: 'idle', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
+			idleDir: 'down',   // opzionale: se fermo, quale idle usare
 		});
 
 		console.log(this.scene.scene.anims.anims.entries);
-		this.npcGroup.add(antonio.sprite);
+		// this.npcGroup.add(antonio.sprite);
 		this.npcGroup.add(giovanni.sprite);
 		this.physics.add.collider(this.player, this.npcGroup);
 
@@ -151,16 +150,16 @@ export default class GameScene extends Phaser.Scene {
 	createAnims() {
 		const animations = [
 			// Movimento
-			{ key: 'down', sheet: 'player', start: 0, end: 7, frameRate: 10, repeat: -1 },
-			{ key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 10, repeat: -1 },
-			{ key: 'right', sheet: 'player', start: 16, end: 23, frameRate: 10, repeat: -1 },
-			{ key: 'up', sheet: 'player', start: 24, end: 31, frameRate: 10, repeat: -1 },
+			{ key: 'up', sheet: 'vinzo', start: 0, end: 8, frameRate: 9, repeat: -1 },
+			{ key: 'left', sheet: 'vinzo', start: 9, end: 17, frameRate: 9, repeat: -1 },
+			{ key: 'down', sheet: 'vinzo', start: 18, end: 26, frameRate: 9, repeat: -1 },
+			{ key: 'right', sheet: 'vinzo', start: 27, end: 35, frameRate: 9, repeat: -1 },
 
 			// Idle
-			{ key: 'idle-down', sheet: 'player-idle', start: 0, end: 11, frameRate: 2, repeat: -1 },
-			{ key: 'idle-left', sheet: 'player-idle', start: 12, end: 23, frameRate: 2, repeat: -1 },
-			{ key: 'idle-right', sheet: 'player-idle', start: 24, end: 35, frameRate: 2, repeat: -1 },
-			{ key: 'idle-up', sheet: 'player-idle', start: 36, end: 39, frameRate: 2, repeat: -1 },
+			{ key: 'idle-down', sheet: 'vinzo', start: 38, end: 39, frameRate: 2, repeat: -1 },
+			{ key: 'idle-left', sheet: 'vinzo', start: 45, end: 46, frameRate: 2, repeat: -1 },
+			{ key: 'idle-right', sheet: 'vinzo', start: 47, end: 48, frameRate: 2, repeat: -1 },
+			{ key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
 
 			// Attacco fermo
 			{ key: 'attack-down', sheet: 'player-attack', start: 0, end: 7, frameRate: 10, repeat: 0 },
@@ -183,7 +182,6 @@ export default class GameScene extends Phaser.Scene {
 				repeat: anim.repeat
 			});
 		});
-
 	}
 
 	// MUOVI CON PULSANTI
@@ -219,6 +217,7 @@ export default class GameScene extends Phaser.Scene {
 			} else {
 				this.player.setVelocity(0, 0);
 				this.player.anims.play(`idle-${this.lastDirection}`, true);
+				console.log(this.player.anims);
 			}
 		}
 	}

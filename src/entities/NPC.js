@@ -53,10 +53,10 @@ export default class NPC {
 
 		// Animazioni se è idle
     this.animIdleKeys = {
-      up: "idle-up",
-      down: "idle-down",
-      left: "idle-left",
-      right: "idle-right"
+      up: this.spriteKey+"-idle-up",
+      down: this.spriteKey+"-idle-down",
+      left: this.spriteKey+"-idle-left",
+      right: this.spriteKey+"-idle-right"
     };
 
 		// Movimento
@@ -69,14 +69,15 @@ export default class NPC {
     const idleDir = config.idleDir ?? 'down';                 // idle-* da mostrare se fermo
 		
 		// Animazioni interne
-		// this.createAnims();
+		this.createAnims();
 
     if (movementType === 'x' && distance > 0 && speed > 0) {
       this.patrolX(distance, speed, startDir);
     } else if (movementType === 'y' && distance > 0 && speed > 0) {
       this.patrolY(distance, speed, startDir);
     } else {
-      this.sprite.anims.play(this.animIdleKeys[idleDir] ?? 'idle-down', true);
+			console.log(this.animIdleKeys[idleDir]);
+      this.sprite.anims.play(this.animIdleKeys[idleDir] ?? this.spriteKey+'-idle-down', true);
     }
 
 		this.onSceneUpdate = this.onSceneUpdate.bind(this);
@@ -95,21 +96,22 @@ export default class NPC {
 				up: [18, 23]
 			},
 			idle: {
-				down: [0, 12],
-				left: [13, 24],
-				right: [25, 36],
-				up: [37, 40]
+				down: [0, 11],
+				left: [12, 23],
+				right: [24, 35],
+				up: [36, 39]
 			}
 		};
 		for (let type in anims) {
 			for (let dir in anims[type]) {
 				const key = `${this.spriteKey}-${type}-${dir}`;
+				console.log(key);
 				if (!this.scene.anims.exists(key)) {
 					this.scene.anims.create({
 						key,
 						frames: this.scene.anims.generateFrameNumbers(this.spriteKey, { start: anims[type][dir][0], end: anims[type][dir][1] }),
-						frameRate: 10,
-						repeat: type === 'walk' ? -1 : 0
+						frameRate: 2,
+						repeat: -1
 					});
 				}
 			}

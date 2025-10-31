@@ -67,6 +67,9 @@ export default class LoadScene extends Phaser.Scene {
 
 		// Aggiungiamo ANTONIO
     this.load.spritesheet('antonio', 'sprites/antonio.png', { frameWidth: 64, frameHeight: 64 });
+		
+		// Aggiungiamo ANTONIO
+    this.load.spritesheet('vinzo', 'sprites/vinzo.png', { frameWidth: 64, frameHeight: 64 });
   }
 
 	// Tilemap
