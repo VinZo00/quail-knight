@@ -203,7 +203,7 @@ export default class NPC {
 		this.npcName.x = this.sprite.x;
 		this.npcName.y = this.sprite.y - 20;
 
-		const player = this.scene.player;
+		const player = this.scene.player.sprite;
 		if (player) this.updateProximity(player);
 
 		if (this.npcMessage.visible) {
