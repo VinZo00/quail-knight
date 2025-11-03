@@ -20,24 +20,42 @@ export default class GameScene extends Phaser.Scene {
 
 		// this.addAudios();
 		this.createMap();
-		// this.createGroups();
-		
-		// --- Player ---
-		this.player = new Player(this, 150, 300, 'vinzo');
-
-		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
-
+		this.createGroup();
 		this.bindKeys();
+		this.createCamera();
+		this.generateCollision();
+	}
 
-		this.lastDirection = 'down';
+	update() {
+		if (this.gameOver) return;
 
-		// --- Collision ---
+		this.player.update(this.keys, this.cursorKeys);
+
+		this.physics.world.collide(this.player.sprite, this.star, () => {
+			console.log('Collisione (controllo manuale)');
+		});
+	}
+
+	// ----------------------------------------------------------------------------
+  // COLLISION
+  // ----------------------------------------------------------------------------
+	generateCollision() {
 		this.physics.add.collider(this.player.sprite, this.collision);
 		this.physics.add.collider(this.player.sprite, this.topLayer);
 		this.physics.add.collider(this.player.sprite, this.npcGroup);
+		this.physics.add.collider(this.player.sprite, this.npcGroup);
+	}
 
+	// ----------------------------------------------------------------------------
+  // GRUPPO (PERSONAGGI - SPRITES)
+  // ----------------------------------------------------------------------------
+	createGroup() {
+		// Player
+		this.player = new Player(this, 150, 300, 'vinzo');
 
-		this.createCamera();
+		// Objects
+		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
+
 
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
@@ -64,23 +82,12 @@ export default class GameScene extends Phaser.Scene {
 
 		// @ts-ignore
 		console.log(this.scene.scene.anims.anims.entries);
-		// this.npcGroup.add(antonio.sprite);
 		this.npcGroup.add(giovanni.sprite);
-		this.physics.add.collider(this.player.sprite, this.npcGroup);
-
 	}
 
-	update() {
-		if (this.gameOver) return;
-
-		this.player.update(this.keys, this.cursorKeys);
-
-		this.physics.world.collide(this.player.sprite, this.star, () => {
-			console.log('Collisione (controllo manuale)');
-		});
-	}
-
-	// CREA MAPPA
+  // ----------------------------------------------------------------------------
+  // MAPPA
+  // ----------------------------------------------------------------------------
 	createMap() {
     const map = this.make.tilemap({ key: 'map' });
 		const tiles = map.addTilesetImage('terrain_atlas', 'terrain');
@@ -104,7 +111,9 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
 
-	// PULSANTI
+  // ----------------------------------------------------------------------------
+  // PULSANTI
+  // ----------------------------------------------------------------------------
 	bindKeys() {
 		// @ts-ignore
 		this.keys = this.input.keyboard.addKeys({
@@ -121,7 +130,9 @@ export default class GameScene extends Phaser.Scene {
 		});
 	}
 
-	// CREA CAMERA
+  // ----------------------------------------------------------------------------
+  // CAMERA
+  // ----------------------------------------------------------------------------
 	createCamera() {
 		this.cam = this.cameras.main;
     this.cam.setZoom(1.5);

@@ -1,6 +1,22 @@
 import Phaser from 'phaser';
 
 export default class NPC {
+	/**
+	 * Crea un nuovo NPC.
+	 * @param {Phaser.Scene & { player: import('./Player.js').default }} scene
+	 * @param {Phaser.Scene} scene - La scena Phaser a cui appartiene l’NPC.
+	 * @param {number} x - Posizione X iniziale.
+	 * @param {number} y - Posizione Y iniziale.
+	 * @param {string} spriteKey - Chiave della texture dello sprite (es. 'antonio').
+	 * @param {object} [config] - Configurazione opzionale.
+	 * @param {string} [config.name='NPC'] - Nome visualizzato sopra lo sprite.
+	 * @param {string|string[]} [config.dialogueText='...'] - Testo o lista di dialoghi mostrati quando il player interagisce.
+	 * @param {'x'|'y'|'idle'} [config.movementType='idle'] - Tipo di movimento (orizzontale, verticale o fermo).
+	 * @param {number} [config.distance=0] - Distanza massima di movimento in pixel.
+	 * @param {number} [config.speed=50] - Velocità di movimento in pixel/s.
+	 * @param {'pos'|'neg'} [config.startDir='pos'] - Direzione iniziale del movimento.
+	 * @param {'up'|'down'|'left'|'right'} [config.idleDir='down'] - Direzione idle se l’NPC è fermo.
+	*/
   constructor(scene, x, y, spriteKey, config = {}) {
     this.scene = scene;
 
@@ -87,6 +103,7 @@ export default class NPC {
 	// ---------------------------------------------------------------------------
   // CREA ANIMAZIONI
   // ---------------------------------------------------------------------------
+	// @todo usare animazioni uniche (tutte dentro una key);
   createAnims() {
 		const anims = {
 			walk: {
@@ -121,6 +138,9 @@ export default class NPC {
   // ---------------------------------------------------------------------------
   // CONTATTO CON PLAYER
   // ---------------------------------------------------------------------------
+	/**
+	 * @param {{ x: number; y: number; }} player
+	 */
 	updateProximity(player) {
 		const d = Phaser.Math.Distance.Between(player.x, player.y, this.sprite.x, this.sprite.y);
 		const wasNear = this.isNear;
@@ -144,6 +164,12 @@ export default class NPC {
   // ---------------------------------------------------------------------------
   // MOVIMENTO
   // ---------------------------------------------------------------------------
+	/**
+   * Movimento orizzontale dell'NPC avanti e indietro.
+   * @param {number} distance - Distanza in pixel da percorrere (dal punto di partenza).
+   * @param {number} speed - Velocità in pixel/secondo.
+   * @param {'pos'|'neg'} startDir - Direzione iniziale: 'pos' = verso destra, 'neg' = verso sinistra.
+  */
   patrolX(distance, speed, startDir) {
     const to = startDir === 'pos' ? this.baseX + distance : this.baseX - distance;
     const duration = (distance / speed) * 1000;
@@ -165,6 +191,12 @@ export default class NPC {
     });
   }
 
+	/**
+   * Movimento verticale dell'NPC avanti e indietro.
+   * @param {number} distance - Distanza in pixel da percorrere (dal punto di partenza).
+   * @param {number} speed - Velocità in pixel/secondo.
+   * @param {'pos'|'neg'} startDir - Direzione iniziale: 'pos' = verso il basso, 'neg' = verso l'alto.
+  */
   patrolY(distance, speed, startDir) {
     const to = startDir === 'pos' ? this.baseY + distance : this.baseY - distance;
     const duration = (distance / speed) * 1000;
@@ -199,11 +231,16 @@ export default class NPC {
 	// ---------------------------------------------------------------------------
   // DOVE MOSTRARE NOME E MESSAGGIO
   // ---------------------------------------------------------------------------
+	/**
+   * @param {number} time - Tempo totale trascorso in millisecondi
+   * @param {number} delta - Differenza di tempo dall'ultimo frame in millisecondi
+   */
 	onSceneUpdate(time, delta) {
 		this.npcName.x = this.sprite.x;
 		this.npcName.y = this.sprite.y - 20;
 
 		const player = this.scene.player.sprite;
+		console.log(player);
 		if (player) this.updateProximity(player);
 
 		if (this.npcMessage.visible) {

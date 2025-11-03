@@ -1,6 +1,14 @@
 import Phaser from 'phaser';
 
 export default class Player {
+	/**
+   * Crea un nuovo player controllabile.
+		* @typedef {Object} PlayerKeys
+   * @param {Phaser.Scene} scene - La scena in cui istanziare il giocatore.
+   * @param {number} x - Coordinata X iniziale del giocatore.
+   * @param {number} y - Coordinata Y iniziale del giocatore.
+   * @param {string} [textureKey='player'] - Chiave della texture/sprite sheet da usare per il giocatore.
+  */
   constructor(scene, x, y, textureKey = 'player') {
     this.scene = scene;
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
@@ -21,7 +29,14 @@ export default class Player {
   // ----------------------------------------------------------------------------
   // UPDATE (gestisce movimento e attacco)
   // ----------------------------------------------------------------------------
-  update(keys, cursorKeys) {
+  /**
+   * Aggiorna lo stato del player ad ogni frame.
+   * Gestisce movimento e attacco in base all'input.
+   *
+   * @param {object} keys - Oggetto con i tasti di controllo personalizzati (es. W, A, S, D).
+   * @param {Phaser.Types.Input.Keyboard.CursorKeys} [cursorKeys] - Oggetto cursori standard di Phaser (opzionale).
+  */
+	update(keys, cursorKeys) {
     this.handleMovement(keys, cursorKeys);
     this.handleAttack(keys);
   }
@@ -29,7 +44,14 @@ export default class Player {
 	// ----------------------------------------------------------------------------
   // MOVIMENTO
   // ----------------------------------------------------------------------------
-  handleMovement(keys, cursorKeys) {
+  /**
+	 * Gestisce il movimento del giocatore in base ai tasti premuti.
+	 * Cambia animazione e velocità a seconda della direzione e dello stato di attacco.
+	 *
+	 * @param {PlayerKeys} keys - Oggetto contenente i tasti personalizzati del giocatore.
+	 * @param {Phaser.Types.Input.Keyboard.CursorKeys} [cursorKeys] - Cursori standard opzionali (freccette).
+	*/
+	handleMovement(keys, cursorKeys) {
     const speed = this.currentSpeed;
     let velocityX = 0;
     let velocityY = 0;
@@ -66,7 +88,14 @@ export default class Player {
 	// ----------------------------------------------------------------------------
   // ATTACCO
   // ----------------------------------------------------------------------------
-  handleAttack(keys, cursorKeys) {
+  /**
+   * Gestisce l'input per l'attacco.
+   * Previene attacchi multipli finché l'animazione non è terminata.
+   *
+   * @param {PlayerKeys} keys - Oggetto con i tasti del giocatore.
+   * @param {Phaser.Types.Input.Keyboard.CursorKeys} [cursorKeys] - Cursori opzionali.
+  */
+	handleAttack(keys, cursorKeys) {
     if (this.isAttacking) return;
     if (Phaser.Input.Keyboard.JustDown(keys.attack)) {
       const moving = this.sprite.body.velocity.x !== 0 || this.sprite.body.velocity.y !== 0;
