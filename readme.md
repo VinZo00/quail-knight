@@ -1,7 +1,21 @@
-# Phaser 3 + Vite.js Template
+# Quest of Quail Knight
 > Make Phaser 3 games with modern frontend tooling.
 
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Game cover](materials/cover.jpg)
+
+## About the Game
+
+**Quest of Quail Knight** è un piccolo gioco in **pixel art** realizzato per puro divertimento. Racconta le avventure di **Vito**, un cavaliere un po' goffo ma determinato, impegnato nella sua missione di **caccia alle quaglie**. Il progetto nasce come esperimento personale per esplorare **Phaser 3** e le moderne tecniche di sviluppo frontend applicate al game development. Semplice, ironico e volutamente rétro, *Quest of Quail Knight* è un tributo ai vecchi giochi arcade — con un tocco di umorismo e tanta passione per la pixel art.
+
+---
+
+## Credits
+
+- **Development & Design:** VinZo  
+- **Website:** [vincenzociaccia.it](https://vincenzociaccia.it)
+
+---
 
 ## Prerequisites
 
