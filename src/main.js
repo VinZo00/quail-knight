@@ -9,8 +9,8 @@ import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-p
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 720,
     physics: {
         default: 'arcade',
         arcade: { debug: true }

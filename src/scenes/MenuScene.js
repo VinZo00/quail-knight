@@ -7,7 +7,8 @@ export default class MenuScene extends Phaser.Scene {
 
     preload() {
 				// BACKGROUND
-        this.load.image('bg', 'ui/background-2.jpg');
+        this.load.image('bg', 'ui/background.jpg');
+        this.load.image('logo', 'ui/logo.png');
 
 				// AUDIO
         this.load.image('audio', 'ui/audio.png');
@@ -20,7 +21,7 @@ export default class MenuScene extends Phaser.Scene {
     create() {
 
 			  // BACKGROUND
-        this.bg = this.add.image(this.scale.width / 2, this.scale.height / 2, 'bg').setScale(0.6);
+        this.bg = this.add.image(this.scale.width / 2, this.scale.height / 2, 'bg');
 				this.dir = 1;
 				this.vel = 0.075;
 
@@ -51,7 +52,8 @@ export default class MenuScene extends Phaser.Scene {
 				});
 
 				// TEXT
-        this.add.text(this.scale.width / 2, 200, 'Il mio Gioco Phaser', { fontSize: '48px', color: '#fff' }).setOrigin(0.5);
+				this.logo = this.add.image(this.scale.width / 2, 150, 'logo').setOrigin(0.5).setScale(.8);
+        // this.add.text(this.scale.width / 2, 200, 'Created by VinZo', { fontSize: '48px', color: '#fff' }).setOrigin(0.5);
         const playButton = this.add.text(this.scale.width / 2, 400, 'PLAY', { fontSize: '32px', color: '#0f0' }).setOrigin(0.5).setInteractive();
 
         playButton.on('pointerdown', () => {

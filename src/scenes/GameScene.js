@@ -55,7 +55,7 @@ export default class GameScene extends Phaser.Scene {
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
-
+		this.chicken = this.physics.add.sprite(300, 300, 'quail').setScale(.8).setImmovable();
 
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
