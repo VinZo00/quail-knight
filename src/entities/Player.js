@@ -124,10 +124,10 @@ export default class Player {
     const anims = this.scene.anims;
     const animations = [
       // Movimento
-      { key: 'up', sheet: 'vinzo', start: 0, end: 8, frameRate: 9, repeat: -1 },
-      { key: 'left', sheet: 'vinzo', start: 9, end: 17, frameRate: 9, repeat: -1 },
-      { key: 'down', sheet: 'vinzo', start: 18, end: 26, frameRate: 9, repeat: -1 },
-      { key: 'right', sheet: 'vinzo', start: 27, end: 35, frameRate: 9, repeat: -1 },
+      { key: 'up', sheet: 'player', start: 0, end: 7, frameRate: 9, repeat: -1 },
+      { key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 9, repeat: -1 },
+      { key: 'down', sheet: 'player', start: 16, end: 23, frameRate: 9, repeat: -1 },
+      { key: 'right', sheet: 'player', start: 24, end: 31, frameRate: 9, repeat: -1 },
 
       // Idle
       { key: 'idle-down', sheet: 'vinzo', start: 38, end: 39, frameRate: 2, repeat: -1 },
@@ -136,16 +136,16 @@ export default class Player {
       { key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
 
       // Attacco fermo
-      { key: 'attack-down', sheet: 'player-attack', start: 0, end: 7, frameRate: 10, repeat: 0 },
-      { key: 'attack-left', sheet: 'player-attack', start: 8, end: 15, frameRate: 10, repeat: 0 },
-      { key: 'attack-right', sheet: 'player-attack', start: 16, end: 23, frameRate: 10, repeat: 0 },
-      { key: 'attack-up', sheet: 'player-attack', start: 24, end: 31, frameRate: 10, repeat: 0 },
+      { key: 'attack-down', sheet: 'player-attack', start: 14, end: 19, frameRate: 10, repeat: 0 },
+      { key: 'attack-left', sheet: 'player-attack', start: 7, end: 12, frameRate: 10, repeat: 0 },
+      { key: 'attack-right', sheet: 'player-attack', start: 21, end: 26, frameRate: 10, repeat: 0 },
+      { key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
 
       // Attacco camminando
-      { key: 'attack-walk-down', sheet: 'player-attack-walk', start: 0, end: 7, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-left', sheet: 'player-attack-walk', start: 8, end: 15, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-right', sheet: 'player-attack-walk', start: 16, end: 23, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-up', sheet: 'player-attack-walk', start: 24, end: 31, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-down', sheet: 'player-slash', start: 26, end: 38, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-left', sheet: 'player-slash', start: 13, end: 25, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-right', sheet: 'player-slash',start: 39, end: 51, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-up', sheet: 'player-slash', start: 0, end: 12, frameRate: 10, repeat: 0 },
     ];
 
     animations.forEach(anim => {

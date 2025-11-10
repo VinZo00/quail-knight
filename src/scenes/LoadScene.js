@@ -63,6 +63,7 @@ export default class LoadScene extends Phaser.Scene {
     this.load.spritesheet('player', 'sprites/player.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-idle', 'sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack', 'sprites/player-attack.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-slash', 'sprites/player-slash.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-attack-walk', 'sprites/player-attack-run.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('quail', 'sprites/quail.png', { frameWidth: 32, frameHeight: 32 });
 
