@@ -25,7 +25,6 @@ export default class Quail {
         this.minDistance = 20;
         this.lastIdle = 'quail-idle-down';
 
-				// BUG   
         this.moveTimer = this.scene.time.addEvent({
             delay: Phaser.Math.Between(1000, 3000),
             callback: this.randomMove,
@@ -80,9 +79,8 @@ export default class Quail {
             player.sprite.x, player.sprite.y
         );
 
-        if (distance < this.chaseDistance && Phaser.Math.Between(0, 100) < 50) {
+        if (distance < this.chaseDistance) {
             this.isChasing = true;
-						console.log('Vicino al player');
             if (this.moveTimer) this.moveTimer.paused = true;
 
             const angle = Phaser.Math.Angle.Between(
@@ -97,12 +95,10 @@ export default class Quail {
                 this.scene.physics.velocityFromRotation(angle, this.chaseSpeed, this.sprite.body.velocity);
             }
         } else if (this.isChasing) {
-					console.log('Riprendo');
             this.isChasing = false;
             if (this.moveTimer) this.moveTimer.paused = false;
         }
 
-        // Aggiorna animazioni
         this.updateAnimation();
     }
 
