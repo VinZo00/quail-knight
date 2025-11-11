@@ -10,7 +10,9 @@
 - [ ] Come differenzio lo spritesheet di un npc? 
 - [ ] Gestire meglio le animazioni, anche con il player
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
-- [ ] 
+- [ ] Collider delle quaglie
+- [ ] NPC, meglio tween o moveTimer
+- [ ] Le quaglie attaccano
 
 ## Da implementare
 - [ ] Interazione con i personaggi
