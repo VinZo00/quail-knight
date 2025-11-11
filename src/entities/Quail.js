@@ -11,7 +11,7 @@ export default class Quail {
     constructor(scene, x, y, texture = 'quail') {
         this.scene = scene;
 
-        this.sprite = this.scene.physics.add.sprite(x, y, texture).setScale(0.8);
+        this.sprite = this.scene.physics.add.sprite(x, y, texture).setScale(0.4);
         this.sprite.setImmovable(false);
         this.sprite.setCollideWorldBounds(true);
 

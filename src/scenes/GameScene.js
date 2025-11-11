@@ -179,7 +179,7 @@ export default class GameScene extends Phaser.Scene {
 		// Quails
 		this.quailGroup = this.add.group();
 
-		for (let i = 0; i < 1; i++) {
+		for (let i = 0; i < 50; i++) {
 				let x, y;
 				let safe = false;
 
@@ -281,7 +281,7 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createCamera() {
 		this.cam = this.cameras.main;
-    this.cam.setZoom(.6);
+    this.cam.setZoom(1.5);
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
