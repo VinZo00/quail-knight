@@ -36,9 +36,10 @@ export default class GameScene extends Phaser.Scene {
 			console.log('Collisione (controllo manuale)');
 		});
 
-		// this.quailGroup.getChildren().forEach(sprite => {
-    //     sprite.quail.update(this.player);
-    // });
+		this.quailGroup.getChildren().forEach(sprite => {
+				// @ts-ignore
+        sprite.quail.update(this.player);
+    });
 	}
 
 	// ----------------------------------------------------------------------------
@@ -67,6 +68,7 @@ export default class GameScene extends Phaser.Scene {
         const x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
         const y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
         const quail = new Quail(this, x, y, 'quail');
+				// @ts-ignore
 				quail.sprite.quail = quail;
         this.quailGroup.add(quail.sprite);
     }

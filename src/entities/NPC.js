@@ -96,7 +96,6 @@ export default class NPC {
     } else if (movementType === 'y' && distance > 0 && speed > 0) {
       this.patrolY(distance, speed, startDir);
     } else {
-			console.log(this.animIdleKeys[idleDir]);
       this.sprite.anims.play(this.animIdleKeys[idleDir] ?? this.spriteKey+'-idle-down', true);
     }
 
@@ -126,7 +125,6 @@ export default class NPC {
 		for (let type in anims) {
 			for (let dir in anims[type]) {
 				const key = `${this.spriteKey}-${type}-${dir}`;
-				console.log(key);
 				if (!this.scene.anims.exists(key)) {
 					this.scene.anims.create({
 						key,
@@ -244,7 +242,6 @@ export default class NPC {
 		this.npcName.y = this.sprite.y - 20;
 
 		const player = this.scene.player.sprite;
-		console.log(player);
 		if (player) this.updateProximity(player);
 
 		if (this.npcMessage.visible) {

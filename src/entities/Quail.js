@@ -43,6 +43,7 @@ export default class Quail {
     }
 
     update(player) {
+			console.log('we');
         const distance = Phaser.Math.Distance.Between(
             this.sprite.x, this.sprite.y,
             player.sprite.x, player.sprite.y
