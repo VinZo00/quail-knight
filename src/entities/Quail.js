@@ -28,35 +28,67 @@ export default class Quail {
         });
     }
 
-    randomMove() {
-        if (this.isChasing) return; // non cambiare direzione se sta inseguendo
 
-        const directions = [
-            { x: 1, y: 0 },
-            { x: -1, y: 0 },
-            { x: 0, y: 1 },
-            { x: 0, y: -1 },
-            { x: 0, y: 0 } // fermo
-        ];
-        const dir = Phaser.Math.RND.pick(directions);
-        this.sprite.setVelocity(dir.x * this.speed, dir.y * this.speed);
-    }
+	randomMove() {
+		if (this.isChasing) return;
 
+		const directions = [
+			{ x: 1, y: 0 },
+			{ x: -1, y: 0 },
+			{ x: 0, y: 1 },
+			{ x: 0, y: -1 },
+			{ x: 0, y: 0 } // fermo
+		];
+		const dir = Phaser.Math.RND.pick(directions);
+		this.sprite.setVelocity(dir.x * this.speed, dir.y * this.speed);
+
+		// Animazioni
+		if (dir.x > 0) { this.sprite.anims.play('quail-walk-right', true); }
+		else if (dir.x < 0) this.sprite.anims.play('quail-walk-left', true);
+		else if (dir.y > 0) this.sprite.anims.play('quail-walk-down', true);
+		else if (dir.y < 0) this.sprite.anims.play('quail-walk-up', true);
+		else this.sprite.anims.play(this.lastIdle || 'quail-idle-down', true);
+
+		// Aggiorna ultima direzione idle
+		if (dir.x !== 0 || dir.y !== 0) {
+			if (dir.x > 0) this.lastIdle = 'quail-idle-right';
+			else if (dir.x < 0) this.lastIdle = 'quail-idle-left';
+			else if (dir.y > 0) this.lastIdle = 'quail-idle-down';
+			else if (dir.y < 0) this.lastIdle = 'quail-idle-up';
+		}
+	}
+
+		/**
+		 * Aggiorna lo stato della quaglia (movimento e inseguimento del player).
+		 * @param {{ sprite: Phaser.Physics.Arcade.Sprite }} player - Istanza del player da inseguire.
+		*/
     update(player) {
-			console.log('we');
         const distance = Phaser.Math.Distance.Between(
             this.sprite.x, this.sprite.y,
             player.sprite.x, player.sprite.y
         );
 
         if (distance < this.chaseDistance && Phaser.Math.Between(0, 100) < 50) {
-            // 50% delle quaglie vicine inseguono
             this.isChasing = true;
+
             const angle = Phaser.Math.Angle.Between(
                 this.sprite.x, this.sprite.y,
                 player.sprite.x, player.sprite.y
             );
+
             this.scene.physics.velocityFromRotation(angle, this.chaseSpeed, this.sprite.body.velocity);
+
+            const vx = this.sprite.body.velocity.x;
+            const vy = this.sprite.body.velocity.y;
+
+            if (Math.abs(vx) > Math.abs(vy)) {
+                if (vx > 0) this.sprite.anims.play('quail-walk-right', true);
+                else this.sprite.anims.play('quail-walk-left', true);
+            } else {
+                if (vy > 0) this.sprite.anims.play('quail-walk-down', true);
+                else this.sprite.anims.play('quail-walk-up', true);
+            }
+
         } else {
             this.isChasing = false;
         }

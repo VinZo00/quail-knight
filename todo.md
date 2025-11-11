@@ -8,7 +8,7 @@
 - [x] Migliorare Classe NPC (da guardala bene)
 - [x] NPC Rallentano dopo dialogo
 - [ ] Come differenzio lo spritesheet di un npc? 
-- [ ] Gestire meglio le animazioni, anche con il player
+- [ ] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI CLASSE
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 - [ ] Collider delle quaglie
 - [ ] NPC, meglio tween o moveTimer

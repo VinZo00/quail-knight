@@ -21,6 +21,7 @@ export default class GameScene extends Phaser.Scene {
 
 		// this.addAudios();
 		this.createMap();
+		this.createAnims();
 		this.createGroup();
 		this.bindKeys();
 		this.createCamera();
@@ -50,6 +51,107 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player.sprite, this.topLayer);
 		this.physics.add.collider(this.player.sprite, this.npcGroup);
 		this.physics.add.collider(this.player.sprite, this.quailGroup);
+	}
+
+	// ----------------------------------------------------------------------------
+  // ANIMS
+  // ----------------------------------------------------------------------------
+	createAnims() {
+		this.playerAnims();
+		this.quailsAnims();
+	}
+
+	// @todo ottimizzare qui
+	playerAnims() {
+		const anims = this.anims;
+		const animations = [
+      { key: 'up', sheet: 'player', start: 0, end: 7, frameRate: 9, repeat: -1 },
+      { key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 9, repeat: -1 },
+      { key: 'down', sheet: 'player', start: 16, end: 23, frameRate: 9, repeat: -1 },
+      { key: 'right', sheet: 'player', start: 24, end: 31, frameRate: 9, repeat: -1 },
+
+      { key: 'idle-down', sheet: 'vinzo', start: 38, end: 39, frameRate: 2, repeat: -1 },
+      { key: 'idle-left', sheet: 'vinzo', start: 45, end: 46, frameRate: 2, repeat: -1 },
+      { key: 'idle-right', sheet: 'vinzo', start: 47, end: 48, frameRate: 2, repeat: -1 },
+      { key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
+
+      { key: 'attack-down', sheet: 'player-attack', start: 14, end: 19, frameRate: 10, repeat: 0 },
+      { key: 'attack-left', sheet: 'player-attack', start: 7, end: 12, frameRate: 10, repeat: 0 },
+      { key: 'attack-right', sheet: 'player-attack', start: 21, end: 26, frameRate: 10, repeat: 0 },
+      { key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
+
+      { key: 'attack-walk-down', sheet: 'player-slash', start: 26, end: 38, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-left', sheet: 'player-slash', start: 13, end: 25, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-right', sheet: 'player-slash',start: 39, end: 51, frameRate: 10, repeat: 0 },
+      { key: 'attack-walk-up', sheet: 'player-slash', start: 0, end: 12, frameRate: 10, repeat: 0 },
+    ];
+
+    animations.forEach(anim => {
+      if (!anims.exists(anim.key)) {
+        anims.create({
+          key: anim.key,
+          frames: anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
+          frameRate: anim.frameRate,
+          repeat: anim.repeat
+        });
+      }
+    });
+	}
+
+	quailsAnims() {
+		const scene = this;
+		scene.anims.create({
+			key: 'quail-walk-up',
+			frames: scene.anims.generateFrameNumbers('quail', { start: 0, end: 3 }),
+			frameRate: 6,
+			repeat: -1
+		});
+
+		scene.anims.create({
+			key: 'quail-walk-down',
+			frames: scene.anims.generateFrameNumbers('quail', { start: 4, end: 7 }),
+			frameRate: 6,
+			repeat: -1
+		});
+
+		scene.anims.create({
+			key: 'quail-walk-right',
+			frames: scene.anims.generateFrameNumbers('quail', { start: 8, end: 11 }),
+			frameRate: 6,
+			repeat: -1
+		});
+
+		scene.anims.create({
+			key: 'quail-walk-left',
+			frames: scene.anims.generateFrameNumbers('quail', { start: 12, end: 15 }),
+			frameRate: 6,
+			repeat: -1
+		});
+
+		// Idle animations (quinta riga)
+		scene.anims.create({
+			key: 'quail-idle-up',
+			frames: [{ key: 'quail', frame: 16 }],
+			frameRate: 1
+		});
+
+		scene.anims.create({
+			key: 'quail-idle-down',
+			frames: [{ key: 'quail', frame: 17 }],
+			frameRate: 1
+		});
+
+		scene.anims.create({
+			key: 'quail-idle-right',
+			frames: [{ key: 'quail', frame: 18 }],
+			frameRate: 1
+		});
+
+		scene.anims.create({
+			key: 'quail-idle-left',
+			frames: [{ key: 'quail', frame: 19 }],
+			frameRate: 1
+		});
 	}
 
 	// ----------------------------------------------------------------------------
