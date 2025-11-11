@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player.sprite, this.collision);
 		this.physics.add.collider(this.player.sprite, this.topLayer);
 		this.physics.add.collider(this.player.sprite, this.npcGroup);
-		this.physics.add.collider(this.player.sprite, this.npcGroup);
+		this.physics.add.collider(this.player.sprite, this.quailGroup);
 	}
 
 	// ----------------------------------------------------------------------------
