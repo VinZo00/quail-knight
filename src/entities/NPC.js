@@ -89,7 +89,7 @@ export default class NPC {
     const idleDir = config.idleDir ?? 'down';                 // idle-* da mostrare se fermo
 		
 		// Animazioni interne
-		this.createAnims();
+		// this.createAnims();
 
     if (movementType === 'x' && distance > 0 && speed > 0) {
       this.patrolX(distance, speed, startDir);
@@ -106,7 +106,7 @@ export default class NPC {
 	// ---------------------------------------------------------------------------
   // CREA ANIMAZIONI
   // ---------------------------------------------------------------------------
-	// @todo usare animazioni uniche (tutte dentro una key);
+	// FIXME inserire animazioni dentro GameScene
   createAnims() {
 		const anims = {
 			walk: {

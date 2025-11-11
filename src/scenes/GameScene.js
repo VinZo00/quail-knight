@@ -50,7 +50,18 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player.sprite, this.collision);
 		this.physics.add.collider(this.player.sprite, this.topLayer);
 		this.physics.add.collider(this.player.sprite, this.npcGroup);
-		this.physics.add.collider(this.player.sprite, this.quailGroup);
+		this.physics.add.overlap(this.player.sprite, this.quailGroup, (playerSprite, quailSprite) => {
+			if (!this.player.isAttacking) return; 
+			// @ts-ignore
+				const quail = quailSprite.quail; 
+				if (quail) {
+						quail.moveTimer.remove(false);
+						quail.sprite.destroy();
+						this.quailGroup.remove(quail.sprite, true, true);
+				}
+		});
+		this.physics.add.collider(this.quailGroup, this.collision);
+		this.physics.add.collider(this.quailGroup, this.topLayer);
 	}
 
 	// ----------------------------------------------------------------------------
@@ -59,6 +70,8 @@ export default class GameScene extends Phaser.Scene {
 	createAnims() {
 		this.playerAnims();
 		this.quailsAnims();
+		// @todo inserire animazioni npc
+		// this.npcAnims();
 	}
 
 	// @todo ottimizzare qui
@@ -154,26 +167,41 @@ export default class GameScene extends Phaser.Scene {
 		});
 	}
 
+	npcAnims() {
+
+	}
+
 	// ----------------------------------------------------------------------------
   // GRUPPO (PERSONAGGI - SPRITES)
   // ----------------------------------------------------------------------------
 	createGroup() {
+
+		// Quails
+		this.quailGroup = this.add.group();
+
+		for (let i = 0; i < 40; i++) {
+				let x, y;
+				let safe = false;
+
+				while (!safe) {
+					x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+					y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+
+					const tile = this.collision.getTileAtWorldXY(x, y);
+					if (!tile) safe = true;
+				}
+
+				const quail = new Quail(this, x, y, 'quail');
+				// @ts-ignore
+				quail.sprite.quail = quail;
+				this.quailGroup.add(quail.sprite);
+		}
+
 		// Player
 		this.player = new Player(this, 150, 300, 'vinzo');
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
-
-		// Quails
-		this.quailGroup = this.add.group();
-    for (let i = 0; i < 40; i++) {
-        const x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
-        const y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
-        const quail = new Quail(this, x, y, 'quail');
-				// @ts-ignore
-				quail.sprite.quail = quail;
-        this.quailGroup.add(quail.sprite);
-    }
 
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
