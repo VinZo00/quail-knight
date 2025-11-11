@@ -84,10 +84,10 @@ export default class GameScene extends Phaser.Scene {
 		// 	// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		// });
 
-		const giovanni = new NPC(this, 250, 300, 'antonio', {
+		const giovanni = new NPC(this, 250, 300, 'player', {
 			name: 'Giovanni',
 			dialogueText: 'oggi mi sento proprio gay',
-			movementType: 'x', // 'x' | 'y' | 'idle'
+			movementType: 'idle', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'

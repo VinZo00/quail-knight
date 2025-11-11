@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 export default class NPC {
 	/**
 	 * Crea un nuovo NPC.
-	 * @param {Phaser.Scene & { player: import('./NPC.js').default }} scene
+	 * @param {Phaser.Scene & { player: import('./Player.js').default }} scene
 	 * @param {Phaser.Scene} scene - La scena Phaser a cui appartiene l’NPC.
 	 * @param {number} x - Posizione X iniziale.
 	 * @param {number} y - Posizione Y iniziale.
@@ -23,11 +23,8 @@ export default class NPC {
     // Sprite e fisica
 		this.spriteKey = spriteKey;
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
-		this.sprite.setImmovable(true).setCollideWorldBounds(true).setScale(0.7);
-
-    const { width, height } = this.sprite;
-    this.sprite.body.setSize(width * 0.5, height * 0.8);
-    this.sprite.body.setOffset(width * 0.25, height * 0.2);
+    this.sprite.setImmovable(true);
+    this.sprite.setSize(20, 30);
 
 		// Dati base
     this.baseX = x;
