@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 export default class NPC {
 	/**
 	 * Crea un nuovo NPC.
-	 * @param {Phaser.Scene & { player: import('./Player.js').default }} scene
+	 * @param {Phaser.Scene & { player: import('./NPC.js').default }} scene
 	 * @param {Phaser.Scene} scene - La scena Phaser a cui appartiene l’NPC.
 	 * @param {number} x - Posizione X iniziale.
 	 * @param {number} y - Posizione Y iniziale.
