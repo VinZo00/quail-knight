@@ -38,6 +38,7 @@ export default class Quail {
      * Movimento random della quaglia (solo se non sta inseguendo)
      */
     randomMove() {
+			console.log('random move');
         if (this.isChasing) return;
 
         const directions = [
@@ -81,6 +82,7 @@ export default class Quail {
 
         if (distance < this.chaseDistance && Phaser.Math.Between(0, 100) < 50) {
             this.isChasing = true;
+						console.log('Vicino al player');
             if (this.moveTimer) this.moveTimer.paused = true;
 
             const angle = Phaser.Math.Angle.Between(
@@ -95,6 +97,7 @@ export default class Quail {
                 this.scene.physics.velocityFromRotation(angle, this.chaseSpeed, this.sprite.body.velocity);
             }
         } else if (this.isChasing) {
+					console.log('Riprendo');
             this.isChasing = false;
             if (this.moveTimer) this.moveTimer.paused = false;
         }
@@ -129,7 +132,6 @@ export default class Quail {
     tryAttack(player, distance) {
         const now = this.scene.time.now;
         if (distance < 50 && now - this.lastAttackTime > this.attackCooldown) {
-            console.log('attaccato');
             this.lastAttackTime = now;
         }
     }
