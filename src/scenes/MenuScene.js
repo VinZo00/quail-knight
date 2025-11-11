@@ -39,7 +39,7 @@ export default class MenuScene extends Phaser.Scene {
 				const introMusic = this.sound.add('intro', { loop: true });
 
 				// @todo mettere play
-				introMusic.play();
+				// introMusic.play();
 
 				const audioBtn = this.add.image(50, 50, 'audio').setScale(.3).setInteractive();
 				let isMuted = false;

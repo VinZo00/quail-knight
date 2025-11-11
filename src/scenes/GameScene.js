@@ -73,7 +73,7 @@ export default class GameScene extends Phaser.Scene {
 		const giovanni = new NPC(this, 250, 300, 'antonio', {
 			name: 'Giovanni',
 			dialogueText: 'oggi mi sento proprio gay',
-			movementType: 'idle', // 'x' | 'y' | 'idle'
+			movementType: 'x', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
