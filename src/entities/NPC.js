@@ -23,8 +23,7 @@ export default class NPC {
     // Sprite e fisica
 		this.spriteKey = spriteKey;
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
-    this.sprite.setImmovable(true);
-		this.sprite.setScale(0.7);
+		this.sprite.setImmovable(true).setCollideWorldBounds(true).setScale(0.7);
 
     const { width, height } = this.sprite;
     this.sprite.body.setSize(width * 0.5, height * 0.8);

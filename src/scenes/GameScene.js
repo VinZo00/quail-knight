@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import NPC from '../entities/NPC.js';
 import Player from '../entities/Player.js';
+import Quail from '../entities/Quail.js';
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {
@@ -34,6 +35,10 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.world.collide(this.player.sprite, this.star, () => {
 			console.log('Collisione (controllo manuale)');
 		});
+
+		// this.quailGroup.getChildren().forEach(sprite => {
+    //     sprite.quail.update(this.player);
+    // });
 	}
 
 	// ----------------------------------------------------------------------------
@@ -55,7 +60,16 @@ export default class GameScene extends Phaser.Scene {
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
-		this.chicken = this.physics.add.sprite(300, 300, 'quail').setScale(.8).setImmovable();
+
+		// Quails
+		this.quailGroup = this.add.group();
+    for (let i = 0; i < 40; i++) {
+        const x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+        const y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+        const quail = new Quail(this, x, y, 'quail');
+				quail.sprite.quail = quail;
+        this.quailGroup.add(quail.sprite);
+    }
 
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
