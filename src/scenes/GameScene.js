@@ -6,7 +6,9 @@ import Quail from '../entities/Quail.js';
 /**
  * @extends Phaser.Scene
  * @property {Phaser.Physics.Arcade.Group} quailGroup
-*/
+ * @property {Phaser.Physics.Arcade.Group} npcGroup
+ * @property {Player} player
+ */
 export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'GameScene' });

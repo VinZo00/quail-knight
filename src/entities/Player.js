@@ -119,10 +119,13 @@ export default class Player {
 
 		const bodies = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight);
 		for (const body of bodies) {
+			// @ts-ignore
 			if (this.scene.quailGroup.contains(body.gameObject)) {
+				// @ts-ignore
 				const quail = body.gameObject.quail;
         quail.moveTimer.remove(false);
         quail.sprite.destroy();
+				// @ts-ignore
         this.scene.quailGroup.remove(quail.sprite, true, true);
 				break;
 			}
