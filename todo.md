@@ -13,7 +13,7 @@
 
 CLASSE
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
-- [ ] Collider delle quaglie
+- [x] Collider delle quaglie
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
 

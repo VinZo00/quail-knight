@@ -3,6 +3,10 @@ import NPC from '../entities/NPC.js';
 import Player from '../entities/Player.js';
 import Quail from '../entities/Quail.js';
 
+/**
+ * @extends Phaser.Scene
+ * @property {Phaser.Physics.Arcade.Group} quailGroup
+*/
 export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'GameScene' });
@@ -209,7 +213,7 @@ export default class GameScene extends Phaser.Scene {
 	createGroup() {
 
 		// Quails
-		this.quailGroup = this.add.group();
+		this.quailGroup = this.physics.add.group();
 
 		for (let i = 0; i < 50; i++) {
 				let x, y;
@@ -236,7 +240,7 @@ export default class GameScene extends Phaser.Scene {
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
 
 		// INSERISCO NPCS
-		this.npcGroup = this.add.group();
+		this.npcGroup = this.physics.add.group();
 
 		const vincenzo = new NPC(this, 180, 250, 'npc-vincenzo', {
 			name: 'Vincenzo',

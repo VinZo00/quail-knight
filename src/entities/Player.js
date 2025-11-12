@@ -117,16 +117,16 @@ export default class Player {
 		const rectWidth = width + range * 2;
 		const rectHeight = height + range * 2;
 
-		const hitQuail = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight)
-				.find(body => body.gameObject.quail)?.gameObject.quail;
-
-
-    if (hitQuail) {
-        hitQuail.moveTimer.remove(false);
-        hitQuail.sprite.destroy();
-				// @ts-ignore
-        this.scene.quailGroup.remove(hitQuail.sprite, true, true);
-    }
+		const bodies = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight);
+		for (const body of bodies) {
+			if (this.scene.quailGroup.contains(body.gameObject)) {
+				const quail = body.gameObject.quail;
+        quail.moveTimer.remove(false);
+        quail.sprite.destroy();
+        this.scene.quailGroup.remove(quail.sprite, true, true);
+				break;
+			}
+		}
 
     this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
       if (animation.key === animKey) {
