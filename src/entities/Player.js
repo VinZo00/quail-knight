@@ -107,6 +107,26 @@ export default class Player {
     const animKey = moving ? `attack-walk-${this.lastDirection}` : `attack-${this.lastDirection}`;
     this.sprite.anims.play(animKey, false);
 
+		const width = this.sprite.body.width;
+		const height = this.sprite.body.height;
+
+		const range = 20;
+		const rectX = this.sprite.x - width / 2 - range;
+		const rectY = this.sprite.y - height / 2 - range;
+		const rectWidth = width + range * 2;
+		const rectHeight = height + range * 2;
+
+		const hitQuail = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight)
+				.find(body => body.gameObject.quail)?.gameObject.quail;
+
+
+    if (hitQuail) {
+        hitQuail.moveTimer.remove(false);
+        hitQuail.sprite.destroy();
+				// @ts-ignore
+        this.scene.quailGroup.remove(hitQuail.sprite, true, true);
+    }
+
     this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
       if (animation.key === animKey) {
         this.isAttacking = false;

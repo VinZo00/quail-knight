@@ -50,16 +50,6 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player.sprite, this.collision);
 		this.physics.add.collider(this.player.sprite, this.topLayer);
 		this.physics.add.collider(this.player.sprite, this.npcGroup);
-		this.physics.add.overlap(this.player.sprite, this.quailGroup, (playerSprite, quailSprite) => {
-			if (!this.player.isAttacking) return; 
-			// @ts-ignore
-				const quail = quailSprite.quail; 
-				if (quail) {
-						quail.moveTimer.remove(false);
-						quail.sprite.destroy();
-						this.quailGroup.remove(quail.sprite, true, true);
-				}
-		});
 		this.physics.add.collider(this.quailGroup, this.collision);
 		this.physics.add.collider(this.quailGroup, this.topLayer);
 	}

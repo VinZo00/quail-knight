@@ -7,12 +7,14 @@
 - [x] Personaggi sprite che si muovono (anche randomici)
 - [x] Migliorare Classe NPC (da guardala bene)
 - [x] NPC Rallentano dopo dialogo
-- [ ] Come differenzio lo spritesheet di un npc? 
-- [ ] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI CLASSE
+- [x] Come differenzio lo spritesheet di un npc? 
+- [x] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI 
+
+CLASSE
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 - [ ] Collider delle quaglie
-- [ ] NPC, meglio tween o moveTimer
-- [ ] Le quaglie attaccano
+- [x] NPC, meglio tween o moveTimer
+- [x] Le quaglie attaccano
 
 ## Da implementare
 - [ ] Interazione con i personaggi
