@@ -9,6 +9,7 @@
 - [x] NPC Rallentano dopo dialogo
 - [x] Come differenzio lo spritesheet di un npc? 
 - [x] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI 
+- [ ] Aggiungere lo speedrun per il giocatore
 
 CLASSE
 - [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
@@ -20,6 +21,9 @@ CLASSE
 - [ ] Interazione con i personaggi
 - [ ] Interazione con oggetti
 - [ ] Dinamica di attacco sulle galline
+- [ ] Galline morte animazione
+- [ ] Giocatore hittato animazione
+- [ ] Vite giocatore
 - [ ] Oggetti in mappa animati, si può fare?
 
 ## Fine del gioco

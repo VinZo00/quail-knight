@@ -18,7 +18,8 @@ export default class Player {
     this.sprite.body.setSize(width * 0.5, height * 0.8);
     this.sprite.body.setOffset(width * 0.25, height * 0.2);
 
-    this.speed = 160;
+    this.speed = 80;
+    this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
     this.currentSpeed = this.speed;
