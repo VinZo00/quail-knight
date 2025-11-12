@@ -103,40 +103,6 @@ export default class NPC {
 		this.scene.events.on('update', this.onSceneUpdate);
   }
 
-	// ---------------------------------------------------------------------------
-  // CREA ANIMAZIONI
-  // ---------------------------------------------------------------------------
-	// FIXME inserire animazioni dentro GameScene
-  createAnims() {
-		const anims = {
-			walk: {
-				down: [0, 5],
-				left: [6, 11],
-				right: [12, 17],
-				up: [18, 23]
-			},
-			idle: {
-				down: [0, 11],
-				left: [12, 23],
-				right: [24, 35],
-				up: [36, 39]
-			}
-		};
-		for (let type in anims) {
-			for (let dir in anims[type]) {
-				const key = `${this.spriteKey}-${type}-${dir}`;
-				if (!this.scene.anims.exists(key)) {
-					this.scene.anims.create({
-						key,
-						frames: this.scene.anims.generateFrameNumbers(this.spriteKey, { start: anims[type][dir][0], end: anims[type][dir][1] }),
-						frameRate: 2,
-						repeat: -1
-					});
-				}
-			}
-		}
-	}
-
   // ---------------------------------------------------------------------------
   // CONTATTO CON PLAYER
   // ---------------------------------------------------------------------------
@@ -187,9 +153,9 @@ export default class NPC {
       ease: 'Linear',
       yoyo: true,
       repeat: -1,
-      onStart:  () => this.sprite.anims.play(dir > 0 ? 'right' : 'left', true),
-      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'right' : 'left', true); },
-      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'right' : 'left', true); },
+      onStart:  () => this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-right` : `${this.spriteKey}-walk-left`, true),
+      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-right` : `${this.spriteKey}-walk-left`, true); },
+      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-right` : `${this.spriteKey}-walk-left`, true); },
     });
   }
 
@@ -214,9 +180,9 @@ export default class NPC {
       ease: 'Linear',
       yoyo: true,
       repeat: -1,
-      onStart:  () => this.sprite.anims.play(dir > 0 ? 'down' : 'up', true),
-      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'down' : 'up', true); },
-      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? 'down' : 'up', true); },
+      onStart:  () => this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-down` : `${this.spriteKey}-walk-up`, true),
+      onYoyo:   () => { dir *= -1; this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-down` : `${this.spriteKey}-walk-up`, true); },
+      onRepeat: () => { dir *= -1; this.sprite.anims.play(dir > 0 ? `${this.spriteKey}-walk-down` : `${this.spriteKey}-walk-up`, true); },
     });
   }
 

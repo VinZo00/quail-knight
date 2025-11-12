@@ -70,8 +70,7 @@ export default class GameScene extends Phaser.Scene {
 	createAnims() {
 		this.playerAnims();
 		this.quailsAnims();
-		// @todo inserire animazioni npc
-		// this.npcAnims();
+		this.npcsAnims();
 	}
 
 	// @todo ottimizzare qui
@@ -88,10 +87,10 @@ export default class GameScene extends Phaser.Scene {
       { key: 'idle-right', sheet: 'vinzo', start: 47, end: 48, frameRate: 2, repeat: -1 },
       { key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
 
-      { key: 'attack-down', sheet: 'player-attack', start: 14, end: 19, frameRate: 10, repeat: 0 },
-      { key: 'attack-left', sheet: 'player-attack', start: 7, end: 12, frameRate: 10, repeat: 0 },
-      { key: 'attack-right', sheet: 'player-attack', start: 21, end: 26, frameRate: 10, repeat: 0 },
-      { key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
+			{ key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
+      { key: 'attack-left', sheet: 'player-attack', start: 6, end: 11, frameRate: 10, repeat: 0 },
+			{ key: 'attack-down', sheet: 'player-attack', start: 12, end: 17, frameRate: 10, repeat: 0 },
+      { key: 'attack-right', sheet: 'player-attack', start: 18, end: 23, frameRate: 10, repeat: 0 },
 
       { key: 'attack-walk-down', sheet: 'player-slash', start: 26, end: 38, frameRate: 10, repeat: 0 },
       { key: 'attack-walk-left', sheet: 'player-slash', start: 13, end: 25, frameRate: 10, repeat: 0 },
@@ -167,9 +166,52 @@ export default class GameScene extends Phaser.Scene {
 		});
 	}
 
-	npcAnims() {
-
+	npcsAnims() {
+		this.createNPCAnims('npc-giovanni');
+		this.createNPCAnims('npc-vincenzo');
 	}
+
+	/**
+	 * Crea le animazioni per un determinato NPC
+	 * @param {string} key - Nome della spritesheet dell’NPC
+	*/
+	createNPCAnims(key) {
+		const anims = this.anims;
+
+		anims.create({
+			key: `${key}-walk-up`,
+			frames: anims.generateFrameNumbers(key, { start: 0, end: 8 }),
+			frameRate: 10,
+			repeat: -1
+		});
+
+		anims.create({
+			key: `${key}-walk-left`,
+			frames: anims.generateFrameNumbers(key, { start: 9, end: 17 }),
+			frameRate: 10,
+			repeat: -1
+		});
+
+		anims.create({
+			key: `${key}-walk-down`,
+			frames: anims.generateFrameNumbers(key, { start: 18, end: 26 }),
+			frameRate: 10,
+			repeat: -1
+		});
+
+		anims.create({
+			key: `${key}-walk-right`,
+			frames: anims.generateFrameNumbers(key, { start: 27, end: 35 }),
+			frameRate: 10,
+			repeat: -1
+		});
+
+		anims.create({ key: `${key}-idle-up`, frames: [{ key, frame: 16 }] });
+		anims.create({ key: `${key}-idle-down`, frames: [{ key, frame: 17 }] });
+		anims.create({ key: `${key}-idle-right`, frames: [{ key, frame: 18 }] });
+		anims.create({ key: `${key}-idle-left`, frames: [{ key, frame: 19 }] });
+	}
+
 
 	// ----------------------------------------------------------------------------
   // GRUPPO (PERSONAGGI - SPRITES)
@@ -206,29 +248,28 @@ export default class GameScene extends Phaser.Scene {
 		// INSERISCO NPCS
 		this.npcGroup = this.add.group();
 
-		// const antonio = new NPC(this, 180, 250, 'antonio', {
-		// 	name: 'Antonio',
-		// 	dialogueText: 'Mi sa che stasera non esco',
-		// 	movementType: 'x', // 'x' | 'y' | 'idle'
-		// 	distance: 100,     // px
-		// 	speed: 50,         // px/s
-		// 	startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-		// 	// idleDir: 'right',   // opzionale: se fermo, quale idle usare
-		// });
-
-		const giovanni = new NPC(this, 250, 300, 'player', {
-			name: 'Giovanni',
-			dialogueText: 'oggi mi sento proprio gay',
-			movementType: 'idle', // 'x' | 'y' | 'idle'
+		const vincenzo = new NPC(this, 180, 250, 'npc-vincenzo', {
+			name: 'Vincenzo',
+			dialogueText: 'Mi sa che stasera non esco',
+			movementType: 'y', // 'x' | 'y' | 'idle'
 			distance: 100,     // px
 			speed: 50,         // px/s
 			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-			idleDir: 'down',   // opzionale: se fermo, quale idle usare
+			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		});
 
-		// @ts-ignore
-		console.log(this.scene.scene.anims.anims.entries);
+		const giovanni = new NPC(this, 250, 300, 'npc-giovanni', {
+			name: 'Giovanni',
+			dialogueText: 'oggi mi sento proprio gay',
+			movementType: 'x',
+			distance: 500,
+			speed: 20,
+			startDir: 'pos',
+			idleDir: 'down',
+		});
+
 		this.npcGroup.add(giovanni.sprite);
+		this.npcGroup.add(vincenzo.sprite);
 	}
 
   // ----------------------------------------------------------------------------
