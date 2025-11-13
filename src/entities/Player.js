@@ -14,7 +14,8 @@ export default class Player {
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
 
-		this.shadow = scene.add.ellipse(x, y + 10, 20, 8, 0x000000, 0.4);
+		// SHADOW
+		this.shadow = scene.add.ellipse(x, y + this.sprite.displayHeight / 2 - 3, 20, 8, 0x000000, 0.4);
   	this.shadow.setDepth(0);
 
     const { width, height } = this.sprite;
@@ -41,7 +42,8 @@ export default class Player {
 	update(keys, cursorKeys) {
     this.handleMovement(keys, cursorKeys);
     this.handleAttack(keys);
-		this.shadow.setPosition(this.sprite.x, this.sprite.y + 10);
+		// SHADOW
+		this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
   }
 
 	// ----------------------------------------------------------------------------

@@ -15,6 +15,8 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		// @ts-ignore
+		// this.textures.setDefaultFilter(Phaser.Textures.FilterMode.NEAREST);
     this.scene.launch('UIScene'); 
     this.scene.bringToTop('UIScene'); 
 
@@ -71,39 +73,81 @@ export default class GameScene extends Phaser.Scene {
 
 	// @todo ottimizzare qui
 	playerAnims() {
-		const anims = this.anims;
-		const animations = [
-      { key: 'up', sheet: 'player', start: 0, end: 7, frameRate: 9, repeat: -1 },
-      { key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 9, repeat: -1 },
-      { key: 'down', sheet: 'player', start: 16, end: 23, frameRate: 9, repeat: -1 },
-      { key: 'right', sheet: 'player', start: 24, end: 31, frameRate: 9, repeat: -1 },
+		// solo walk animations
+		this.anims.create({
+			key: 'right',
+			frames: this.anims.generateFrameNames('player', {
+				prefix: 'player_walk_right_',
+				start: 0,
+				end: 8
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'down',
+			frames: this.anims.generateFrameNames('player', {
+				prefix: 'player_walk_down_',
+				start: 0,
+				end: 8
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'left',
+			frames: this.anims.generateFrameNames('player', {
+				prefix: 'player_walk_left_',
+				start: 0,
+				end: 8
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'up',
+			frames: this.anims.generateFrameNames('player', {
+				prefix: 'player_walk_up_',
+				start: 0,
+				end: 8
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 
-      { key: 'idle-down', sheet: 'vinzo', start: 38, end: 39, frameRate: 2, repeat: -1 },
-      { key: 'idle-left', sheet: 'vinzo', start: 45, end: 46, frameRate: 2, repeat: -1 },
-      { key: 'idle-right', sheet: 'vinzo', start: 47, end: 48, frameRate: 2, repeat: -1 },
-      { key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
+		// const anims = this.anims;
+		// const animations = [
+    //   { key: 'up', sheet: 'player', start: 0, end: 7, frameRate: 9, repeat: -1 },
+    //   { key: 'left', sheet: 'player', start: 8, end: 15, frameRate: 9, repeat: -1 },
+    //   { key: 'down', sheet: 'player', start: 16, end: 23, frameRate: 9, repeat: -1 },
+    //   { key: 'right', sheet: 'player', start: 24, end: 31, frameRate: 9, repeat: -1 },
 
-			{ key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
-      { key: 'attack-left', sheet: 'player-attack', start: 6, end: 11, frameRate: 10, repeat: 0 },
-			{ key: 'attack-down', sheet: 'player-attack', start: 12, end: 17, frameRate: 10, repeat: 0 },
-      { key: 'attack-right', sheet: 'player-attack', start: 18, end: 23, frameRate: 10, repeat: 0 },
+    //   { key: 'idle-down', sheet: 'vinzo', start: 38, end: 39, frameRate: 2, repeat: -1 },
+    //   { key: 'idle-left', sheet: 'vinzo', start: 45, end: 46, frameRate: 2, repeat: -1 },
+    //   { key: 'idle-right', sheet: 'vinzo', start: 47, end: 48, frameRate: 2, repeat: -1 },
+    //   { key: 'idle-up', sheet: 'vinzo', start: 36, end: 37, frameRate: 2, repeat: -1 },
 
-      { key: 'attack-walk-down', sheet: 'player-slash', start: 26, end: 38, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-left', sheet: 'player-slash', start: 13, end: 25, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-right', sheet: 'player-slash',start: 39, end: 51, frameRate: 10, repeat: 0 },
-      { key: 'attack-walk-up', sheet: 'player-slash', start: 0, end: 12, frameRate: 10, repeat: 0 },
-    ];
+		// 	{ key: 'attack-up', sheet: 'player-attack', start: 0, end: 5, frameRate: 10, repeat: 0 },
+    //   { key: 'attack-left', sheet: 'player-attack', start: 6, end: 11, frameRate: 10, repeat: 0 },
+		// 	{ key: 'attack-down', sheet: 'player-attack', start: 12, end: 17, frameRate: 10, repeat: 0 },
+    //   { key: 'attack-right', sheet: 'player-attack', start: 18, end: 23, frameRate: 10, repeat: 0 },
 
-    animations.forEach(anim => {
-      if (!anims.exists(anim.key)) {
-        anims.create({
-          key: anim.key,
-          frames: anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
-          frameRate: anim.frameRate,
-          repeat: anim.repeat
-        });
-      }
-    });
+    //   { key: 'attack-walk-down', sheet: 'player-slash', start: 26, end: 38, frameRate: 10, repeat: 0 },
+    //   { key: 'attack-walk-left', sheet: 'player-slash', start: 13, end: 25, frameRate: 10, repeat: 0 },
+    //   { key: 'attack-walk-right', sheet: 'player-slash',start: 39, end: 51, frameRate: 10, repeat: 0 },
+    //   { key: 'attack-walk-up', sheet: 'player-slash', start: 0, end: 12, frameRate: 10, repeat: 0 },
+    // ];
+
+    // animations.forEach(anim => {
+    //   if (!anims.exists(anim.key)) {
+    //     anims.create({
+    //       key: anim.key,
+    //       frames: anims.generateFrameNumbers(anim.sheet, { start: anim.start, end: anim.end }),
+    //       frameRate: anim.frameRate,
+    //       repeat: anim.repeat
+    //     });
+    //   }
+    // });
 	}
 
 	quailsAnims() {
