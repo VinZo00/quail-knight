@@ -111,6 +111,8 @@ export default class Player {
   attack(moving = false) {
     this.isAttacking = true;
 
+		// FIXME Qui decido che animazione mettere  
+    // const animKey = moving ? `player-attack-walk-${this.lastDirection}` : `player-attack-${this.lastDirection}`;
     const animKey = moving ? `player-attack-${this.lastDirection}` : `player-attack-${this.lastDirection}`;
     this.sprite.anims.play(animKey, false);
 
