@@ -71,7 +71,6 @@ export default class GameScene extends Phaser.Scene {
 		this.npcsAnims();
 	}
 
-	// @todo ottimizzare qui
 	playerAnims() {
 		const directions = ['up', 'down', 'left', 'right'];
 
