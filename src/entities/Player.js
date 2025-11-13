@@ -75,13 +75,13 @@ export default class Player {
 
     if (!this.isAttacking) {
       if (velocityX !== 0 || velocityY !== 0) {
-        if (velocityX < 0) this.sprite.anims.play('left', true), this.lastDirection = 'left';
-        else if (velocityX > 0) this.sprite.anims.play('right', true), this.lastDirection = 'right';
-        else if (velocityY < 0) this.sprite.anims.play('up', true), this.lastDirection = 'up';
-        else if (velocityY > 0) this.sprite.anims.play('down', true), this.lastDirection = 'down';
+        if (velocityX < 0) this.sprite.anims.play('player-walk-left', true), this.lastDirection = 'left';
+        else if (velocityX > 0) this.sprite.anims.play('player-walk-right', true), this.lastDirection = 'right';
+        else if (velocityY < 0) this.sprite.anims.play('player-walk-up', true), this.lastDirection = 'up';
+        else if (velocityY > 0) this.sprite.anims.play('player-walk-down', true), this.lastDirection = 'down';
       } else {
         this.sprite.setVelocity(0, 0);
-        this.sprite.anims.play(`idle-${this.lastDirection}`, true);
+        this.sprite.anims.play(`player-idle-${this.lastDirection}`, true);
       }
     } else {
 			if (this.currentSpeed !== this.speed * 0.5) {
@@ -111,7 +111,7 @@ export default class Player {
   attack(moving = false) {
     this.isAttacking = true;
 
-    const animKey = moving ? `attack-walk-${this.lastDirection}` : `attack-${this.lastDirection}`;
+    const animKey = moving ? `player-attack-${this.lastDirection}` : `player-attack-${this.lastDirection}`;
     this.sprite.anims.play(animKey, false);
 
 		const width = this.sprite.body.width;
