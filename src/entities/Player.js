@@ -26,7 +26,6 @@ export default class Player {
     this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
-    this.currentSpeed = this.speed;
   }
 
   // ----------------------------------------------------------------------------
@@ -57,14 +56,19 @@ export default class Player {
 	 * @param {Phaser.Types.Input.Keyboard.CursorKeys} [cursorKeys] - Cursori standard opzionali (freccette).
 	*/
 	handleMovement(keys, cursorKeys) {
-    const speed = this.currentSpeed;
-    let velocityX = 0;
-    let velocityY = 0;
-
     const left = keys.left.isDown || (cursorKeys && cursorKeys.left.isDown);
     const right = keys.right.isDown || (cursorKeys && cursorKeys.right.isDown);
     const up = keys.up.isDown || (cursorKeys && cursorKeys.up.isDown);
     const down = keys.down.isDown || (cursorKeys && cursorKeys.down.isDown);
+		const isRunning = keys.shift.isDown && !this.isAttacking;
+
+		let speed = isRunning ? this.speedRun : this.speed;
+		let velocityX = 0;
+    let velocityY = 0;
+
+		if (this.isAttacking) {
+			speed *= 0.5;
+		}
 
     if (left) velocityX = -speed;
     if (right) velocityX = speed;
@@ -75,19 +79,15 @@ export default class Player {
 
     if (!this.isAttacking) {
       if (velocityX !== 0 || velocityY !== 0) {
-        if (velocityX < 0) this.sprite.anims.play('player-walk-left', true), this.lastDirection = 'left';
-        else if (velocityX > 0) this.sprite.anims.play('player-walk-right', true), this.lastDirection = 'right';
-        else if (velocityY < 0) this.sprite.anims.play('player-walk-up', true), this.lastDirection = 'up';
-        else if (velocityY > 0) this.sprite.anims.play('player-walk-down', true), this.lastDirection = 'down';
+        if (velocityX < 0) this.sprite.anims.play(`player-${isRunning ? 'run' : 'walk'}-left`, true), this.lastDirection = 'left';
+        else if (velocityX > 0) this.sprite.anims.play(`player-${isRunning ? 'run' : 'walk'}-right`, true), this.lastDirection = 'right';
+        else if (velocityY < 0) this.sprite.anims.play(`player-${isRunning ? 'run' : 'walk'}-up`, true), this.lastDirection = 'up';
+        else if (velocityY > 0) this.sprite.anims.play(`player-${isRunning ? 'run' : 'walk'}-down`, true), this.lastDirection = 'down';
       } else {
         this.sprite.setVelocity(0, 0);
         this.sprite.anims.play(`player-idle-${this.lastDirection}`, true);
       }
-    } else {
-			if (this.currentSpeed !== this.speed * 0.5) {
-				this.currentSpeed = this.speed * 0.5;
-			}
-		}
+    } 
   }
 
 	// ----------------------------------------------------------------------------
@@ -142,7 +142,6 @@ export default class Player {
     this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
       if (animation.key === animKey) {
         this.isAttacking = false;
-        this.currentSpeed = this.speed;
       }
     });
   }

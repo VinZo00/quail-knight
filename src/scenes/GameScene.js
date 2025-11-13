@@ -346,7 +346,8 @@ export default class GameScene extends Phaser.Scene {
 				left: Phaser.Input.Keyboard.KeyCodes.A,
 				right: Phaser.Input.Keyboard.KeyCodes.D,
 				attack: Phaser.Input.Keyboard.KeyCodes.K,
-				talk: Phaser.Input.Keyboard.KeyCodes.T
+				talk: Phaser.Input.Keyboard.KeyCodes.T,
+				shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
 		});
 		this.cursorKeys = null;
 		this.game.events.once('ui_ready', (payload) => {
