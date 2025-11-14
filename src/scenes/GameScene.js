@@ -271,7 +271,6 @@ export default class GameScene extends Phaser.Scene {
 
 				const quail = new Quail(this, x, y, 'quail');
 				// @ts-ignore
-				quail.sprite.quail = quail;
 				this.quailGroup.add(quail.sprite);
 		}
 

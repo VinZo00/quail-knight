@@ -14,7 +14,6 @@ export default class Player {
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
 
-		// SHADOW
 		this.shadow = scene.add.ellipse(x, y + this.sprite.displayHeight / 2 - 3, 20, 8, 0x000000, 0.4);
   	this.shadow.setDepth(0);
 
@@ -26,6 +25,7 @@ export default class Player {
     this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
+		this.hp = 100;
   }
 
   // ----------------------------------------------------------------------------
@@ -131,8 +131,7 @@ export default class Player {
 			if (this.scene.quailGroup.contains(body.gameObject)) {
 				// @ts-ignore
 				const quail = body.gameObject.quail;
-        quail.moveTimer.remove(false);
-        quail.sprite.destroy();
+				quail.destroy();
 				// @ts-ignore
         this.scene.quailGroup.remove(quail.sprite, true, true);
 				break;
@@ -145,4 +144,21 @@ export default class Player {
       }
     });
   }
+
+
+	takeDamage(damage = 0) {
+		if (this.isInvulnerable) return;
+
+		this.isInvulnerable = true;
+
+		this.sprite.setTint(0xff0000);
+
+		this.scene.time.delayedCall(150, () => {
+			this.sprite.clearTint();
+		});
+
+		this.scene.time.delayedCall(500, () => {
+			this.isInvulnerable = false;
+		});
+	}
 }

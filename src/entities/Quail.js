@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Player from './Player.js';
 
 export default class Quail {
     /**
@@ -14,6 +15,12 @@ export default class Quail {
         this.sprite = this.scene.physics.add.sprite(x, y, texture).setScale(0.4);
         this.sprite.setImmovable(false);
         this.sprite.setCollideWorldBounds(true);
+
+				this.sprite.quail = this;
+
+				// SHADOW
+				this.shadow = scene.add.ellipse(x, y + this.sprite.displayHeight / 2 - 3, 20, 8, 0x000000, 0.4);
+				this.shadow.setDepth(0);
 
         this.speed = 40;
         this.chaseSpeed = 80;
@@ -37,7 +44,6 @@ export default class Quail {
      * Movimento random della quaglia (solo se non sta inseguendo)
      */
     randomMove() {
-			console.log('random move');
         if (this.isChasing) return;
 
         const directions = [
@@ -45,13 +51,12 @@ export default class Quail {
             { x: -1, y: 0 },
             { x: 0, y: 1 },
             { x: 0, y: -1 },
-            { x: 0, y: 0 } // fermo
+            { x: 0, y: 0 }
         ];
         const dir = Phaser.Math.RND.pick(directions);
 
         this.sprite.setVelocity(dir.x * this.speed, dir.y * this.speed);
 
-        // Aggiorna animazione e lastIdle
         if (dir.x > 0) this.setAnimation('quail-walk-right', 'quail-idle-right');
         else if (dir.x < 0) this.setAnimation('quail-walk-left', 'quail-idle-left');
         else if (dir.y > 0) this.setAnimation('quail-walk-down', 'quail-idle-down');
@@ -71,9 +76,11 @@ export default class Quail {
 
     /**
      * Aggiorna lo stato della quaglia: movimento, inseguimento e attacco
-     * @param {{ sprite: Phaser.Physics.Arcade.Sprite }} player - Istanza del player
+			* @param {Player} player
      */
     update(player) {
+				this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
+
         const distance = Phaser.Math.Distance.Between(
             this.sprite.x, this.sprite.y,
             player.sprite.x, player.sprite.y
@@ -94,7 +101,7 @@ export default class Quail {
             } else {
                 this.scene.physics.velocityFromRotation(angle, this.chaseSpeed, this.sprite.body.velocity);
             }
-        } else if (this.isChasing) {
+        }  else {
             this.isChasing = false;
             if (this.moveTimer) this.moveTimer.paused = false;
         }
@@ -122,13 +129,20 @@ export default class Quail {
 
     /**
      * Prova ad attaccare il player se la quaglia è abbastanza vicina e il cooldown è scaduto
-     * @param {{ sprite: Phaser.Physics.Arcade.Sprite }} player - Istanza del player
+		 * @param {Player} player
      * @param {number} distance - Distanza attuale dalla quaglia al player
      */
     tryAttack(player, distance) {
         const now = this.scene.time.now;
         if (distance < 50 && now - this.lastAttackTime > this.attackCooldown) {
             this.lastAttackTime = now;
+						player.takeDamage(10);
         }
     }
+
+		destroy() {
+			this.moveTimer.remove(false);
+			this.shadow.destroy();
+			this.sprite.destroy();
+		}
 }
