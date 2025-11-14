@@ -25,7 +25,16 @@ export default class Player {
     this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
-		this.hp = 100;
+
+		this.maxHp = 100;
+    this.hp = this.maxHp;
+
+		this.regenDelay = 3000;      // 3 secondi prima di iniziare a curare
+    this.regenAmount = 1;        // quanto cura ogni tick
+    this.regenSpeed = 150;       // ogni quanto cura (ms)
+    this.regenTimer = null;      // timer che attende i 3s
+    this.regenLoop = null;       // loop che cura gradualmente
+
   }
 
   // ----------------------------------------------------------------------------
@@ -146,19 +155,83 @@ export default class Player {
   }
 
 
-	takeDamage(damage = 0) {
-		if (this.isInvulnerable) return;
+  // ------------------------------------------------------------
+  // DANNI
+  // ------------------------------------------------------------
+  takeDamage(damage = 0) {
+    if (this.isInvulnerable) return;
 
-		this.isInvulnerable = true;
+    this.isInvulnerable = true;
+    this.sprite.setTint(0xff0000);
 
-		this.sprite.setTint(0xff0000);
+    this.scene.time.delayedCall(150, () => this.sprite.clearTint());
+    this.scene.time.delayedCall(500, () => this.isInvulnerable = false);
 
-		this.scene.time.delayedCall(150, () => {
-			this.sprite.clearTint();
-		});
+    // ⭐ scala HP
+    this.hp -= damage;
+    if (this.hp < 0) this.hp = 0;
 
-		this.scene.time.delayedCall(500, () => {
-			this.isInvulnerable = false;
-		});
-	}
+    // ⭐ avvisa UIScene
+    this.scene.game.events.emit('hpChanged', this.hp);
+
+    // -----------------------------------------
+    // ⭐ AGGIUNTA: quando prendi danno → resetta la rigenerazione
+    this.stopRegen(); // interrompe eventuale cura attiva
+    this.startRegenAfterDelay(); // fa partire un nuovo conto alla rovescia
+    // -----------------------------------------
+  }
+
+  // ------------------------------------------------------------
+  // ⭐ NUOVO: avvia rigenerazione dopo 3 secondi
+  // ------------------------------------------------------------
+  startRegenAfterDelay() {
+    // se esiste già un timer → cancellalo
+    if (this.regenTimer) {
+      this.regenTimer.remove(false);
+    }
+
+    // dopo 3 secondi, parte il loop di cura
+    this.regenTimer = this.scene.time.delayedCall(this.regenDelay, () => {
+      this.startRegenLoop();
+    });
+  }
+
+  // ------------------------------------------------------------
+  // ⭐ NUOVO: loop che cura gradualmente finché non raggiunge maxHp
+  // ------------------------------------------------------------
+  startRegenLoop() {
+    // se il player è già full hp → niente rigenerazione
+    if (this.hp >= this.maxHp) return;
+
+    this.regenLoop = this.scene.time.addEvent({
+      delay: this.regenSpeed,
+      loop: true,
+      callback: () => {
+        this.hp += this.regenAmount;
+        if (this.hp > this.maxHp) this.hp = this.maxHp;
+
+        // aggiorna HUD
+        this.scene.game.events.emit('hpChanged', this.hp);
+
+        // fermati quando è full
+        if (this.hp >= this.maxHp) {
+          this.stopRegen();
+        }
+      }
+    });
+  }
+
+  // ------------------------------------------------------------
+  // ⭐ NUOVO: stop rigenerazione (quando si prende danno)
+  // ------------------------------------------------------------
+  stopRegen() {
+    if (this.regenTimer) {
+      this.regenTimer.remove(false);
+      this.regenTimer = null;
+    }
+    if (this.regenLoop) {
+      this.regenLoop.remove(false);
+      this.regenLoop = null;
+    }
+  }
 }

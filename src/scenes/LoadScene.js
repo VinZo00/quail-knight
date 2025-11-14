@@ -58,6 +58,10 @@ export default class LoadScene extends Phaser.Scene {
 	}
 
   loadSprite() {
+		this.load.spritesheet('faces', 'ui/hud-faces.png', {
+			frameWidth: 64,
+			frameHeight: 64
+		});
 		
 		// Spritesheet del player
 		this.load.atlas('player', 'sprites/player.png', 'sprites/player.json');
