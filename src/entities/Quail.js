@@ -16,6 +16,8 @@ export default class Quail {
         this.sprite.setImmovable(false);
         this.sprite.setCollideWorldBounds(true);
 
+				// FIXME
+				// @ts-ignore 
 				this.sprite.quail = this;
 
 				// SHADOW

@@ -45,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
 			console.log('Collisione (controllo manuale)');
 		});
 
+		//FIXME
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
         sprite.quail.update(this.player);
@@ -254,6 +255,7 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createGroup() {
 
+		// FIXME
 		// Quails
 		this.quailGroup = this.physics.add.group();
 

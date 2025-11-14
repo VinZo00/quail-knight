@@ -125,6 +125,7 @@ export default class Player {
 		const rectWidth = width + range * 2;
 		const rectHeight = height + range * 2;
 
+		// FIXME
 		const bodies = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight);
 		for (const body of bodies) {
 			// @ts-ignore
