@@ -27,6 +27,9 @@ export default class NPC {
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
 		this.sprite.body.moves = false;
 
+		this.shadow = scene.add.ellipse(x, y + this.sprite.displayHeight / 2 - 3, 20, 8, 0x000000, 0.4);
+  	this.shadow.setDepth(0);
+
     const { width, height } = this.sprite;
     this.sprite.body.setSize(width * 0.5, height * 0.8);
     this.sprite.body.setOffset(width * 0.25, height * 0.2);
@@ -207,6 +210,8 @@ export default class NPC {
 	onSceneUpdate(time, delta) {
 		this.npcName.x = this.sprite.x;
 		this.npcName.y = this.sprite.y - 20;
+
+		this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
 
 		const player = this.scene.player.sprite;
 		if (player) this.updateProximity(player);

@@ -41,7 +41,6 @@ export default class Player {
 	update(keys, cursorKeys) {
     this.handleMovement(keys, cursorKeys);
     this.handleAttack(keys);
-		// SHADOW
 		this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
   }
 

@@ -1,0 +1,1071 @@
+{
+  "frames": {
+    "npc-vincenzo-walk-down-0": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 30,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-1": {
+      "frame": {
+        "x": 3,
+        "y": 58,
+        "w": 30,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-down-0": {
+      "frame": {
+        "x": 39,
+        "y": 3,
+        "w": 30,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-4": {
+      "frame": {
+        "x": 3,
+        "y": 113,
+        "w": 30,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-5": {
+      "frame": {
+        "x": 39,
+        "y": 56,
+        "w": 30,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-down-1": {
+      "frame": {
+        "x": 75,
+        "y": 3,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-8": {
+      "frame": {
+        "x": 3,
+        "y": 168,
+        "w": 30,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-left-1": {
+      "frame": {
+        "x": 39,
+        "y": 111,
+        "w": 22,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 14,
+        "w": 22,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-right-1": {
+      "frame": {
+        "x": 75,
+        "y": 57,
+        "w": 22,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 14,
+        "w": 22,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-up-0": {
+      "frame": {
+        "x": 111,
+        "y": 3,
+        "w": 30,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-up-1": {
+      "frame": {
+        "x": 3,
+        "y": 223,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-2": {
+      "frame": {
+        "x": 39,
+        "y": 165,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-6": {
+      "frame": {
+        "x": 103,
+        "y": 57,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-0": {
+      "frame": {
+        "x": 147,
+        "y": 3,
+        "w": 30,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-0": {
+      "frame": {
+        "x": 3,
+        "y": 277,
+        "w": 22,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 22,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-0": {
+      "frame": {
+        "x": 39,
+        "y": 219,
+        "w": 22,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 22,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-2": {
+      "frame": {
+        "x": 67,
+        "y": 111,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-1": {
+      "frame": {
+        "x": 139,
+        "y": 56,
+        "w": 30,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-4": {
+      "frame": {
+        "x": 183,
+        "y": 3,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-3": {
+      "frame": {
+        "x": 3,
+        "y": 331,
+        "w": 29,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 15,
+        "w": 29,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-6": {
+      "frame": {
+        "x": 39,
+        "y": 273,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-7": {
+      "frame": {
+        "x": 75,
+        "y": 165,
+        "w": 29,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 15,
+        "w": 29,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-5": {
+      "frame": {
+        "x": 139,
+        "y": 109,
+        "w": 30,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-up-8": {
+      "frame": {
+        "x": 219,
+        "y": 3,
+        "w": 30,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 14,
+        "w": 30,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-3": {
+      "frame": {
+        "x": 175,
+        "y": 57,
+        "w": 29,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 16,
+        "w": 29,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-left-0": {
+      "frame": {
+        "x": 3,
+        "y": 385,
+        "w": 22,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 22,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-idle-right-0": {
+      "frame": {
+        "x": 67,
+        "y": 219,
+        "w": 22,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 22,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-down-7": {
+      "frame": {
+        "x": 38,
+        "y": 327,
+        "w": 29,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 16,
+        "w": 29,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-4": {
+      "frame": {
+        "x": 103,
+        "y": 111,
+        "w": 25,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 25,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-5": {
+      "frame": {
+        "x": 255,
+        "y": 3,
+        "w": 28,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 20,
+        "y": 16,
+        "w": 28,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-5": {
+      "frame": {
+        "x": 175,
+        "y": 110,
+        "w": 28,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 16,
+        "w": 28,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-1": {
+      "frame": {
+        "x": 210,
+        "y": 57,
+        "w": 26,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 16,
+        "w": 26,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-6": {
+      "frame": {
+        "x": 3,
+        "y": 438,
+        "w": 25,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 25,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-7": {
+      "frame": {
+        "x": 75,
+        "y": 272,
+        "w": 24,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 24,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-8": {
+      "frame": {
+        "x": 38,
+        "y": 380,
+        "w": 23,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 23,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-4": {
+      "frame": {
+        "x": 73,
+        "y": 327,
+        "w": 25,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 15,
+        "w": 25,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-6": {
+      "frame": {
+        "x": 110,
+        "y": 164,
+        "w": 25,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 15,
+        "w": 25,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-1": {
+      "frame": {
+        "x": 255,
+        "y": 55,
+        "w": 26,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 20,
+        "y": 16,
+        "w": 26,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-3": {
+      "frame": {
+        "x": 289,
+        "y": 3,
+        "w": 24,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 24,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-3": {
+      "frame": {
+        "x": 209,
+        "y": 110,
+        "w": 24,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 19,
+        "y": 15,
+        "w": 24,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-7": {
+      "frame": {
+        "x": 3,
+        "y": 491,
+        "w": 24,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 19,
+        "y": 15,
+        "w": 24,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-8": {
+      "frame": {
+        "x": 95,
+        "y": 219,
+        "w": 23,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 20,
+        "y": 15,
+        "w": 23,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-left-2": {
+      "frame": {
+        "x": 67,
+        "y": 380,
+        "w": 23,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 20,
+        "y": 15,
+        "w": 23,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "npc-vincenzo-walk-right-2": {
+      "frame": {
+        "x": 34,
+        "y": 433,
+        "w": 23,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 21,
+        "y": 15,
+        "w": 23,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "npc-vincenzo.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 316,
+      "h": 541
+    },
+    "scale": 1
+  }
+}

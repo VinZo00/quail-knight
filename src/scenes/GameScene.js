@@ -23,14 +23,16 @@ export default class GameScene extends Phaser.Scene {
     this.score = 0;
 		this.gameOver = false;
 
+		this.directions = ['up', 'down', 'left', 'right'];
+
     // ogni volta che cambia lo score:
     // this.score += 10;
     this.game.events.emit('scoreChanged', this.score);
 
 		// this.addAudios();
 		this.createMap();
-		this.createAnims();
 		this.createGroup();
+		this.createAnims();
 		this.bindKeys();
 		this.createCamera();
 		this.generateCollision();
@@ -204,8 +206,12 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	npcsAnims() {
-		this.createNPCAnims('npc-giovanni');
-		this.createNPCAnims('npc-vincenzo');
+		// @ts-ignore
+    this.npcGroup.children.each(npc => {
+				// @ts-ignore
+        const key = npc.texture.key;
+        this.createNPCAnims(key);
+    });
 	}
 
 	/**
@@ -213,40 +219,32 @@ export default class GameScene extends Phaser.Scene {
 	 * @param {string} key - Nome della spritesheet dell’NPC
 	*/
 	createNPCAnims(key) {
-		const anims = this.anims;
 
-		anims.create({
-			key: `${key}-walk-up`,
-			frames: anims.generateFrameNumbers(key, { start: 0, end: 8 }),
-			frameRate: 10,
-			repeat: -1
+		this.directions.forEach(dir => {
+
+			this.anims.create({
+				key: `${key}-walk-${dir}`,
+				frames: this.anims.generateFrameNames(key, {
+					prefix: `${key}-walk-${dir}-`,
+					start: 0,
+					end: 8
+				}),
+				frameRate: 10,
+				repeat: -1
+			});
+
+			this.anims.create({
+				key: `${key}-idle-${dir}`,
+				frames: this.anims.generateFrameNames(key, {
+					prefix: `${key}-idle-${dir}-`,
+					start: 0,
+					end: 1
+				}),
+				frameRate: 2,
+				repeat: -1
+			});
+			
 		});
-
-		anims.create({
-			key: `${key}-walk-left`,
-			frames: anims.generateFrameNumbers(key, { start: 9, end: 17 }),
-			frameRate: 10,
-			repeat: -1
-		});
-
-		anims.create({
-			key: `${key}-walk-down`,
-			frames: anims.generateFrameNumbers(key, { start: 18, end: 26 }),
-			frameRate: 10,
-			repeat: -1
-		});
-
-		anims.create({
-			key: `${key}-walk-right`,
-			frames: anims.generateFrameNumbers(key, { start: 27, end: 35 }),
-			frameRate: 10,
-			repeat: -1
-		});
-
-		anims.create({ key: `${key}-idle-up`, frames: [{ key, frame: 16 }] });
-		anims.create({ key: `${key}-idle-down`, frames: [{ key, frame: 17 }] });
-		anims.create({ key: `${key}-idle-right`, frames: [{ key, frame: 18 }] });
-		anims.create({ key: `${key}-idle-left`, frames: [{ key, frame: 19 }] });
 	}
 
 
@@ -277,7 +275,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		// Player
-		this.player = new Player(this, 150, 300, 'vinzo');
+		this.player = new Player(this, 150, 300, 'player');
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
@@ -295,17 +293,17 @@ export default class GameScene extends Phaser.Scene {
 			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		});
 
-		const giovanni = new NPC(this, 250, 300, 'npc-giovanni', {
-			name: 'Giovanni',
-			dialogueText: 'oggi mi sento proprio gay',
-			movementType: 'x',
-			distance: 500,
-			speed: 20,
-			startDir: 'pos',
-			idleDir: 'down',
-		});
+		// const giovanni = new NPC(this, 250, 300, 'npc-giovanni', {
+		// 	name: 'Giovanni',
+		// 	dialogueText: 'oggi mi sento proprio gay',
+		// 	movementType: 'x',
+		// 	distance: 500,
+		// 	speed: 20,
+		// 	startDir: 'pos',
+		// 	idleDir: 'down',
+		// });
 
-		this.npcGroup.add(giovanni.sprite);
+		// this.npcGroup.add(giovanni.sprite);
 		this.npcGroup.add(vincenzo.sprite);
 	}
 
