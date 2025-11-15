@@ -9,21 +9,27 @@ export default class UIScene extends Phaser.Scene {
     uiCam.setZoom(1);
     uiCam.setScroll(0, 0);
 
-    // HUD fisso a schermo
+    // 	 fisso a schermo
 		this.hudLifeContainer = this.add.container(30, 30);
 
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
 
+		// FIXME update health bar
 		this.healthContainer = this.add.container(0, 0);
 		this.healthContainer.x = this.faceSprite.width + 8;
 		this.healthContainer.y =  this.faceSprite.height / 2 - 10;
 		this.healthBorder = this.add.graphics();
-		this.healthBorder.lineStyle(2, 0xffffff);
-		this.healthBorder.strokeRect(0, 0, 150, 20);
+		this.healthBorder.lineStyle(2, 0x1e0800);
+		this.healthBorder.strokeRect(0, 10, 150, 20).setDepth(2);
 		this.healthFill = this.add.graphics();
-		this.healthFill.fillStyle(0x00ff00);
-		this.healthFill.fillRect(0, 0, 150, 20);
-		this.healthContainer.add([this.healthBorder, this.healthFill]);
+		this.healthFill.fillStyle(0x34a214);
+		this.healthFill.fillRect(0, 10, 150, 20);
+		this.healthText = this.add.text(0, -15, `HP ${100}`, {
+				fontFamily: 'Arial',
+				fontSize: '16px',
+				color: '#ffffffff'
+		});
+		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
 
 		this.hudLifeContainer.add([
 			this.faceSprite,
@@ -34,7 +40,7 @@ export default class UIScene extends Phaser.Scene {
 		this.scoreText = this.add.text(0, 0, '0', {
 				fontFamily: 'Arial',
 				fontSize: '16px',
-				color: '#ffffff'
+				color: '#1e0800'
 		});
 		this.scoreText.setOrigin(0, 0);
 		this.scoreText.x = this.scoreBox.displayWidth / 2;
