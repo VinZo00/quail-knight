@@ -167,18 +167,13 @@ export default class Player {
     this.scene.time.delayedCall(150, () => this.sprite.clearTint());
     this.scene.time.delayedCall(500, () => this.isInvulnerable = false);
 
-    // ⭐ scala HP
     this.hp -= damage;
     if (this.hp < 0) this.hp = 0;
 
-    // ⭐ avvisa UIScene
     this.scene.game.events.emit('hpChanged', this.hp);
 
-    // -----------------------------------------
-    // ⭐ AGGIUNTA: quando prendi danno → resetta la rigenerazione
-    this.stopRegen(); // interrompe eventuale cura attiva
-    this.startRegenAfterDelay(); // fa partire un nuovo conto alla rovescia
-    // -----------------------------------------
+    this.stopRegen(); 
+    this.startRegenAfterDelay();
   }
 
   // ------------------------------------------------------------
@@ -211,7 +206,7 @@ export default class Player {
         if (this.hp > this.maxHp) this.hp = this.maxHp;
 
         // aggiorna HUD
-        this.scene.game.events.emit('hpChanged', this.hp);
+        this.scene.game.events.emit('hpRegenerate', this.hp);
 
         // fermati quando è full
         if (this.hp >= this.maxHp) {
