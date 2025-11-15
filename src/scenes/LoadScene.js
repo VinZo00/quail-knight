@@ -52,7 +52,7 @@ export default class LoadScene extends Phaser.Scene {
   // --- Raggruppo tutte le risorse ---
 	// Immagini
 	loadImages() {
-    this.load.image('ground', 'sprites/platform.png');
+    this.load.image('quailscore', 'ui/quailscore.png');
     this.load.image('star', 'sprites/star.png');
     this.load.image('bomb', 'sprites/bomb.png');
 	}

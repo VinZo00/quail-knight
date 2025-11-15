@@ -30,6 +30,21 @@ export default class UIScene extends Phaser.Scene {
 			this.healthContainer
 		]);
 
+		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
+		this.scoreText = this.add.text(0, 0, '0', {
+				fontFamily: 'Arial',
+				fontSize: '16px',
+				color: '#ffffff'
+		});
+		this.scoreText.setOrigin(0, 0);
+		this.scoreText.x = this.scoreBox.displayWidth / 2;
+		this.scoreText.y = this.scoreBox.displayHeight / 2;
+		this.scoreContainer = this.add.container(
+				this.scale.width - this.scoreBox.displayWidth - 30,
+				30
+		);
+		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(.9);
+
     // Ascolta gli eventi dal gioco
     // this.game.events.on('scoreChanged', (value) => {
     //   this.scoreText.setText('SCORE: ' + value);
