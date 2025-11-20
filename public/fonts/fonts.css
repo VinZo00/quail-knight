@@ -1,0 +1,16 @@
+@font-face {
+	font-family: 'Ari';
+	src: url('./ari-w9500.woff2') format('woff2'),
+			url('./ari-w9500.woff') format('woff'),
+			url('./ari-w9500.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Ari';
+	src: url('./ari-w9500-bold.woff2') format('woff2'),
+			url('./ari-w9500-bold.woff') format('woff'),
+			url('./ari-w9500-bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}

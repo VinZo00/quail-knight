@@ -37,14 +37,14 @@ export default class UIScene extends Phaser.Scene {
 		]);
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
-		this.scoreText = this.add.text(0, 0, '0', {
-				fontFamily: 'Arial',
-				fontSize: '16px',
+		this.scoreText = this.add.text(0, 0, '01', {
+				fontFamily: 'Ari',
+				fontSize: '35px',
 				color: '#1e0800'
 		});
 		this.scoreText.setOrigin(0, 0);
-		this.scoreText.x = this.scoreBox.displayWidth / 2;
-		this.scoreText.y = this.scoreBox.displayHeight / 2;
+		this.scoreText.x = this.scoreBox.displayWidth / 2 + 20;
+		this.scoreText.y = this.scoreBox.displayHeight / 2 - 40;
 		this.scoreContainer = this.add.container(
 				this.scale.width - this.scoreBox.displayWidth - 30,
 				30
