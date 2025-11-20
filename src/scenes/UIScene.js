@@ -15,17 +15,13 @@ export default class UIScene extends Phaser.Scene {
 		this.score = 0;
 
 		// FIXME update health bar
-		this.healthContainer = this.add.container(0, 0);
-		this.healthContainer.x = this.faceSprite.width + 8;
-		this.healthContainer.y =  this.faceSprite.height / 2 - 10;
+		this.healthContainer = this.add.container(this.faceSprite.width + 8, this.faceSprite.height / 2 - 10);
 		this.healthBorder = this.add.graphics();
-		this.healthBorder.lineStyle(2, 0x1e0800);
-		this.healthBorder.strokeRect(0, 10, 150, 20).setDepth(2);
+		this.healthBorder.lineStyle(2, 0x1e0800).strokeRect(0, 10, 150, 20).setDepth(2);
 		this.healthFill = this.add.graphics();
-		this.healthFill.fillStyle(0x34a214);
-		this.healthFill.fillRect(0, 10, 150, 20);
+		this.healthFill.fillStyle(0x34a214).fillRect(0, 12, 150, 16);
 		this.healthText = this.add.text(0, -45, `HP ${100}`, {
-				font: 'bold 40px Ari',
+				font: 'bold 35px Ari',
 				color: '#ffffffff'
 		});
 		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
@@ -80,11 +76,13 @@ export default class UIScene extends Phaser.Scene {
 		
 		this.game.events.on('hpChanged', (hp) => {
 			this.showDamageFace(hp);
+			this.updateHP(hp);
 			this.updateHealthBar(hp);
 		});
 
 		this.game.events.on('hpRegenerate', (hp) => {
 			this.updateFace(hp);
+			this.updateHP(hp);
 			this.updateHealthBar(hp);
 		});
 
@@ -93,6 +91,10 @@ export default class UIScene extends Phaser.Scene {
       this.scoreText.setText(this.score);
     });
   }
+
+	updateHP(hp) {
+		this.healthText.setText(`HP ${hp}`);
+	}
 
 	updateFace(hp) {
     if (hp > 75) this.faceSprite.setFrame(0);
@@ -126,7 +128,7 @@ export default class UIScene extends Phaser.Scene {
 		if (hp <= 25) color = 0xff0000;
 
 		this.healthFill.fillStyle(color);
-		this.healthFill.fillRect(0, 0, width, 20);
+		this.healthFill.fillRect(0, 12, width, 16).setDepth(1);
 	}
 
 }
