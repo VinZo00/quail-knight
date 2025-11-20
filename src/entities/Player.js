@@ -133,7 +133,6 @@ export default class Player {
 		const rectWidth = width + range * 2;
 		const rectHeight = height + range * 2;
 
-		// FIXME Decidere se uasare array
 		const bodies = this.scene.physics.overlapRect(rectX, rectY, rectWidth, rectHeight);
 		for (const body of bodies) {
 			// @ts-ignore
@@ -143,6 +142,7 @@ export default class Player {
 				quail.destroy();
 				// @ts-ignore
         this.scene.quailGroup.remove(quail.sprite, true, true);
+        this.scene.game.events.emit('scoreChanged', 1);
 				break;
 			}
 		}
@@ -192,7 +192,7 @@ export default class Player {
   }
 
   // ------------------------------------------------------------
-  // ⭐ NUOVO: loop che cura gradualmente finché non raggiunge maxHp
+  // loop che cura gradualmente finché non raggiunge maxHp
   // ------------------------------------------------------------
   startRegenLoop() {
     // se il player è già full hp → niente rigenerazione

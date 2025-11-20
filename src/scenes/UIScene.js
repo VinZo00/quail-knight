@@ -11,8 +11,8 @@ export default class UIScene extends Phaser.Scene {
 
     // 	 fisso a schermo
 		this.hudLifeContainer = this.add.container(30, 30);
-
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
+		this.score = 0;
 
 		// FIXME update health bar
 		this.healthContainer = this.add.container(0, 0);
@@ -24,9 +24,8 @@ export default class UIScene extends Phaser.Scene {
 		this.healthFill = this.add.graphics();
 		this.healthFill.fillStyle(0x34a214);
 		this.healthFill.fillRect(0, 10, 150, 20);
-		this.healthText = this.add.text(0, -15, `HP ${100}`, {
-				fontFamily: 'Arial',
-				fontSize: '16px',
+		this.healthText = this.add.text(0, -45, `HP ${100}`, {
+				font: 'bold 40px Ari',
 				color: '#ffffffff'
 		});
 		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
@@ -37,24 +36,19 @@ export default class UIScene extends Phaser.Scene {
 		]);
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
-		this.scoreText = this.add.text(0, 0, '01', {
-				fontFamily: 'Ari',
-				fontSize: '35px',
+		this.scoreText = this.add.text(0, 0, '0', {
+				font: 'bold 40px Ari',
 				color: '#1e0800'
 		});
+		this.scoreText.setText('0');
 		this.scoreText.setOrigin(0, 0);
-		this.scoreText.x = this.scoreBox.displayWidth / 2 + 20;
-		this.scoreText.y = this.scoreBox.displayHeight / 2 - 40;
+		this.scoreText.x = this.scoreBox.displayWidth / 2 + 10;
+		this.scoreText.y = this.scoreBox.displayHeight / 2 - 50;
 		this.scoreContainer = this.add.container(
 				this.scale.width - this.scoreBox.displayWidth - 30,
 				30
 		);
 		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(.9);
-
-    // Ascolta gli eventi dal gioco
-    // this.game.events.on('scoreChanged', (value) => {
-    //   this.scoreText.setText('SCORE: ' + value);
-    // });
 
     // Se il canvas viene ridimensionato:
     this.scale.on('resize', (gs) => {
@@ -94,6 +88,10 @@ export default class UIScene extends Phaser.Scene {
 			this.updateHealthBar(hp);
 		});
 
+		this.game.events.on('scoreChanged', (value) => {
+			this.score = this.score + value;
+      this.scoreText.setText(this.score);
+    });
   }
 
 	updateFace(hp) {
@@ -116,7 +114,6 @@ export default class UIScene extends Phaser.Scene {
 			this.updateFace(hp);
 		});
 	}
-
 
 	updateHealthBar(hp) {
 		const maxWidth = 150;

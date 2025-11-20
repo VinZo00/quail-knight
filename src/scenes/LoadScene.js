@@ -7,6 +7,7 @@ export default class LoadScene extends Phaser.Scene {
 
   preload() {
 		// --- Load bar ---
+		this.loadFonts();
 		this.loadBar();
 
     // --- Caricamento risorse (tutte le tue) ---
@@ -20,13 +21,26 @@ export default class LoadScene extends Phaser.Scene {
     this.scene.start('GameScene');
   }
 
+	loadFonts() {
+    this.load.font([
+        { key: 'Ari', url: 'fonts/ari-w9500.ttf', format: 'truetype' },
+        { key: 'Ari', url: 'fonts/ari-w9500.woff', format: 'woff' },
+        { key: 'Ari', url: 'fonts/ari-w9500.woff2', format: 'woff2' },
+    ]);
+    this.load.font([
+        { key: 'Ari-bold', url: 'fonts/ari-w9500-bold.ttf', format: 'truetype' },
+        { key: 'Ari-bold', url: 'fonts/ari-w9500-bold.woff', format: 'woff' },
+        { key: 'Ari-bold', url: 'fonts/ari-w9500-bold.woff2', format: 'woff2' },
+    ]);
+	}
+ 
 	loadBar() {
 		// --- Testo "Caricamento..." ---
     const loadingText = this.add.text(
       this.scale.width / 2,
       this.scale.height / 2 - 40,
       'Caricamento...',
-      { fontSize: '20px', color: '#ffffff', fontFamily: 'monospace' }
+      { fontSize: '20px', color: '#ffffff', fontFamily: 'Ari' }
     ).setOrigin(0.5);
 
     // --- Barra di caricamento ---

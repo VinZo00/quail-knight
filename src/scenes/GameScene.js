@@ -24,11 +24,7 @@ export default class GameScene extends Phaser.Scene {
 		this.gameOver = false;
 
 		this.directions = ['up', 'down', 'left', 'right'];
-
-    // ogni volta che cambia lo score:
-    // this.score += 10;
-    this.game.events.emit('scoreChanged', this.score);
-
+		
 		// this.addAudios();
 		this.createMap();
 		this.createGroup();
@@ -362,5 +358,4 @@ export default class GameScene extends Phaser.Scene {
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
-
 }
