@@ -9,19 +9,18 @@ export default class UIScene extends Phaser.Scene {
     uiCam.setZoom(1);
     uiCam.setScroll(0, 0);
 
-    // 	 fisso a schermo
+    // HUD
 		this.hudLifeContainer = this.add.container(30, 30);
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
 		this.score = 0;
 
-		// FIXME update health bar
 		this.healthContainer = this.add.container(this.faceSprite.width + 8, this.faceSprite.height / 2 - 10);
 		this.healthBorder = this.add.graphics();
 		this.healthBorder.lineStyle(2, 0x1e0800).strokeRect(0, 10, 150, 20).setDepth(2);
 		this.healthFill = this.add.graphics();
 		this.healthFill.fillStyle(0x34a214).fillRect(0, 12, 150, 16);
-		this.healthText = this.add.text(0, -45, `HP ${100}`, {
-				font: 'bold 35px Ari',
+		this.healthText = this.add.text(0, -25, `HP ${100}`, {
+				font: 'bold 20px Ari',
 				color: '#ffffffff'
 		});
 		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
@@ -32,7 +31,7 @@ export default class UIScene extends Phaser.Scene {
 		]);
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
-		this.scoreText = this.add.text(0, 0, '0', {
+		this.scoreText = this.add.text(0, 0, `${this.score}`, {
 				font: 'bold 40px Ari',
 				color: '#1e0800'
 		});
@@ -46,12 +45,9 @@ export default class UIScene extends Phaser.Scene {
 		);
 		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(.9);
 
-    // Se il canvas viene ridimensionato:
-    this.scale.on('resize', (gs) => {
-      uiCam.setSize(gs.width, gs.height);
-      // riposiziona elementi se li ancoravi ai bordi
-      // this.scoreText.setPosition(80, 16);
-    });
+    // this.scale.on('resize', (gs) => {
+    //   uiCam.setSize(gs.width, gs.height);
+    // });
 
 		// ——— JOYSTICK VIRTUALE (rex) ———
 		// @ts-ignore
@@ -69,33 +65,39 @@ export default class UIScene extends Phaser.Scene {
       joystick: this.joystick
     });
 
-    this.scale.on('resize', (gs) => {
+    this.scale.on('resize', (gs = null) => {
       this.joystick.setPosition(100, gs.height - 100);
     });
 
 		
-		this.game.events.on('hpChanged', (hp) => {
+		this.game.events.on('hpChanged', (hp = null) => {
 			this.showDamageFace(hp);
 			this.updateHP(hp);
 			this.updateHealthBar(hp);
 		});
 
-		this.game.events.on('hpRegenerate', (hp) => {
+		this.game.events.on('hpRegenerate', (hp = null) => {
 			this.updateFace(hp);
 			this.updateHP(hp);
 			this.updateHealthBar(hp);
 		});
 
-		this.game.events.on('scoreChanged', (value) => {
+		this.game.events.on('scoreChanged', (value = null) => {
 			this.score = this.score + value;
       this.scoreText.setText(this.score);
     });
   }
 
+	/**
+   * @param {number} hp
+  */
 	updateHP(hp) {
 		this.healthText.setText(`HP ${hp}`);
 	}
 
+	/**
+   * @param {number} hp
+  */
 	updateFace(hp) {
     if (hp > 75) this.faceSprite.setFrame(0);
     else if (hp > 50) this.faceSprite.setFrame(1);
@@ -103,6 +105,9 @@ export default class UIScene extends Phaser.Scene {
     else this.faceSprite.setFrame(3);
   }
 
+	/**
+   * @param {number} hp
+  */
 	showDamageFace(hp) {
 
 		if (this.isTakingDamage) return;
@@ -117,6 +122,9 @@ export default class UIScene extends Phaser.Scene {
 		});
 	}
 
+	/**
+   * @param {number} hp
+  */
 	updateHealthBar(hp) {
 		const maxWidth = 150;
 		const width = Phaser.Math.Clamp(hp, 0, 100) * (maxWidth / 100);

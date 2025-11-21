@@ -16,9 +16,12 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 		// @ts-ignore
-		// this.textures.setDefaultFilter(Phaser.Textures.FilterMode.NEAREST);
     this.scene.launch('UIScene'); 
     this.scene.bringToTop('UIScene'); 
+
+		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
+		this.soundBG.play();
+
 
     this.score = 0;
 		this.gameOver = false;
@@ -43,7 +46,6 @@ export default class GameScene extends Phaser.Scene {
 			console.log('Collisione (controllo manuale)');
 		});
 
-		//FIXME decidere se usare array
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
         sprite.quail.update(this.player);
@@ -248,8 +250,6 @@ export default class GameScene extends Phaser.Scene {
   // GRUPPO (PERSONAGGI - SPRITES)
   // ----------------------------------------------------------------------------
 	createGroup() {
-
-		// FIXME decidere se usare array
 		// Quails
 		this.quailGroup = this.physics.add.group();
 

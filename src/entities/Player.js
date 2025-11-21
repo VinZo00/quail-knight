@@ -13,6 +13,7 @@ export default class Player {
     this.scene = scene;
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
+		this.soundAttack = this.scene.sound.add('player-attack', { loop: false });
 
 		this.shadow = scene.add.ellipse(x, y + this.sprite.displayHeight / 2 - 3, 20, 8, 0x000000, 0.4);
   	this.shadow.setDepth(0);
@@ -118,7 +119,7 @@ export default class Player {
 
   attack(moving = false) {
     this.isAttacking = true;
-
+		this.soundAttack.play();
     const animKey = moving ? `player-attack-${this.lastDirection}` : `player-attack-${this.lastDirection}`;
     this.sprite.anims.play(animKey, false);
 
