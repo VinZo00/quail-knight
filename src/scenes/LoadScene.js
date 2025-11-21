@@ -50,6 +50,9 @@ export default class LoadScene extends Phaser.Scene {
     progressBox.fillRect(this.scale.width / 2 - 160, this.scale.height / 2 - 10, 320, 30);
 
     // --- Eventi del caricamento ---
+		/**
+		 * @param {number} value
+		*/
     this.load.on('progress', (value) => {
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
@@ -89,7 +92,6 @@ export default class LoadScene extends Phaser.Scene {
 	}
 
 	loadAudio() {
-    // this.load.audio('music', 'audio/menu-intro.mp3');
     this.load.audio('player-attack', 'audio/player-attack.mp3');
     this.load.audio('background', 'audio/background.mp3');
 	}
