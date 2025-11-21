@@ -9,6 +9,7 @@ export default class MenuScene extends Phaser.Scene {
 				// BACKGROUND
         this.load.image('bg', 'ui/background.jpg');
         this.load.image('logo', 'ui/logo.png');
+				  this.load.image('play', 'ui/play.png');
 
 				// AUDIO
         this.load.image('audio', 'ui/audio.png');
@@ -52,11 +53,11 @@ export default class MenuScene extends Phaser.Scene {
 				});
 
 				// TEXT
+				this.playButton = this.add.image(this.scale.width / 2, 500, 'play').setOrigin(0.5).setScale(1).setInteractive();
 				this.logo = this.add.image(this.scale.width / 2, 150, 'logo').setOrigin(0.5).setScale(.8);
         // this.add.text(this.scale.width / 2, 200, 'Created by VinZo', { fontSize: '48px', color: '#fff' }).setOrigin(0.5);
-        const playButton = this.add.text(this.scale.width / 2, 400, 'PLAY', { fontSize: '32px', color: '#0f0' }).setOrigin(0.5).setInteractive();
 
-        playButton.on('pointerdown', () => {
+        this.playButton.on('pointerdown', () => {
 						introMusic.stop();
             this.scene.start('LoadScene');
         });

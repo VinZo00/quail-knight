@@ -131,8 +131,8 @@ export default class UIScene extends Phaser.Scene {
 
 		this.healthFill.clear();
 		
-		let color = 0x00ff00;
-		if (hp <= 50) color = 0xffff00;
+		let color = 0x34a214;
+		if (hp <= 75) color = 0xffff00;
 		if (hp <= 25) color = 0xff0000;
 
 		this.healthFill.fillStyle(color);
