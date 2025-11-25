@@ -308,11 +308,13 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createMap() {
     const map = this.make.tilemap({ key: 'map' });
-		const tiles = map.addTilesetImage('terrain_atlas', 'terrain');
+		const terrain = map.addTilesetImage('general', 'terrain');
+		const water = map.addTilesetImage('terrain', 'water');
+		const houses = map.addTilesetImage('houses', 'houses');
 
-		const bottomLayer = map.createLayer('bottom', tiles).setDepth(-1);
-		const topLayer = map.createLayer('top', tiles).setDepth(2);
-		const collision = map.createLayer('collision', tiles);
+		const bottomLayer = map.createLayer('bottom', [terrain, water, houses]).setDepth(-1);
+		const topLayer = map.createLayer('top', [terrain, water, houses]).setDepth(2);
+		const collision = map.createLayer('collision', [terrain, water, houses]);
 		
 		collision.setCollisionByExclusion([-1]);
 		topLayer.setCollisionByProperty({ collision: true });

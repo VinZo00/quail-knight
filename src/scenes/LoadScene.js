@@ -87,7 +87,9 @@ export default class LoadScene extends Phaser.Scene {
 
 	// Tilemap
 	loadMap() {
-    this.load.image('terrain', 'tilesets/terrain_atlas.png');
+    this.load.image('terrain', 'tilesets/general.png');
+    this.load.image('water', 'tilesets/terrain.png');
+    this.load.image('houses', 'tilesets/houses.png');
     this.load.tilemapTiledJSON('map', 'maps/mappa.json');
 	}
 
