@@ -16,6 +16,7 @@ CLASSE
 - [x] Collider delle quaglie
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
+- [ ] modificare Tileset
 
 ## Da implementare
 - [ ] Interazione con i personaggi
