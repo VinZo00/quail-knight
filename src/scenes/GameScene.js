@@ -20,7 +20,7 @@ export default class GameScene extends Phaser.Scene {
     this.scene.bringToTop('UIScene'); 
 
 		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
-		this.soundBG.play();
+		// this.soundBG.play();
 
 
     this.score = 0;
@@ -56,11 +56,13 @@ export default class GameScene extends Phaser.Scene {
   // COLLISION
   // ----------------------------------------------------------------------------
 	generateCollision() {
-		this.physics.add.collider(this.player.sprite, this.collision);
-		this.physics.add.collider(this.player.sprite, this.topLayer);
-		this.physics.add.collider(this.player.sprite, this.npcGroup);
-		this.physics.add.collider(this.quailGroup, this.collision);
-		this.physics.add.collider(this.quailGroup, this.topLayer);
+		this.physics.add.collider(this.player.sprite, this.solidityLayer);
+		this.physics.add.collider(this.player.sprite, this.elementsLayer);
+		// this.physics.add.collider(this.player.sprite, this.collision);
+		// this.physics.add.collider(this.player.sprite, this.topLayer);
+		// this.physics.add.collider(this.player.sprite, this.npcGroup);
+		// this.physics.add.collider(this.quailGroup, this.collision);
+		// this.physics.add.collider(this.quailGroup, this.topLayer);
 	}
 
 	// ----------------------------------------------------------------------------
@@ -253,22 +255,22 @@ export default class GameScene extends Phaser.Scene {
 		// Quails
 		this.quailGroup = this.physics.add.group();
 
-		for (let i = 0; i < 50; i++) {
-				let x, y;
-				let safe = false;
+		// for (let i = 0; i < 50; i++) {
+		// 		let x, y;
+		// 		let safe = false;
 
-				while (!safe) {
-					x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
-					y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+		// 		while (!safe) {
+		// 			x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+		// 			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
 
-					const tile = this.collision.getTileAtWorldXY(x, y);
-					if (!tile) safe = true;
-				}
+		// 			const tile = this.collision.getTileAtWorldXY(x, y);
+		// 			if (!tile) safe = true;
+		// 		}
 
-				const quail = new Quail(this, x, y, 'quail');
-				// @ts-ignore
-				this.quailGroup.add(quail.sprite);
-		}
+		// 		const quail = new Quail(this, x, y, 'quail');
+		// 		// @ts-ignore
+		// 		this.quailGroup.add(quail.sprite);
+		// }
 
 		// Player
 		this.player = new Player(this, 150, 300, 'player');
@@ -308,26 +310,39 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createMap() {
     const map = this.make.tilemap({ key: 'map' });
-		const terrain = map.addTilesetImage('general', 'terrain');
-		const water = map.addTilesetImage('terrain', 'water');
-		const houses = map.addTilesetImage('houses', 'houses');
+		const terrain = map.addTilesetImage('general', 'general');
+		// const water = map.addTilesetImage('terrain', 'water');
+		// const houses = map.addTilesetImage('houses', 'houses');
+		// const tree = map.addTilesetImage('trees', 'tree');
 
-		const bottomLayer = map.createLayer('bottom', [terrain, water, houses]).setDepth(-1);
-		const topLayer = map.createLayer('top', [terrain, water, houses]).setDepth(2);
-		const collision = map.createLayer('collision', [terrain, water, houses]);
+		const terrainLayer = map.createLayer('terrain', [terrain]).setDepth(-3);
+		const decorationLayer = map.createLayer('decorations', [terrain]).setDepth(-2);
+		const elementsLayer = map.createLayer('elements', [terrain]).setDepth(-1);
+		const overlap2Layer = map.createLayer('overlap-2', [terrain]).setDepth(2);
+		const topLayer = map.createLayer('top', [terrain]).setDepth(2);
+		const solidityLayer = map.createLayer('solidity', [terrain]);
+	
+		solidityLayer.setCollisionByProperty({ collides: true });
+		elementsLayer.setCollisionByProperty({ collides: true });
+
+		solidityLayer.setVisible(false);
+
+		// const topLayer = map.createLayer('top', [terrain]).setDepth(2);
+		// const collision = map.createLayer('collision', [terrain]);
 		
-		collision.setCollisionByExclusion([-1]);
-		topLayer.setCollisionByProperty({ collision: true });
+		// collision.setCollisionByExclusion([-1]);
+		// topLayer.setCollisionByProperty({ collision: true });
 
-		topLayer.setTileLocationCallback(6, 9, 1, 1, () => {
-			console.log('Sono sul pomodoro!');
-			topLayer.setTileLocationCallback(6, 9, 1, 1, null);
-		})
+		// topLayer.setTileLocationCallback(6, 9, 1, 1, () => {
+		// 	console.log('Sono sul pomodoro!');
+		// 	topLayer.setTileLocationCallback(6, 9, 1, 1, null);
+		// })
 
 		this.map = map;
-		this.bottomLayer = bottomLayer;
-		this.topLayer = topLayer;
-		this.collision = collision;
+		this.solidityLayer = solidityLayer;
+		this.elementsLayer = elementsLayer;
+		// this.topLayer = topLayer;
+		// this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
 

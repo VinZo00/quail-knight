@@ -5,17 +5,60 @@
     },
     "activeFile": "public/maps/mappa.json",
     "expandedProjectPaths": [
-        "public",
         ".",
+        "public",
         "public/maps"
     ],
     "file.lastUsedOpenFilter": "Tutti i file (*)",
     "fileStates": {
         "": {
             "scaleInDock": 1,
-            "scaleInEditor": 1
+            "scaleInEditor": 0.75
         },
         "#terrain_atlas": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa-old.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1952,
+                "y": 1596
+            }
+        },
+        "C:/Users/vince/Desktop/mappa-old.tmx#general": {
+            "scaleInDock": 3
+        },
+        "C:/Users/vince/Desktop/mappa-old.tmx#houses": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa-old.tmx#terrain": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa-old.tmx#trees": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2093.939393939394,
+                "y": 1153.030303030303
+            }
+        },
+        "C:/Users/vince/Desktop/mappa.tmx#general": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa.tmx#houses": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa.tmx#terrain": {
+            "scaleInDock": 1
+        },
+        "C:/Users/vince/Desktop/mappa.tmx#trees": {
             "scaleInDock": 1
         },
         "dist/maps/map.json": {
@@ -70,11 +113,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1,
+            "scale": 0.33,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1600,
-                "y": 1599.5
+                "x": 1086.3636363636365,
+                "y": 1242.4242424242425
             }
         },
         "mappa-ufficiale.tmx#terrain_atlas": {
@@ -88,8 +131,8 @@
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1251.5151515151515,
-                "y": 512.1212121212121
+                "x": 1625.757575757576,
+                "y": 784.8484848484848
             }
         },
         "mappa.tmx#1_terrain": {
@@ -103,14 +146,11 @@
             "scaleInDock": 0.75
         },
         "public/maps/mappa.json": {
-            "expandedObjectLayers": [
-                3
-            ],
-            "scale": 1.5,
+            "scale": 0.25,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 440.3333333333333,
-                "y": 449.6666666666667
+                "x": 2408,
+                "y": 522
             }
         },
         "public/maps/mappa.json#1_terrain": {
@@ -123,8 +163,9 @@
             "dynamicWrapping": true
         },
         "public/maps/mappa.json#general": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.75,
-            "scaleInEditor": 2
+            "scaleInEditor": 4
         },
         "public/maps/mappa.json#house": {
             "scaleInEditor": 2
@@ -132,7 +173,7 @@
         "public/maps/mappa.json#houses": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
-            "scaleInEditor": 3
+            "scaleInEditor": 0.75
         },
         "public/maps/mappa.json#terrain": {
             "dynamicWrapping": false,
@@ -141,8 +182,16 @@
         },
         "public/maps/mappa.json#terrain_atlas": {
             "scaleInDock": 1.5
+        },
+        "public/maps/mappa.json#tree": {
+            "scaleInEditor": 1
+        },
+        "public/maps/mappa.json#trees": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
+    "frame.defaultDuration": 100,
     "last.imagePath": "C:/Users/vince/Desktop/quail-executioner-vite/public/tilesets",
     "map.height": 20,
     "map.lastUsedFormat": "json",
@@ -156,16 +205,18 @@
     "property.type": "bool",
     "recentFiles": [
         "public/maps/mappa.json",
-        "mappa.tmx",
+        "C:/Users/vince/Desktop/mappa.tmx",
+        "C:/Users/vince/Desktop/mappa-old.tmx",
         "mappa-ufficiale.tmx",
+        "mappa.tmx",
         "dist/maps/map.json",
         "dist/maps/mappa-ufficiale.json",
         "dist/maps/map.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 64,
+        "width": 64
     },
     "tileset.type": 0
 }
