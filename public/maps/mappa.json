@@ -699,7 +699,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -708,7 +708,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -717,7 +717,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -726,7 +726,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -735,6 +735,87 @@
                         {
                          "name":"collides",
                          "type":"bool",
+                         "value":false
+                        }]
+                }, 
+                {
+                 "id":292,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":293,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":295,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":296,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":298,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":299,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":324,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":325,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":327,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
                          "value":true
                         }]
                 }, 
@@ -742,7 +823,7 @@
                  "id":328,
                  "properties":[
                         {
-                         "name":"collision",
+                         "name":"noSpawn",
                          "type":"bool",
                          "value":true
                         }]
@@ -752,6 +833,267 @@
                  "properties":[
                         {
                          "name":"collision",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":330,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":331,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":355,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":356,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":357,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":358,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":359,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":360,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":361,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":362,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":363,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":387,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":388,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":389,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":390,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":391,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":392,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":393,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":394,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":395,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":419,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":420,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":421,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":422,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":423,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":424,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":425,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":426,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":427,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
                          "type":"bool",
                          "value":true
                         }]
@@ -776,6 +1118,24 @@
                 }, 
                 {
                  "id":433,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":434,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":435,
                  "properties":[
                         {
                          "name":"collides",
@@ -1054,6 +1414,24 @@
                         }]
                 }, 
                 {
+                 "id":891,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":892,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
                  "id":943,
                  "properties":[
                         {
@@ -1068,7 +1446,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {

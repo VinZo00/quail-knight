@@ -61,7 +61,8 @@ export default class GameScene extends Phaser.Scene {
 		// this.physics.add.collider(this.player.sprite, this.collision);
 		// this.physics.add.collider(this.player.sprite, this.topLayer);
 		// this.physics.add.collider(this.player.sprite, this.npcGroup);
-		// this.physics.add.collider(this.quailGroup, this.collision);
+		this.physics.add.collider(this.quailGroup, this.solidityLayer);
+		this.physics.add.collider(this.quailGroup, this.elementsLayer);
 		// this.physics.add.collider(this.quailGroup, this.topLayer);
 	}
 
@@ -253,24 +254,28 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createGroup() {
 		// Quails
-		this.quailGroup = this.physics.add.group();
+		this.quailGroup = this.physics.add.group()
+		
+		for (let i = 0; i < 50; i++) {
+		 		let x, y;
+		 		let safe = false;
 
-		// for (let i = 0; i < 50; i++) {
-		// 		let x, y;
-		// 		let safe = false;
+		 		while (!safe) {
+		 			x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+		 			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+					const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
+					const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
+		 			
+					if ((!solidityTile || !solidityTile.properties.collides) &&
+							(!decorationTile || !decorationTile.properties.noSpawn)) {
+							safe = true;
+					}
+		 		}
 
-		// 		while (!safe) {
-		// 			x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
-		// 			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
-
-		// 			const tile = this.collision.getTileAtWorldXY(x, y);
-		// 			if (!tile) safe = true;
-		// 		}
-
-		// 		const quail = new Quail(this, x, y, 'quail');
-		// 		// @ts-ignore
-		// 		this.quailGroup.add(quail.sprite);
-		// }
+		 		const quail = new Quail(this, x, y, 'quail');
+		 		// @ts-ignore
+		 		this.quailGroup.add(quail.sprite);
+		 }
 
 		// Player
 		this.player = new Player(this, 150, 300, 'player');
@@ -341,6 +346,7 @@ export default class GameScene extends Phaser.Scene {
 		this.map = map;
 		this.solidityLayer = solidityLayer;
 		this.elementsLayer = elementsLayer;
+		this.decorationLayer = elementsLayer;
 		// this.topLayer = topLayer;
 		// this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
