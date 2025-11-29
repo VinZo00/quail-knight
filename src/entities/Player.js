@@ -69,7 +69,9 @@ export default class Player {
     const right = keys.right.isDown || (cursorKeys && cursorKeys.right.isDown);
     const up = keys.up.isDown || (cursorKeys && cursorKeys.up.isDown);
     const down = keys.down.isDown || (cursorKeys && cursorKeys.down.isDown);
-		const isRunning = keys.shift.isDown && !this.isAttacking;
+		const isRunning =
+				(!this.isAttacking) &&
+				(keys.shift.isDown || this.scene.isRunTouch);
 
 		let speed = isRunning ? this.speedRun : this.speed;
 		let velocityX = 0;
@@ -111,7 +113,7 @@ export default class Player {
   */
 	handleAttack(keys, cursorKeys) {
     if (this.isAttacking) return;
-    if (Phaser.Input.Keyboard.JustDown(keys.attack)) {
+    if (Phaser.Input.Keyboard.JustDown(keys.attack) || this.scene.isAttackTouch) {
       const moving = this.sprite.body.velocity.x !== 0 || this.sprite.body.velocity.y !== 0;
       this.attack(moving);
     }

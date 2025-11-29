@@ -1,16 +1,19 @@
 import Phaser from 'phaser'
+import { GAME_SETTINGS } from '../Settings.js';
 
 export default class UIScene extends Phaser.Scene {
   constructor(){ super('UIScene'); }
 
   create(){
+		const scale = GAME_SETTINGS.getScale(this.game);
+
     // Camera UI: nessuno zoom/scroll
     const uiCam = this.cameras.main;
     uiCam.setZoom(1);
     uiCam.setScroll(0, 0);
 
     // HUD
-		this.hudLifeContainer = this.add.container(30, 30);
+		this.hudLifeContainer = this.add.container(30, 30).setScale(scale);
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
 		this.score = 0;
 
@@ -31,6 +34,7 @@ export default class UIScene extends Phaser.Scene {
 		]);
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
+		const containerWidth = this.scoreBox.displayWidth * scale;
 		this.scoreText = this.add.text(0, 0, `${this.score}`, {
 				font: 'bold 40px Ari',
 				color: '#1e0800'
@@ -40,36 +44,66 @@ export default class UIScene extends Phaser.Scene {
 		this.scoreText.x = this.scoreBox.displayWidth / 2 + 10;
 		this.scoreText.y = this.scoreBox.displayHeight / 2 - 50;
 		this.scoreContainer = this.add.container(
-				this.scale.width - this.scoreBox.displayWidth - 30,
+				this.scale.width - containerWidth - 30,
 				30
 		);
-		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(.9);
+		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(scale * .9);
 
-    // this.scale.on('resize', (gs) => {
-    //   uiCam.setSize(gs.width, gs.height);
-    // });
+		if (GAME_SETTINGS.isMobile) {
+			// ——— JOYSTICK VIRTUALE (rex) ———
+			// @ts-ignore
+			this.joystick = this.rexVirtualJoystick.add(this, {
+				x: 80, y: this.scale.height - 70,
+				radius: 60,
+				base: this.add.circle(0, 0, 50, 0x888888, 0.4),
+				thumb: this.add.circle(0, 0, 25, 0xffffff, 0.8)
+			});
 
-		// ——— JOYSTICK VIRTUALE (rex) ———
-		// @ts-ignore
-    this.joystick = this.rexVirtualJoystick.add(this, {
-      x: 100, y: this.scale.height - 100,
-      radius: 60,
-      base: this.add.circle(0, 0, 60, 0x888888, 0.4),
-      thumb: this.add.circle(0, 0, 30, 0xffffff, 0.8)
-    });
+			this.cursorKeys = this.joystick.createCursorKeys();
 
-    this.cursorKeys = this.joystick.createCursorKeys();
+			this.game.events.emit('ui_ready', {
+				cursorKeys: this.cursorKeys,
+				joystick: this.joystick
+			});
+			
+			this.runButton = this.add.circle(
+					this.scale.width - 130,      
+					this.scale.height - 130,      
+					25,                           
+					0x0000ff,                   
+					0.25                        
+			)
+			.setInteractive()
+			.setScrollFactor(0);
 
-    this.game.events.emit('ui_ready', {
-      cursorKeys: this.cursorKeys,
-      joystick: this.joystick
-    });
+			this.runButton.on('pointerdown', () => {
+					this.game.events.emit('run_down');
+			});
 
-    this.scale.on('resize', (gs = null) => {
-      this.joystick.setPosition(100, gs.height - 100);
-    });
+			this.runButton.on('pointerup', () => {
+					this.game.events.emit('run_up');
+			});
 
-		
+			this.attackButton = this.add.circle(
+					this.scale.width - 80,      
+					this.scale.height - 70,      
+					30,                           
+					0xff0000,                   
+					0.25                        
+			)
+			.setInteractive()
+			.setScrollFactor(0);
+
+			this.attackButton.on('pointerdown', () => {
+				this.game.events.emit('attack_down');
+			});
+
+			this.attackButton.on('pointerup', () => {
+				this.game.events.emit('attack_up');
+			});
+			
+		}
+
 		this.game.events.on('hpChanged', (hp = null) => {
 			this.showDamageFace(hp);
 			this.updateHP(hp);

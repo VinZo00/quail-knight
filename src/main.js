@@ -7,15 +7,19 @@ import GameScene from './scenes/GameScene';
 import UIScene from './scenes/UIScene';
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
+const MAX_WIDTH = 1200;
+const MAX_HEIGHT = 720;
+
 const config = {
     type: Phaser.AUTO,
-    width: 1200,
-    height: 720,
+    width: Math.min(window.innerWidth, MAX_WIDTH),
+    height: Math.min(window.innerHeight, MAX_HEIGHT),
     physics: {
         default: 'arcade',
-        arcade: { debug: true }
+        arcade: { debug: false }
     },
 		scale: {
+			mode: Phaser.Scale.FIT,
 			autoCenter: Phaser.Scale.CENTER_BOTH,
 		},
     scene: [BootScene,LoadScene,MenuScene,GameScene,UIScene],
@@ -26,7 +30,13 @@ const config = {
         scene: [
             { key: 'rexVirtualJoystick', plugin: VirtualJoystickPlugin, mapping: 'rexVirtualJoystick' }
         ]
+    },
+		input: {
+    activePointers: 3,
+    touch: {
+        capture: true
     }
+	}
 };
 
 // @ts-ignore

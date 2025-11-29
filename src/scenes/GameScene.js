@@ -364,6 +364,19 @@ export default class GameScene extends Phaser.Scene {
 		this.game.events.once('ui_ready', (payload) => {
 			this.cursorKeys = payload.cursorKeys;
 		});
+		this.isRunTouch = false;
+		this.game.events.on('run_down', () => {
+				this.isRunTouch = true;
+		});
+		this.game.events.on('run_up', () => {
+				this.isRunTouch = false;
+		});
+		this.game.events.on('attack_down', () => {
+				this.isAttackTouch = true;
+		});
+		this.game.events.on('attack_up', () => {
+				this.isAttackTouch = false;
+		});
 	}
 
   // ----------------------------------------------------------------------------

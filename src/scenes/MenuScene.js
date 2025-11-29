@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { GAME_SETTINGS } from '../Settings.js';
 
 export default class MenuScene extends Phaser.Scene {
     constructor() {
@@ -20,6 +21,7 @@ export default class MenuScene extends Phaser.Scene {
     }
 
     create() {
+				const scale = GAME_SETTINGS.getScale(this.game);
 
 			  // BACKGROUND
         this.bg = this.add.image(this.scale.width / 2, this.scale.height / 2, 'bg');
@@ -38,9 +40,9 @@ export default class MenuScene extends Phaser.Scene {
 
 				// AUDIO
 				const introMusic = this.sound.add('intro', { loop: true });
-				introMusic.play();
+				// introMusic.play();
 
-				const audioBtn = this.add.image(50, 50, 'audio').setScale(.3).setInteractive();
+				const audioBtn = this.add.image(30, 30, 'audio').setScale(.3).setInteractive();
 				let isMuted = false;
 				
 				audioBtn.on('pointerdown', () => {
@@ -51,8 +53,8 @@ export default class MenuScene extends Phaser.Scene {
 				});
 
 				// TEXT
-				const playButton = this.add.image(this.scale.width / 2, 500, 'play').setOrigin(0.5).setScale(1).setInteractive();
-				this.logo = this.add.image(this.scale.width / 2, 150, 'logo').setOrigin(0.5).setScale(.8);
+				const playButton = this.add.image(this.scale.width / 2, this.scale.height - 80, 'play').setOrigin(0.5).setScale(scale).setInteractive();
+				this.logo = this.add.image(this.scale.width / 2, scale * 150, 'logo').setOrigin(0.5).setScale(scale * .8);
 
         playButton.on('pointerdown', () => {
 						introMusic.stop();
