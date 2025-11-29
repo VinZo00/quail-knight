@@ -17,19 +17,20 @@ CLASSE
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
 - [ ] modificare Tileset
+- [ ] Bug sulla corsa e l'attacco
 
 ## Da implementare
 - [ ] Interazione con i personaggi
 - [ ] Interazione con oggetti
 - [x] Dinamica di attacco sulle galline
 - [ ] Galline morte animazione
-- [ ] Giocatore hittato animazione
-- [ ] Vite giocatore
+- [x] Giocatore hittato animazione
+- [x] Vite giocatore
 - [ ] Oggetti in mappa animati, si può fare?
 
 ## Fine del gioco
 - [ ] Creare logo, sistemare menu
 - [ ] Impostare quiet mode -> le quaglie non attaccano
 - [ ] Creare una bella mappa e creare i vari personaggi
-- [ ] Tutto deve essere responsivo su mobile
+- [x] Tutto deve essere responsivo su mobile
 - [ ] Creare apk

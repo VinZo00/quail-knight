@@ -20,7 +20,7 @@ export default class GameScene extends Phaser.Scene {
     this.scene.bringToTop('UIScene'); 
 
 		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
-		// this.soundBG.play();
+		this.soundBG.play();
 
 
     this.score = 0;
@@ -278,7 +278,7 @@ export default class GameScene extends Phaser.Scene {
 		 }
 
 		// Player
-		this.player = new Player(this, 150, 300, 'player');
+		this.player = new Player(this, this.map.widthInPixels - 150, this.map.heightInPixels  - 150, 'player');
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();

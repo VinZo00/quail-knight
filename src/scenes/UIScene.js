@@ -66,13 +66,12 @@ export default class UIScene extends Phaser.Scene {
 				joystick: this.joystick
 			});
 			
-			this.runButton = this.add.circle(
-					this.scale.width - 130,      
-					this.scale.height - 130,      
-					25,                           
-					0x0000ff,                   
-					0.25                        
+			this.runButton = this.add.image(
+					this.scale.width - 130,
+					this.scale.height - 130, 
+					'run'         
 			)
+			.setScale(scale * 0.6)
 			.setInteractive()
 			.setScrollFactor(0);
 
@@ -84,13 +83,12 @@ export default class UIScene extends Phaser.Scene {
 					this.game.events.emit('run_up');
 			});
 
-			this.attackButton = this.add.circle(
-					this.scale.width - 80,      
-					this.scale.height - 70,      
-					30,                           
-					0xff0000,                   
-					0.25                        
+			this.attackButton = this.add.image(
+					this.scale.width - 80,
+					this.scale.height - 70, 
+					'attack'         
 			)
+			.setScale(scale * 0.7)
 			.setInteractive()
 			.setScrollFactor(0);
 
