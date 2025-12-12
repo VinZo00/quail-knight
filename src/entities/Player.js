@@ -141,9 +141,9 @@ export default class Player {
 			if (this.scene.quailGroup.contains(body.gameObject)) {
 				// @ts-ignore
 				const quail = body.gameObject.quail;
-				quail.destroy();
+				quail.die();
 				// @ts-ignore
-        this.scene.quailGroup.remove(quail.sprite, true, true);
+        // this.scene.quailGroup.remove(quail.sprite, true, true);
         this.scene.game.events.emit('scoreChanged', 1);
 				break;
 			}

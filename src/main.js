@@ -5,6 +5,7 @@ import LoadScene from './scenes/LoadScene';
 import MenuScene from './scenes/MenuScene';
 import GameScene from './scenes/GameScene';
 import UIScene from './scenes/UIScene';
+import SettingsScene from './scenes/SettingsScene';
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 const MAX_WIDTH = 1200;
@@ -22,7 +23,7 @@ const config = {
 			mode: Phaser.Scale.FIT,
 			autoCenter: Phaser.Scale.CENTER_BOTH,
 		},
-    scene: [BootScene,LoadScene,MenuScene,GameScene,UIScene],
+    scene: [BootScene,LoadScene,MenuScene,GameScene,UIScene,SettingsScene],
 		render: {
 			pixelArt: true
 		},

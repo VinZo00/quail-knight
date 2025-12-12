@@ -29,8 +29,10 @@ export default class Quail {
         this.chaseDistance = 150;
         this.isChasing = false;
 
-        this.attackCooldown = 2000;
-        this.lastAttackTime = 0;
+				this.nextAttackAllowedAt = 0;
+				this.firstAttackDelay = 500;
+				this.attackCooldown = 2000;
+				
         this.minDistance = 20;
         this.lastIdle = 'quail-idle-down';
 
@@ -134,17 +136,39 @@ export default class Quail {
 		 * @param {Player} player
      * @param {number} distance - Distanza attuale dalla quaglia al player
      */
-    tryAttack(player, distance) {
-        const now = this.scene.time.now;
-        if (distance < 50 && now - this.lastAttackTime > this.attackCooldown) {
-            this.lastAttackTime = now;
-						player.takeDamage(10);
-        }
-    }
+		tryAttack(player, distance) {
+				const now = this.scene.time.now;
+				if (distance < 50) {
+						if (this.nextAttackAllowedAt === 0) {
+								this.nextAttackAllowedAt = now + this.firstAttackDelay;
+								return;
+						}
+						if (now >= this.nextAttackAllowedAt) {
+								player.takeDamage(10);
+								this.nextAttackAllowedAt = now + this.attackCooldown;
+						}
+				}
+		}
 
-		destroy() {
+
+		die() {
 			this.moveTimer.remove(false);
+			this.scene.physics.world.disable(this.sprite);
+
+			this.sprite.setTint(0xff0000);
 			this.shadow.destroy();
-			this.sprite.destroy();
+			
+			const angle = Phaser.Math.Between(-90, 90);
+			
+			this.scene.tweens.add({
+					targets: this.sprite,
+					angle,
+					duration: 500, 
+					alpha: 0,
+					ease: 'Cubic.easeOut',
+					onComplete: () => {
+						this.sprite.destroy();
+					}
+			});
 		}
 }

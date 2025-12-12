@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 import { GAME_SETTINGS } from '../Settings.js';
 
 export default class UIScene extends Phaser.Scene {
@@ -13,7 +13,7 @@ export default class UIScene extends Phaser.Scene {
     uiCam.setScroll(0, 0);
 
     // HUD
-		this.hudLifeContainer = this.add.container(30, 30).setScale(scale);
+		this.hudLifeContainer = this.add.container(40, 30).setScale(scale);
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
 		this.score = 0;
 
@@ -27,7 +27,7 @@ export default class UIScene extends Phaser.Scene {
 				color: '#ffffffff'
 		});
 		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
-
+	
 		this.hudLifeContainer.add([
 			this.faceSprite,
 			this.healthContainer
@@ -48,6 +48,16 @@ export default class UIScene extends Phaser.Scene {
 				30
 		);
 		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(scale * .9);
+
+		this.settings = this.add.image(20, 20, 'settings').setScale(.4).setOrigin(0, 0).setInteractive();
+
+		this.settings.on('pointerdown', () => {
+				this.scene.pause('GameScene');
+				this.scene.pause('UIScene');
+				this.scene.launch('SettingsScene');
+				this.scene.bringToTop('SettingsScene');
+		});
+
 
 		if (GAME_SETTINGS.isMobile) {
 			// ——— JOYSTICK VIRTUALE (rex) ———

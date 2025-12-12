@@ -10,7 +10,7 @@ export default class MenuScene extends Phaser.Scene {
 				// BACKGROUND
         this.load.image('bg', 'ui/background.jpg');
         this.load.image('logo', 'ui/logo.png');
-				  this.load.image('play', 'ui/play.png');
+				this.load.image('play', 'ui/play.png');
 
 				// AUDIO
         this.load.image('audio', 'ui/audio.png');
