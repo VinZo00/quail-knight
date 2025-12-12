@@ -18,17 +18,12 @@ export default class GameScene extends Phaser.Scene {
 		// @ts-ignore
     this.scene.launch('UIScene'); 
     this.scene.bringToTop('UIScene'); 
-
-		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
-		this.soundBG.play();
-
-
     this.score = 0;
 		this.gameOver = false;
 
 		this.directions = ['up', 'down', 'left', 'right'];
 		
-		// this.addAudios();
+		this.addAudios();
 		this.createMap();
 		this.createGroup();
 		this.createAnims();
@@ -49,6 +44,28 @@ export default class GameScene extends Phaser.Scene {
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
         sprite.quail.update(this.player);
+    });
+	}
+
+	// ----------------------------------------------------------------------------
+	// AUDIO
+	// ----------------------------------------------------------------------------
+	addAudios() {
+		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
+		this.soundBG.play();
+		this.musicEnabled = true;
+
+		this.game.events.on('toggleMusic', (enabled) => {
+				this.musicEnabled = enabled;
+        if (enabled) {
+            if (this.soundBG.isPaused) {
+                this.soundBG.resume();
+            } else {
+                this.soundBG.play();
+            }
+        } else {
+            this.soundBG.pause();
+        }
     });
 	}
 

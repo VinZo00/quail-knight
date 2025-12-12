@@ -38,7 +38,7 @@ export default class SettingsScene extends Phaser.Scene {
         // TOGGLE MUSIC (testo)
         // ===========================
         this.add.text(
-            this.scale.width / 2 - 60,               // sinistra
+            this.scale.width / 2 - 60, 
             this.scale.height / 2 - 60,
             'Music',
             { font: '24px Ari', color: '#000' }
@@ -49,29 +49,24 @@ export default class SettingsScene extends Phaser.Scene {
         // ============================
         // TOGGLER ON/OFF grafico
         // ============================
-
-        // stato iniziale (puoi leggerlo da game.settings o simile)
-        this.musicOn = true;
-
-        // contenitore toggle
         const toggleContainer = this.add.container(
             this.scale.width / 2 + 60,
             this.scale.height / 2 - 60
         ).setSize(60, 30).setInteractive();
 
-        // sfondo del toggle
         const toggleBg = this.add.rectangle(0, 0, 60, 30, 0xcccccc, 1)
             .setOrigin(0.5)
             .setStrokeStyle(2, 0x444444);
 
-        // pallino
         const knob = this.add.circle(-15, 0, 12, 0xffffff)
             .setStrokeStyle(2, 0x666666);
 
-        // aggiunge al container
         toggleContainer.add([toggleBg, knob]);
 
-        // funzione per aggiornare l’aspetto grafico
+				const gameScene = this.scene.get('GameScene');
+				// @ts-ignore
+				this.musicOn = gameScene.musicEnabled;
+
         const updateToggleVisual = () => {
             if (this.musicOn) {
                 toggleBg.setFillStyle(0x44cc44);
@@ -84,12 +79,10 @@ export default class SettingsScene extends Phaser.Scene {
 
         updateToggleVisual();
 
-        // quando clicchi il toggle
         toggleContainer.on('pointerdown', () => {
             this.musicOn = !this.musicOn;
             updateToggleVisual();
 
-            // notifica al gioco
             this.game.events.emit('toggleMusic', this.musicOn);
         });
 
@@ -107,9 +100,17 @@ export default class SettingsScene extends Phaser.Scene {
         ).setOrigin(0.5).setInteractive();
 
         goMenu.on('pointerdown', () => {
+						// @ts-ignore
+						const gameScene = this.scene.get('GameScene');
+
+						// @ts-ignore
+						if (gameScene && gameScene.soundBG && gameScene.soundBG.isPlaying) {
+							// @ts-ignore	
+							gameScene.soundBG.stop();
+						}
+
             this.scene.stop('GameScene');
             this.scene.stop('UIScene');
-
             this.scene.start('MenuScene');
         });
 
@@ -118,7 +119,6 @@ export default class SettingsScene extends Phaser.Scene {
         // ============================
         // CLOSE BUTTON
         // ============================
-
         const closeBtn = this.add.text(
             this.scale.width / 2,
             this.scale.height / 2 + 130,
