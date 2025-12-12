@@ -17,7 +17,7 @@ CLASSE
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
 - [ ] modificare Tileset
-- [ ] Bug sulla corsa e l'attacco
+- [x] Bug sulla corsa e l'attacco
 
 ## Da implementare
 - [ ] Interazione con i personaggi
@@ -29,7 +29,7 @@ CLASSE
 - [ ] Oggetti in mappa animati, si può fare?
 
 ## Fine del gioco
-- [ ] Creare logo, sistemare menu
+- [x] Creare logo, sistemare menu
 - [ ] Impostare quiet mode -> le quaglie non attaccano
 - [ ] Creare una bella mappa e creare i vari personaggi
 - [x] Tutto deve essere responsivo su mobile

@@ -73,13 +73,21 @@ export default class UIScene extends Phaser.Scene {
 			)
 			.setScale(scale * 0.6)
 			.setInteractive()
-			.setScrollFactor(0);
-
-			this.runButton.on('pointerdown', () => {
+			.setScrollFactor(0)
+			.on('pointerdown', () => {
+				this.runButton.setTint(0x888888);
 					this.game.events.emit('run_down');
-			});
-
-			this.runButton.on('pointerup', () => {
+			})
+			.on('pointerup', () => {
+					this.runButton.clearTint();
+					this.game.events.emit('run_up');
+			})
+			.on('pointerout', () => {
+					this.runButton.clearTint();
+					this.game.events.emit('run_up');
+			})
+			.on('pointerupoutside', () => {
+					this.runButton.clearTint();
 					this.game.events.emit('run_up');
 			});
 
@@ -90,16 +98,23 @@ export default class UIScene extends Phaser.Scene {
 			)
 			.setScale(scale * 0.7)
 			.setInteractive()
-			.setScrollFactor(0);
-
-			this.attackButton.on('pointerdown', () => {
+			.setScrollFactor(0)
+			.on('pointerdown', () => {
+				this.attackButton.setTint(0x888888);
 				this.game.events.emit('attack_down');
-			});
-
-			this.attackButton.on('pointerup', () => {
+			})
+			.on('pointerup', () => {
+				this.attackButton.clearTint();
 				this.game.events.emit('attack_up');
+			})
+			.on('pointerout', () => {
+					this.attackButton.clearTint();
+					this.game.events.emit('attack_up');
+			})
+			.on('pointerupoutside', () => {
+					this.attackButton.clearTint();
+					this.game.events.emit('attack_up');
 			});
-			
 		}
 
 		this.game.events.on('hpChanged', (hp = null) => {
