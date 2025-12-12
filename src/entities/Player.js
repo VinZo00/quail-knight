@@ -14,6 +14,8 @@ export default class Player {
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
 		this.soundAttack = this.scene.sound.add('player-attack', { loop: false });
+		this.soundRun = this.scene.sound.add('player-run', { loop: true, volume: .3 });
+		this.soundHurt = this.scene.sound.add('player-hurt', { loop: false, volume: .5 });
 
 		this.offsetY = 20;
 		this.shadow = scene.add.ellipse(x, y + this.offsetY, 20, 8, 0x000000, 0.4);
@@ -78,6 +80,16 @@ export default class Player {
 		let speed = isRunning ? this.speedRun : this.speed;
 		let velocityX = 0;
     let velocityY = 0;
+
+		if (isRunning) {
+				if (!this.soundRun.isPlaying) {
+						this.soundRun.play();
+				}
+		} else {
+				if (this.soundRun.isPlaying) {
+						this.soundRun.stop();
+				}
+		}
 
 		if (this.isAttacking) {
 			speed *= 0.5;
@@ -163,6 +175,7 @@ export default class Player {
   // DANNI
   // ------------------------------------------------------------
   takeDamage(damage = 0) {
+		this.soundHurt.play();
     if (this.isInvulnerable) return;
 
     this.isInvulnerable = true;

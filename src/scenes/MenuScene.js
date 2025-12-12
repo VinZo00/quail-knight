@@ -39,7 +39,7 @@ export default class MenuScene extends Phaser.Scene {
 				).setOrigin(0.5);
 
 				// AUDIO
-				const introMusic = this.sound.add('intro', { loop: true });
+				const introMusic = this.sound.add('intro', { loop: true, volume: .5 });
 				introMusic.play();
 
 				const audioBtn = this.add.image(30, 30, 'audio').setScale(.3).setInteractive();

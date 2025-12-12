@@ -99,6 +99,8 @@ export default class LoadScene extends Phaser.Scene {
 
 	loadAudio() {
     this.load.audio('player-attack', 'audio/player-attack.mp3');
+    this.load.audio('player-hurt', 'audio/player-hurt.mp3');
+    this.load.audio('player-run', 'audio/player-run.mp3');
     this.load.audio('background', 'audio/background.mp3');
 	}
 }
