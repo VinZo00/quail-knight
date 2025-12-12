@@ -24,7 +24,7 @@ CLASSE
 - [ ] Interazione con i personaggi
 - [ ] Interazione con oggetti
 - [x] Dinamica di attacco sulle galline
-- [ ] Galline morte animazione
+- [x] Galline morte animazione
 - [x] Giocatore hittato animazione
 - [x] Vite giocatore
 - [ ] Oggetti in mappa animati, si può fare?

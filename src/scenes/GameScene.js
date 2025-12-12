@@ -55,7 +55,7 @@ export default class GameScene extends Phaser.Scene {
 		this.soundBG.play();
 		this.musicEnabled = true;
 
-		this.game.events.on('toggleMusic', (enabled) => {
+		this.game.events.on('toggleMusic', /** @param {boolean} enabled */ (enabled) => {
 				this.musicEnabled = enabled;
         if (enabled) {
             if (this.soundBG.isPaused) {
