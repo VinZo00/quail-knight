@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.vinzo.questof" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>QuestOf</name>
+    <description>
+        QuestOf - Phaser Game
+    </description>
+    <author email="vincenzo_ciaccia@hotmail.com" href="https://vincenzociaccia.it">
+        Vincenzo
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    
+    <preference name="Orientation" value="landscape" />
+    <preference name="Fullscreen" value="true" />
+    
+    <platform name="android">
+        <preference name="Orientation" value="landscape" />
+        <preference name="Fullscreen" value="true" />
+        <preference name="KeepScreenOn" value="true" />
+        
+        <!-- <icon density="ldpi" src="res/icon/android/ldpi.png" />
+        <icon density="mdpi" src="res/icon/android/mdpi.png" />
+        <icon density="hdpi" src="res/icon/android/hdpi.png" />
+        <icon density="xhdpi" src="res/icon/android/xhdpi.png" /> -->
+    </platform>
+</widget>
