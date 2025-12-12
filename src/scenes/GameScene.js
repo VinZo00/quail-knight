@@ -19,10 +19,7 @@ export default class GameScene extends Phaser.Scene {
     this.scene.launch('UIScene'); 
     this.scene.bringToTop('UIScene'); 
     this.score = 0;
-		this.gameOver = false;
-
-		this.directions = ['up', 'down', 'left', 'right'];
-		
+		this.gameOver = false;		
 		this.addAudios();
 		this.createMap();
 		this.createGroup();
@@ -87,16 +84,16 @@ export default class GameScene extends Phaser.Scene {
   // ANIMS
   // ----------------------------------------------------------------------------
 	createAnims() {
+		this.directions = ['up', 'down', 'left', 'right'];
 		this.playerAnims();
 		this.quailsAnims();
 		this.npcsAnims();
 	}
 
 	playerAnims() {
-		const directions = ['up', 'down', 'left', 'right'];
 
 		// Animazioni IDLE (0–1)
-		directions.forEach(dir => {
+		this.directions.forEach(dir => {
 			this.anims.create({
 				key: `player-idle-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
@@ -110,7 +107,7 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		// Animazioni WALK (0–8)
-		directions.forEach(dir => {
+		this.directions.forEach(dir => {
 			this.anims.create({
 				key: `player-walk-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
@@ -124,7 +121,7 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		// Animazioni RUN (0–7)
-		directions.forEach(dir => {
+		this.directions.forEach(dir => {
 			this.anims.create({
 				key: `player-run-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
@@ -138,7 +135,7 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		// Animazioni ATTACK WALK (0–7)
-		directions.forEach(dir => {
+		this.directions.forEach(dir => {
 			this.anims.create({
 				key: `player-attack-walk-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
@@ -147,12 +144,12 @@ export default class GameScene extends Phaser.Scene {
 					end: 11
 				}),
 				frameRate: 20,
-				repeat: 0
+				repeat: -1
 			});
 		});
 
 		// Animazioni ATTACK (0–5)
-		directions.forEach(dir => {
+		this.directions.forEach(dir => {
 			this.anims.create({
 				key: `player-attack-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
@@ -168,58 +165,33 @@ export default class GameScene extends Phaser.Scene {
 
 
 	quailsAnims() {
-		const scene = this;
-		scene.anims.create({
-			key: 'quail-walk-up',
-			frames: scene.anims.generateFrameNumbers('quail', { start: 0, end: 3 }),
-			frameRate: 6,
-			repeat: -1
-		});
 
-		scene.anims.create({
-			key: 'quail-walk-down',
-			frames: scene.anims.generateFrameNumbers('quail', { start: 4, end: 7 }),
-			frameRate: 6,
-			repeat: -1
+		this.anims.create({
+			key: `quail-death`,
+			frames: [{ key: 'quail', frame: `quail-death` }],
+			frameRate: 1,
+			repeat: 0
 		});
+			
+		this.directions.forEach(dir => {
+			this.anims.create({
+				key: `quail-walk-${dir}`,
+				frames: this.anims.generateFrameNames('quail', {
+					prefix: `quail-walk-${dir}-`,
+					start: 0,
+					end: 3
+				}),
+				frameRate: 6,
+				repeat: -1
+			});
 
-		scene.anims.create({
-			key: 'quail-walk-right',
-			frames: scene.anims.generateFrameNumbers('quail', { start: 8, end: 11 }),
-			frameRate: 6,
-			repeat: -1
-		});
-
-		scene.anims.create({
-			key: 'quail-walk-left',
-			frames: scene.anims.generateFrameNumbers('quail', { start: 12, end: 15 }),
-			frameRate: 6,
-			repeat: -1
-		});
-
-		// Idle animations (quinta riga)
-		scene.anims.create({
-			key: 'quail-idle-up',
-			frames: [{ key: 'quail', frame: 16 }],
-			frameRate: 1
-		});
-
-		scene.anims.create({
-			key: 'quail-idle-down',
-			frames: [{ key: 'quail', frame: 17 }],
-			frameRate: 1
-		});
-
-		scene.anims.create({
-			key: 'quail-idle-right',
-			frames: [{ key: 'quail', frame: 18 }],
-			frameRate: 1
-		});
-
-		scene.anims.create({
-			key: 'quail-idle-left',
-			frames: [{ key: 'quail', frame: 19 }],
-			frameRate: 1
+			this.anims.create({
+					key: `quail-idle-${dir}`,
+					frames: [{ key: 'quail', frame: `quail-idle-${dir}` }],
+					frameRate: 1,
+					repeat: 0
+			});
+		
 		});
 	}
 

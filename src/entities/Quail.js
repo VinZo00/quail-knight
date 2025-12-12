@@ -48,6 +48,7 @@ export default class Quail {
      * Movimento random della quaglia (solo se non sta inseguendo)
      */
     randomMove() {
+        if (this.isDead) return;
         if (this.isChasing) return;
 
         const directions = [
@@ -83,6 +84,7 @@ export default class Quail {
 			* @param {Player} player
      */
     update(player) {
+				if (this.isDead) return;
 				this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
 
         const distance = Phaser.Math.Distance.Between(
@@ -137,6 +139,7 @@ export default class Quail {
      * @param {number} distance - Distanza attuale dalla quaglia al player
      */
 		tryAttack(player, distance) {
+				if (this.isDead) return;
 				const now = this.scene.time.now;
 				if (distance < 50) {
 						if (this.nextAttackAllowedAt === 0) {
@@ -151,24 +154,38 @@ export default class Quail {
 		}
 
 
-		die() {
-			this.moveTimer.remove(false);
-			this.scene.physics.world.disable(this.sprite);
-
-			this.sprite.setTint(0xff0000);
-			this.shadow.destroy();
-			
-			const angle = Phaser.Math.Between(-90, 90);
-			
-			this.scene.tweens.add({
-					targets: this.sprite,
-					angle,
-					duration: 500, 
-					alpha: 0,
-					ease: 'Cubic.easeOut',
-					onComplete: () => {
-						this.sprite.destroy();
-					}
-			});
-		}
+die() {
+    if (this.isDead) return;
+    this.isDead = true;
+    
+    this.sprite.setVelocity(0, 0); 
+    this.sprite.anims.stop();
+    
+    if (this.moveTimer) {
+        this.moveTimer.remove(false);
+        this.moveTimer = null;
+    }
+    
+    this.scene.physics.world.disable(this.sprite);
+    
+    this.sprite.setTexture('quail', 'quail-death');
+    this.sprite.setTint(0xff0000);
+    
+    if (this.shadow) {
+        this.shadow.destroy();
+    }
+    
+    const angle = Phaser.Math.Between(-90, 90);
+    
+    this.scene.tweens.add({
+        targets: this.sprite,
+        angle,
+        duration: 500, 
+        alpha: 0,
+        ease: 'Cubic.easeOut',
+        onComplete: () => {
+            this.sprite.destroy();
+        }
+    });
+}
 }
