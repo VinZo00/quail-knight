@@ -71,11 +71,13 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	generateCollision() {
 		this.physics.add.collider(this.player.sprite, this.solidityLayer);
+		this.physics.add.collider(this.player.sprite, this.overlapLayer);
 		this.physics.add.collider(this.player.sprite, this.elementsLayer);
 		// this.physics.add.collider(this.player.sprite, this.collision);
 		// this.physics.add.collider(this.player.sprite, this.topLayer);
 		// this.physics.add.collider(this.player.sprite, this.npcGroup);
 		this.physics.add.collider(this.quailGroup, this.solidityLayer);
+		this.physics.add.collider(this.quailGroup, this.overlapLayer);
 		this.physics.add.collider(this.quailGroup, this.elementsLayer);
 		// this.physics.add.collider(this.quailGroup, this.topLayer);
 	}
@@ -212,6 +214,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.directions.forEach(dir => {
 
+			// WALK
 			this.anims.create({
 				key: `${key}-walk-${dir}`,
 				frames: this.anims.generateFrameNames(key, {
@@ -223,6 +226,7 @@ export default class GameScene extends Phaser.Scene {
 				repeat: -1
 			});
 
+			// IDLE
 			this.anims.create({
 				key: `${key}-idle-${dir}`,
 				frames: this.anims.generateFrameNames(key, {
@@ -267,7 +271,12 @@ export default class GameScene extends Phaser.Scene {
 		 }
 
 		// Player
-		this.player = new Player(this, this.map.widthInPixels - 150, this.map.heightInPixels  - 150, 'player');
+		const playerSpawn = this.spawnLayer.objects.find(o => o.type === 'player');
+		const tileW = this.map.tileWidth;
+		const tileH = this.map.tileHeight;
+		const spawnX = playerSpawn.x + tileW / 2;
+		const spawnY = playerSpawn.y + tileH / 2;
+		this.player = new Player(this, spawnX, spawnY, 'player');
 
 		// Objects
 		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
@@ -275,29 +284,60 @@ export default class GameScene extends Phaser.Scene {
 		// INSERISCO NPCS
 		this.npcGroup = this.physics.add.group();
 
-		const vincenzo = new NPC(this, 180, 250, 'npc-vincenzo', {
-			name: 'Vincenzo',
-			dialogueText: 'Mi sa che stasera non esco',
-			movementType: 'y', // 'x' | 'y' | 'idle'
-			distance: 100,     // px
-			speed: 50,         // px/s
-			startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-			// idleDir: 'right',   // opzionale: se fermo, quale idle usare
-		});
-
-		// const giovanni = new NPC(this, 250, 300, 'npc-giovanni', {
-		// 	name: 'Giovanni',
-		// 	dialogueText: 'oggi mi sento proprio gay',
-		// 	movementType: 'x',
-		// 	distance: 500,
-		// 	speed: 20,
-		// 	startDir: 'pos',
-		// 	idleDir: 'down',
+		// VINCENZO
+		// const vincenzo = new NPC(this, 180, 250, 'npc-vincenzo', {
+		// 	name: 'Vincenzo',
+		// 	dialogueText: 'Mi sa che stasera non esco',
+		// 	movementType: 'y', // 'x' | 'y' | 'idle'
+		// 	distance: 100,     // px
+		// 	speed: 50,         // px/s
+		// 	startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
+		// 	// idleDir: 'right',   // opzionale: se fermo, quale idle usare
 		// });
 
-		// this.npcGroup.add(giovanni.sprite);
-		this.npcGroup.add(vincenzo.sprite);
+		// GIOVANNI
+		this.spawnNPCFromPoint('spawn-npc-giovanni', 'npc-vincenzo', {
+				name: 'Giovanni',
+				dialogueText: 'oggi mi sento proprio gay',
+				movementType: 'x',
+				distance: 500,
+				speed: 20,
+				startDir: 'pos',
+				idleDir: 'down',
+		});
 	}
+
+  // ----------------------------------------------------------------------------
+  // HELPER PER SPAWNS
+  // ----------------------------------------------------------------------------
+	/**
+	 * Spawna un NPC a partire da un Point definito in Tiled.
+	 *
+	 * @param {string} spawnName - Il nome del Point in Tiled (campo Name).
+	 * @param {string} spriteKey - La chiave dello sprite da usare per l'NPC.
+	 * @param {Object} [options={}] - Opzioni aggiuntive da passare al costruttore NPC.
+	 * @returns {NPC|null} - L'NPC creato, oppure null se il Point non è stato trovato.
+	*/
+	spawnNPCFromPoint(spawnName, spriteKey, options = {}) {
+			const spawnPoint = this.spawnLayer.objects.find(
+					o => o.type === 'npc' && o.name === spawnName
+			);
+
+			if (!spawnPoint) {
+					console.warn(`Spawn point "${spawnName}" non trovato!`);
+					return null;
+			}
+
+			const x = spawnPoint.x + this.map.tileWidth / 2;
+			const y = spawnPoint.y + this.map.tileHeight / 2;
+
+			const npc = new NPC(this, x, y, spriteKey, options);
+			this.npcGroup.add(npc.sprite);
+
+			return npc;
+	}
+
+
 
   // ----------------------------------------------------------------------------
   // MAPPA
@@ -306,18 +346,21 @@ export default class GameScene extends Phaser.Scene {
     const map = this.make.tilemap({ key: 'map' });
 		const terrain = map.addTilesetImage('general', 'general');
 		// const water = map.addTilesetImage('terrain', 'water');
-		// const houses = map.addTilesetImage('houses', 'houses');
+		const houses = map.addTilesetImage('houses', 'houses');
 		// const tree = map.addTilesetImage('trees', 'tree');
 
 		const terrainLayer = map.createLayer('terrain', [terrain]).setDepth(-3);
 		const decorationLayer = map.createLayer('decorations', [terrain]).setDepth(-2);
 		const elementsLayer = map.createLayer('elements', [terrain]).setDepth(-1);
-		const overlap2Layer = map.createLayer('overlap-2', [terrain]).setDepth(2);
+		const overlapLayer = map.createLayer('overlap', [terrain, houses]).setDepth(2);
 		const topLayer = map.createLayer('top', [terrain]).setDepth(2);
+
 		const solidityLayer = map.createLayer('solidity', [terrain]);
-	
+		const spawnLayer = map.getObjectLayer('spawns');
+
 		solidityLayer.setCollisionByProperty({ collides: true });
 		elementsLayer.setCollisionByProperty({ collides: true });
+		overlapLayer.setCollisionByProperty({ collides: true });
 
 		solidityLayer.setVisible(false);
 
@@ -336,6 +379,8 @@ export default class GameScene extends Phaser.Scene {
 		this.solidityLayer = solidityLayer;
 		this.elementsLayer = elementsLayer;
 		this.decorationLayer = elementsLayer;
+		this.overlapLayer = overlapLayer;
+		this.spawnLayer = spawnLayer;
 		// this.topLayer = topLayer;
 		// this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);

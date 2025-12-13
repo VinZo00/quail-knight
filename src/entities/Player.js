@@ -13,7 +13,7 @@ export default class Player {
     this.scene = scene;
     this.sprite = scene.physics.add.sprite(x, y, textureKey).setDepth(1);
     this.sprite.setCollideWorldBounds(true).setScale(0.7);
-		this.soundAttack = this.scene.sound.add('player-attack', { loop: false });
+		this.soundAttack = this.scene.sound.add('player-attack', { loop: false, volume: .3 });
 		this.soundRun = this.scene.sound.add('player-run', { loop: true, volume: .3 });
 		this.soundHurt = this.scene.sound.add('player-hurt', { loop: false, volume: .5 });
 
@@ -81,7 +81,7 @@ export default class Player {
 		let velocityX = 0;
     let velocityY = 0;
 
-		if (isRunning) {
+		if (isRunning && left || right || up || down) {
 				if (!this.soundRun.isPlaying) {
 						this.soundRun.play();
 				}
@@ -194,25 +194,22 @@ export default class Player {
   }
 
   // ------------------------------------------------------------
-  // ⭐ NUOVO: avvia rigenerazione dopo 3 secondi
+  // RIGENERAZIONE DOPO DELAY
   // ------------------------------------------------------------
   startRegenAfterDelay() {
-    // se esiste già un timer → cancellalo
     if (this.regenTimer) {
       this.regenTimer.remove(false);
     }
 
-    // dopo 3 secondi, parte il loop di cura
     this.regenTimer = this.scene.time.delayedCall(this.regenDelay, () => {
       this.startRegenLoop();
     });
   }
 
   // ------------------------------------------------------------
-  // loop che cura gradualmente finché non raggiunge maxHp
+  // RIGENERAZIONE
   // ------------------------------------------------------------
   startRegenLoop() {
-    // se il player è già full hp → niente rigenerazione
     if (this.hp >= this.maxHp) return;
 
     this.regenLoop = this.scene.time.addEvent({
@@ -222,10 +219,8 @@ export default class Player {
         this.hp += this.regenAmount;
         if (this.hp > this.maxHp) this.hp = this.maxHp;
 
-        // aggiorna HUD
         this.scene.game.events.emit('hpRegenerate', this.hp);
 
-        // fermati quando è full
         if (this.hp >= this.maxHp) {
           this.stopRegen();
         }
@@ -234,7 +229,7 @@ export default class Player {
   }
 
   // ------------------------------------------------------------
-  // ⭐ NUOVO: stop rigenerazione (quando si prende danno)
+  // STOP RIGENERAZIONE
   // ------------------------------------------------------------
   stopRegen() {
     if (this.regenTimer) {
