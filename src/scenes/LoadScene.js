@@ -85,6 +85,7 @@ export default class LoadScene extends Phaser.Scene {
 		// Spritesheet del player
 		this.load.atlas('player', 'sprites/player.png', 'sprites/player.json');
 		this.load.atlas('npc-vincenzo', 'sprites/npc-vincenzo.png', 'sprites/npc-vincenzo.json');
+		this.load.atlas('npc-giovanni', 'sprites/npc-giovanni.png', 'sprites/npc-giovanni.json');
 		this.load.atlas('quail', 'sprites/quail.png', 'sprites/quail.json');
   }
 

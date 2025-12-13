@@ -47,14 +47,14 @@ export default class NPC {
     // Testo/fumetto molto semplice
 		// @todo cambiare grafica
     const messageStyle = {
-      font: '12px Arial',
+      font: '12px Ari',
       color: '#3a10d1ff',
       backgroundColor: '#ffffff',
       align: 'center',
       padding: { x: 6, y: 4 },
     };
     const nameStyle = {
-      font: '12px Arial',
+      font: '12px Ari',
       color: '#000',
       align: 'center',
       padding: { x: 6, y: 4 },
@@ -86,15 +86,12 @@ export default class NPC {
 		// Movimento
     this.movementTween = null;
 
-    const movementType = config.movementType ?? 'idle';       // 'x' | 'y' | 'idle'
-    const distance = Number(config.distance ?? 0);            // in px
-    const speed = Number(config.speed ?? 0);                  // px/s
-    const startDir = config.startDir ?? 'pos';                // 'pos'|'neg'
-    const idleDir = config.idleDir ?? 'down';                 // idle-* da mostrare se fermo
+    const movementType = config.movementType ?? 'idle';   
+    const distance = Number(config.distance ?? 0);           
+    const speed = Number(config.speed ?? 0);                
+    const startDir = config.startDir ?? 'pos';           
+    const idleDir = config.idleDir ?? 'down';               
 		
-		// Animazioni interne
-		// this.createAnims();
-
     if (movementType === 'x' && distance > 0 && speed > 0) {
       this.patrolX(distance, speed, startDir);
     } else if (movementType === 'y' && distance > 0 && speed > 0) {

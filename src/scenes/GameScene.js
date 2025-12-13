@@ -246,7 +246,8 @@ export default class GameScene extends Phaser.Scene {
   // GRUPPO (PERSONAGGI - SPRITES)
   // ----------------------------------------------------------------------------
 	createGroup() {
-		// Quails
+
+		// QUAILS
 		this.quailGroup = this.physics.add.group()
 		
 		for (let i = 0; i < 50; i++) {
@@ -270,7 +271,7 @@ export default class GameScene extends Phaser.Scene {
 		 		this.quailGroup.add(quail.sprite);
 		 }
 
-		// Player
+		// PLAYER
 		const playerSpawn = this.spawnLayer.objects.find(o => o.type === 'player');
 		const tileW = this.map.tileWidth;
 		const tileH = this.map.tileHeight;
@@ -296,7 +297,7 @@ export default class GameScene extends Phaser.Scene {
 		// });
 
 		// GIOVANNI
-		this.spawnNPCFromPoint('spawn-npc-giovanni', 'npc-vincenzo', {
+		this.spawnNPCFromPoint('spawn-npc-giovanni', 'npc-giovanni', {
 				name: 'Giovanni',
 				dialogueText: 'oggi mi sento proprio gay',
 				movementType: 'x',
