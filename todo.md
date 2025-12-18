@@ -13,7 +13,6 @@
 - [x] Quaglie ali aperte quando muoiono
 
 CLASSE
-- [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 - [x] Collider delle quaglie
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
@@ -21,8 +20,6 @@ CLASSE
 - [x] Bug sulla corsa e l'attacco
 
 ## Da implementare
-- [ ] Interazione con i personaggi
-- [ ] Interazione con oggetti
 - [x] Dinamica di attacco sulle galline
 - [x] Galline morte animazione
 - [x] Giocatore hittato animazione
@@ -31,7 +28,12 @@ CLASSE
 
 ## Fine del gioco
 - [x] Creare logo, sistemare menu
-- [ ] Impostare quiet mode -> le quaglie non attaccano
 - [ ] Creare una bella mappa e creare i vari personaggi
 - [x] Tutto deve essere responsivo su mobile
 - [ ] Creare apk
+
+## UPDATE 2.0
+- [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
+- [ ] Interazione con i personaggi
+- [ ] Interazione con oggetti
+- [ ] Impostare quiet mode -> le quaglie non attaccano
