@@ -20,7 +20,6 @@ export default class NPC {
   constructor(scene, x, y, spriteKey, config = {}) {
     this.scene = scene;
 
-    // Sprite e fisica
 		this.spriteKey = spriteKey;
     this.sprite = scene.physics.add.sprite(x, y, spriteKey);
     this.sprite.setImmovable(true);
@@ -34,24 +33,23 @@ export default class NPC {
     this.sprite.body.setSize(width * 0.5, height * 0.8);
     this.sprite.body.setOffset(width * 0.25, height * 0.2);
 
-		// Dati base
     this.baseX = x;
     this.baseY = y;
 
-		// Nome
 		this.name = config.name;
 
-		// Dialogo
 		this.dialogueTexts = config.dialogueText;
 
-    // Testo/fumetto molto semplice
-		// @todo cambiare grafica
-    const messageStyle = {
+		const messageStyle = {
       font: '12px Ari',
-      color: '#3a10d1ff',
+      color: '#000',
       backgroundColor: '#ffffff',
       align: 'center',
       padding: { x: 6, y: 4 },
+			wordWrap: {
+				width: 250,
+				useAdvancedWrap: true
+			}
     };
     const nameStyle = {
       font: '12px Ari',
@@ -70,12 +68,10 @@ export default class NPC {
 			.setText(this.name)
       .setDepth(10);
 
-    // Distanza dal player
     this.interactionDistance = 60;
     this.isNear = false;
     this.currentText = '';
 
-		// Animazioni se è idle
     this.animIdleKeys = {
       up: this.spriteKey+"-idle-up",
       down: this.spriteKey+"-idle-down",
@@ -83,7 +79,6 @@ export default class NPC {
       right: this.spriteKey+"-idle-right"
     };
 
-		// Movimento
     this.movementTween = null;
 
     const movementType = config.movementType ?? 'idle';   
@@ -143,7 +138,6 @@ export default class NPC {
     const to = startDir === 'pos' ? this.baseX + distance : this.baseX - distance;
     const duration = (distance / speed) * 1000;
 
-    // +1 destra, -1 sinistra
     let dir = to > this.baseX ? 1 : -1;
 
     this.movementTween?.stop();
@@ -170,7 +164,6 @@ export default class NPC {
     const to = startDir === 'pos' ? this.baseY + distance : this.baseY - distance;
     const duration = (distance / speed) * 1000;
 
-    // +1 giù, -1 su
     let dir = to > this.baseY ? 1 : -1;
 
     this.movementTween?.stop();
@@ -215,7 +208,7 @@ export default class NPC {
 
 		if (this.npcMessage.visible) {
 			this.npcMessage.x = this.sprite.x;
-			this.npcMessage.y = this.sprite.y - 40;
+			this.npcMessage.y = this.sprite.y - 50;
 		}
 	}
 }

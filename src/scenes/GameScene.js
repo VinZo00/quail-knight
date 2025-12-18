@@ -299,7 +299,7 @@ export default class GameScene extends Phaser.Scene {
 		// GIOVANNI
 		this.spawnNPCFromPoint('spawn-npc-giovanni', 'npc-giovanni', {
 				name: 'Giovanni',
-				dialogueText: 'oggi mi sento proprio gay',
+				dialogueText: 'Ciao, benvenuto nel mio villaggio! CIao ciacocaspodjaidjsaiodjaisdjaiodjsoidjisao',
 				movementType: 'x',
 				distance: 500,
 				speed: 20,
@@ -379,7 +379,7 @@ export default class GameScene extends Phaser.Scene {
 		this.map = map;
 		this.solidityLayer = solidityLayer;
 		this.elementsLayer = elementsLayer;
-		this.decorationLayer = elementsLayer;
+		this.decorationLayer = decorationLayer;
 		this.overlapLayer = overlapLayer;
 		this.spawnLayer = spawnLayer;
 		// this.topLayer = topLayer;
