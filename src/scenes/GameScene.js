@@ -59,12 +59,13 @@ export default class GameScene extends Phaser.Scene {
 		this.soundBG.play();
 		this.musicEnabled = true;
 
+    this.game.events.off('toggleMusic');
 		this.game.events.on('toggleMusic', /** @param {boolean} enabled */ (enabled) => {
 				this.musicEnabled = enabled;
         if (enabled) {
             if (this.soundBG.isPaused) {
                 this.soundBG.resume();
-            } else {
+            } else if (!this.soundBG.isPlaying) {
                 this.soundBG.play();
             }
         } else {
@@ -436,4 +437,12 @@ export default class GameScene extends Phaser.Scene {
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
+
+	shutdown() {
+		this.game.events.off('toggleMusic');
+		if (this.soundBG) {
+			this.soundBG.stop();
+		}
+	}
+
 }
