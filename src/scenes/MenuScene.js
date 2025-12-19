@@ -58,9 +58,15 @@ export default class MenuScene extends Phaser.Scene {
 		let isMuted = false;
 
 		audioBtn.on('pointerdown', () => {
-			isMuted = !isMuted;
-			this.sound.setMute(isMuted);
-			audioBtn.setTexture(isMuted ? 'mute' : 'audio');
+			if (!isMuted) {
+				introMusic.pause();
+				audioBtn.setTexture('mute');
+				isMuted = true;
+			} else {
+				introMusic.resume();
+				audioBtn.setTexture('audio');
+				isMuted = false;
+			}
 		});
 	}
 
