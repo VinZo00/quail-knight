@@ -11,6 +11,7 @@
 - [x] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI 
 - [x] Aggiungere lo speedrun per il giocatore
 - [x] Quaglie ali aperte quando muoiono
+- [ ] Decidere se audio farlo globale
 
 CLASSE
 - [x] Collider delle quaglie
