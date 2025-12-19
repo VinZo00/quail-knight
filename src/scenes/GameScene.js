@@ -15,11 +15,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		// @ts-ignore
-    this.scene.launch('UIScene'); 
-    this.scene.bringToTop('UIScene'); 
-    this.score = 0;
-		this.gameOver = false;		
+		this.ui();		
 		this.addAudios();
 		this.createMap();
 		this.createGroup();
@@ -34,14 +30,25 @@ export default class GameScene extends Phaser.Scene {
 
 		this.player.update(this.keys, this.cursorKeys);
 
-		this.physics.world.collide(this.player.sprite, this.star, () => {
-			console.log('Collisione (controllo manuale)');
-		});
+		// @todo il giocatore può raccogliere le verdure
+		// this.physics.world.collide(this.player.sprite, this.star, () => {
+		// 	console.log('Collisione (controllo manuale)');
+		// });
 
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
         sprite.quail.update(this.player);
     });
+	}
+
+	// ----------------------------------------------------------------------------
+	// UI
+	// ----------------------------------------------------------------------------
+	ui() {
+    this.scene.launch('UIScene'); 
+    this.scene.bringToTop('UIScene'); 
+    this.score = 0;
+		this.gameOver = false;
 	}
 
 	// ----------------------------------------------------------------------------
