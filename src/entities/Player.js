@@ -83,11 +83,11 @@ export default class Player {
 
 		if (isRunning && left || right || up || down) {
 				if (!this.soundRun.isPlaying) {
-						this.soundRun.play();
+					this.soundRun.play();
 				}
 		} else {
 				if (this.soundRun.isPlaying) {
-						this.soundRun.stop();
+					this.soundRun.stop();
 				}
 		}
 
@@ -241,4 +241,19 @@ export default class Player {
       this.regenLoop = null;
     }
   }
+
+	// ------------------------------------------------------------
+  // STOP SUONO CORSA
+  // ------------------------------------------------------------
+	pauseSounds() {
+    if (this.soundRun?.isPlaying) {
+        this.soundRun.stop();
+    }
+    if (this.soundAttack?.isPlaying) {
+        this.soundAttack.stop();
+    }
+    if (this.soundHurt?.isPlaying) {
+        this.soundHurt.stop();
+    }
+	}
 }

@@ -32,6 +32,7 @@ const config = {
             { key: 'rexVirtualJoystick', plugin: VirtualJoystickPlugin, mapping: 'rexVirtualJoystick' }
         ]
     },
+		disableVisibilityChange: false,
 		input: {
     activePointers: 3,
     touch: {

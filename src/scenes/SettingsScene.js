@@ -44,46 +44,77 @@ export default class SettingsScene extends Phaser.Scene {
             { font: '24px Ari', color: '#000' }
         ).setOrigin(0, 0.5);
 
+        this.add.text(
+            this.scale.width / 2 - 120, 
+            this.scale.height / 2,
+            'Quiet Mode',
+            { font: '24px Ari', color: '#000' }
+        ).setOrigin(0, 0.5);
 
 
         // ============================
         // TOGGLER ON/OFF grafico
         // ============================
-        const toggleContainer = this.add.container(
-            this.scale.width / 2 + 60,
-            this.scale.height / 2 - 60
-        ).setSize(60, 30).setInteractive();
+				const createToggle = (x, y) => {
+						const container = this.add.container(x, y)
+								.setSize(60, 30)
+								.setInteractive();
 
-        const toggleBg = this.add.rectangle(0, 0, 60, 30, 0xcccccc, 1)
-            .setOrigin(0.5)
-            .setStrokeStyle(2, 0x444444);
+						const bg = this.add.rectangle(0, 0, 60, 30, 0xcccccc, 1)
+								.setOrigin(0.5)
+								.setStrokeStyle(2, 0x444444);
 
-        const knob = this.add.circle(-15, 0, 12, 0xffffff)
-            .setStrokeStyle(2, 0x666666);
+						const knob = this.add.circle(-15, 0, 12, 0xffffff)
+								.setStrokeStyle(2, 0x666666);
 
-        toggleContainer.add([toggleBg, knob]);
+						container.add([bg, knob]);
+
+						return { container, bg, knob };
+				};
+
+				const toggleMusic = createToggle(
+						this.scale.width / 2 + 60,
+						this.scale.height / 2 - 60
+				);
+
+				const toggleQuiet = createToggle(
+						this.scale.width / 2,
+						this.scale.height / 2
+				);
 
 				const gameScene = this.scene.get('GameScene');
 				// @ts-ignore
-				this.musicOn = gameScene.musicEnabled;
+				this.musicEnabled = gameScene.musicEnabled;
+				// @ts-ignore
+				this.quietMode = gameScene.quietMode;
 
-        const updateToggleVisual = () => {
-            if (this.musicOn) {
-                toggleBg.setFillStyle(0x44cc44);
-                knob.x = 15;
-            } else {
-                toggleBg.setFillStyle(0xcc4444);
-                knob.x = -15;
-            }
-        };
+				/**
+				 * @param {object} toggle
+				 * @param {boolean} isEnabled
+				*/
+				const updateToggleVisual = (toggle, isEnabled) => {
+						if (isEnabled) {
+								toggle.bg.setFillStyle(0x44cc44);
+								toggle.knob.x = 15;
+						} else {
+								toggle.bg.setFillStyle(0xcc4444);
+								toggle.knob.x = -15;
+						}
+				};
 
-        updateToggleVisual();
+				updateToggleVisual(toggleMusic, this.musicEnabled);
+				updateToggleVisual(toggleQuiet, this.quietMode);
 
-        toggleContainer.on('pointerdown', () => {
-            this.musicOn = !this.musicOn;
-            updateToggleVisual();
+        toggleMusic.container.on('pointerdown', () => {
+            this.musicEnabled = !this.musicEnabled;
+            updateToggleVisual(toggleMusic, this.musicEnabled);
+            this.game.events.emit('toggleMusic', this.musicEnabled);
+        });
 
-            this.game.events.emit('toggleMusic', this.musicOn);
+        toggleQuiet.container.on('pointerdown', () => {
+            this.quietMode = !this.quietMode;
+            updateToggleVisual(toggleQuiet, this.quietMode);
+            this.game.events.emit('toggleQuiet', this.quietMode);
         });
 
 
@@ -94,25 +125,17 @@ export default class SettingsScene extends Phaser.Scene {
 
         const goMenu = this.add.text(
             this.scale.width / 2,
-            this.scale.height / 2 + 10,
+            this.scale.height / 2 + 80,
             'Go to Menu',
             { font: '24px Ari', color: '#0000aa' }
         ).setOrigin(0.5).setInteractive();
 
-        goMenu.on('pointerdown', () => {
-						// @ts-ignore
-						const gameScene = this.scene.get('GameScene');
-
-						// @ts-ignore
-						if (gameScene && gameScene.soundBG && gameScene.soundBG.isPlaying) {
-							// @ts-ignore	
-							gameScene.soundBG.stop();
-						}
-
-            this.scene.stop('GameScene');
-            this.scene.stop('UIScene');
-            this.scene.start('MenuScene');
-        });
+        goMenu.on('pointerdown', () => {					
+						this.scene.stop('GameScene');
+						this.scene.stop('UIScene');
+						this.scene.stop();
+						this.scene.start('MenuScene');
+				});
 
 
 

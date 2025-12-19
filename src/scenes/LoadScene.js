@@ -6,11 +6,8 @@ export default class LoadScene extends Phaser.Scene {
   }
 
   preload() {
-		// --- Load bar ---
 		this.loadFonts();
 		this.loadBar();
-
-    // --- Caricamento risorse (tutte le tue) ---
     this.loadImages();
     this.loadSprite();
     this.loadMap();
@@ -19,8 +16,12 @@ export default class LoadScene extends Phaser.Scene {
 
   create() {
     this.scene.start('GameScene');
+		this.scene.stop();
   }
 
+	// ----------------------------------------------------------------------------
+	// FONTS
+	// ----------------------------------------------------------------------------
 	loadFonts() {
     this.load.font([
         { key: 'Ari', url: 'fonts/ari-w9500.ttf', format: 'truetype' },
@@ -34,6 +35,9 @@ export default class LoadScene extends Phaser.Scene {
     ]);
 	}
  
+	// ----------------------------------------------------------------------------
+	// LOADING BAR
+	// ----------------------------------------------------------------------------
 	loadBar() {
 		// --- Testo "Caricamento..." ---
     const loadingText = this.add.text(
@@ -66,7 +70,9 @@ export default class LoadScene extends Phaser.Scene {
     });
 	}
 
-	// UI
+	// ----------------------------------------------------------------------------
+	// UI IMAGES
+	// ----------------------------------------------------------------------------
 	loadImages() {
     this.load.image('quailscore', 'ui/quailscore.png');
     this.load.image('settings', 'ui/settings.png');
@@ -74,30 +80,34 @@ export default class LoadScene extends Phaser.Scene {
     this.load.image('run', 'ui/run.png');
     this.load.image('star', 'sprites/star.png');
     this.load.image('bomb', 'sprites/bomb.png');
-	}
-
-  loadSprite() {
 		this.load.spritesheet('faces', 'ui/hud-faces.png', {
 			frameWidth: 128,
 			frameHeight: 128
 		});
-		
-		// Spritesheet del player
+	}
+
+	// ----------------------------------------------------------------------------
+	// SPRITESHEETS
+	// ----------------------------------------------------------------------------
+  loadSprite() {
 		this.load.atlas('player', 'sprites/player.png', 'sprites/player.json');
 		this.load.atlas('npc-vincenzo', 'sprites/npc-vincenzo.png', 'sprites/npc-vincenzo.json');
 		this.load.atlas('npc-giovanni', 'sprites/npc-giovanni.png', 'sprites/npc-giovanni.json');
 		this.load.atlas('quail', 'sprites/quail.png', 'sprites/quail.json');
   }
 
-	// Tilemap
+	// ----------------------------------------------------------------------------
+	// MAP
+	// ----------------------------------------------------------------------------
 	loadMap() {
     this.load.image('general', 'tilesets/general.png');
-    // this.load.image('water', 'tilesets/terrain.png');
-    // this.load.image('tree', 'tilesets/tree.png');
     this.load.image('houses', 'tilesets/houses.png');
     this.load.tilemapTiledJSON('map', 'maps/mappa.json');
 	}
 
+	// ----------------------------------------------------------------------------
+	// AUDIO
+	// ----------------------------------------------------------------------------
 	loadAudio() {
     this.load.audio('player-attack', 'audio/player-attack.mp3');
     this.load.audio('player-hurt', 'audio/player-hurt.mp3');

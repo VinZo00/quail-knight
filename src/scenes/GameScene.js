@@ -15,11 +15,15 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
+		this.events.on(Phaser.Scenes.Events.PAUSE, this.pause, this);
 		this.ui();		
 		this.addAudios();
 		this.createMap();
 		this.createGroup();
-		this.createAnims();
+		if (!this.anims.exists('player-walk-up')) {
+			this.createAnims();
+		}
 		this.bindKeys();
 		this.createCamera();
 		this.generateCollision();
@@ -41,6 +45,17 @@ export default class GameScene extends Phaser.Scene {
     });
 	}
 
+	pause() {
+    this.player.pauseSounds();
+	}
+
+	shutdown() {
+		this.game.events.off('toggleMusic');
+		this.game.events.off('toggleQuiet');
+		this.sound.stopAll();
+	}
+
+
 	// ----------------------------------------------------------------------------
 	// UI
 	// ----------------------------------------------------------------------------
@@ -49,6 +64,7 @@ export default class GameScene extends Phaser.Scene {
     this.scene.bringToTop('UIScene'); 
     this.score = 0;
 		this.gameOver = false;
+		this.quietMode = false;
 	}
 
 	// ----------------------------------------------------------------------------
@@ -59,7 +75,6 @@ export default class GameScene extends Phaser.Scene {
 		this.soundBG.play();
 		this.musicEnabled = true;
 
-    this.game.events.off('toggleMusic');
 		this.game.events.on('toggleMusic', /** @param {boolean} enabled */ (enabled) => {
 				this.musicEnabled = enabled;
         if (enabled) {
@@ -173,7 +188,6 @@ export default class GameScene extends Phaser.Scene {
 		});
 	}
 
-
 	quailsAnims() {
 
 		this.anims.create({
@@ -248,7 +262,6 @@ export default class GameScene extends Phaser.Scene {
 			
 		});
 	}
-
 
 	// ----------------------------------------------------------------------------
   // GRUPPO (PERSONAGGI - SPRITES)
@@ -346,8 +359,6 @@ export default class GameScene extends Phaser.Scene {
 			return npc;
 	}
 
-
-
   // ----------------------------------------------------------------------------
   // MAPPA
   // ----------------------------------------------------------------------------
@@ -410,7 +421,7 @@ export default class GameScene extends Phaser.Scene {
 				shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
 		});
 		this.cursorKeys = null;
-		this.game.events.once('ui_ready', (payload) => {
+		this.game.events.once('ui_ready', /** @param {object} payload */ (payload) => {
 			this.cursorKeys = payload.cursorKeys;
 		});
 		this.isRunTouch = false;
@@ -436,13 +447,6 @@ export default class GameScene extends Phaser.Scene {
     this.cam.setZoom(1.5);
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-	}
-
-	shutdown() {
-		this.game.events.off('toggleMusic');
-		if (this.soundBG) {
-			this.soundBG.stop();
-		}
 	}
 
 }
