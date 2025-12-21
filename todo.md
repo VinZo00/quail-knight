@@ -26,6 +26,11 @@ CLASSE
 - [x] Giocatore hittato animazione
 - [x] Vite giocatore
 - [ ] Oggetti in mappa animati, si può fare?
+- [ ] Vite e non health bar
+- [ ] Vino che recupera la vita
+- [ ] Minimappa
+- [ ] Giocatore che muore
+- [ ] Collisione fixare
 
 ## Fine del gioco
 - [x] Creare logo, sistemare menu
@@ -34,7 +39,6 @@ CLASSE
 - [ ] Creare apk
 
 ## UPDATE 2.0
-- [ ] Aggiornamento status (score) se prendo un pomodoro (questo poi scompare)
 - [ ] Interazione con i personaggi
 - [ ] Interazione con oggetti
 - [ ] Impostare quiet mode -> le quaglie non attaccano
