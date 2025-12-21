@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+	base: '/quail-knight/',
 	plugins: [
 		VitePWA({
 			registerType: 'autoUpdate',
@@ -14,14 +15,16 @@ export default defineConfig({
 				background_color: '#313448',
 				display: 'fullscreen',
 				orientation: 'landscape',
+				start_url: '/quail-knight/',
+        scope: '/quail-knight/',
 				icons: [
 					{
-						src: 'icon/pwa-192x192.png',
+						src: '/quail-knight/icon/pwa-192x192.png',
 						sizes: '192x192',
 						type: 'image/png'
 					},
 					{
-						src: 'icon/pwa-512x512.png',
+						src: '/quail-knight/icon/pwa-512x512.png',
 						sizes: '512x512',
 						type: 'image/png'
 					}
