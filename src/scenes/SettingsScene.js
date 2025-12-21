@@ -26,7 +26,7 @@ export default class SettingsScene extends Phaser.Scene {
             1
         ).setStrokeStyle(4, 0x1e0800);
 
-        // Title
+        // Title 
         this.add.text(
             this.scale.width / 2,
             this.scale.height / 2 - 130,
