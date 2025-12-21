@@ -12,7 +12,8 @@ export default defineConfig({
 				description: 'Developed by VinZo',
 				theme_color: '#313448',
 				background_color: '#313448',
-				display: 'standalone',
+				display: 'fullscreen',
+				orientation: 'landscape',
 				icons: [
 					{
 						src: 'icon/pwa-192x192.png',
