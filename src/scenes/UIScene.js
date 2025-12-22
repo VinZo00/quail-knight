@@ -1,40 +1,76 @@
 import Phaser from 'phaser';
 import { GAME_SETTINGS } from '../Settings.js';
+import { GameState } from '../GameState.js';
 
 export default class UIScene extends Phaser.Scene {
   constructor(){ super('UIScene'); }
 
   create(){
-		const scale = GAME_SETTINGS.getScale(this.game);
+		this.gameScale = GAME_SETTINGS.getScale(this.game);
 
-    // Camera UI: nessuno zoom/scroll
+		this.cameraSettings();
+		this.hudPlayer();
+		this.gameSettings();
+		if (GAME_SETTINGS.isMobile) {
+			this.gameHud();
+		}
+  }
+
+	// ------------------------------------------------------------
+  // CAMERA
+  // ------------------------------------------------------------
+	cameraSettings() {
     const uiCam = this.cameras.main;
     uiCam.setZoom(1);
     uiCam.setScroll(0, 0);
+	}
 
-    // HUD
-		this.hudLifeContainer = this.add.container(40, 30).setScale(scale);
+	// ------------------------------------------------------------
+  // PLAYER
+  // ------------------------------------------------------------
+	hudPlayer() {
+		this.previousLives = GameState.lives;
+		this.hudLifeContainer = this.add.container(40, 30).setScale(this.gameScale);
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
 		this.score = 0;
+    this.heartsContainer = this.add.container(this.faceSprite.width + 8, this.faceSprite.width / 2 - 20);
 
-		this.healthContainer = this.add.container(this.faceSprite.width + 8, this.faceSprite.height / 2 - 10);
-		this.healthBorder = this.add.graphics();
-		this.healthBorder.lineStyle(2, 0x1e0800).strokeRect(0, 10, 150, 20).setDepth(2);
-		this.healthFill = this.add.graphics();
-		this.healthFill.fillStyle(0x34a214).fillRect(0, 12, 150, 16);
-		this.healthText = this.add.text(0, -25, `HP ${100}`, {
-				font: 'bold 20px Ari',
-				color: '#ffffffff'
+    this.maxLives = GameState.maxLives;
+		/** @type {Phaser.GameObjects.Image[]} */
+    this.hearts = [];
+
+    for (let i = 0; i < this.maxLives; i++) {
+        const heart = this.add.image(i * 45, 0, 'heart')
+            .setOrigin(0, 0)
+            .setScale(0.4);
+
+        this.hearts.push(heart);
+        this.heartsContainer.add(heart);
+    }
+
+    this.updateHearts(GameState.lives);
+
+    this.hudLifeContainer.add([
+        this.faceSprite,
+        this.heartsContainer
+    ]);
+
+		/**
+		 * @param {string} lives
+		*/
+		this.game.events.on('livesChanged', (lives) => {
+			if (lives < this.previousLives) {
+				this.showDamageFace(lives);
+			} else {
+				this.updateFace(lives);
+			}
+			 this.updateHearts(lives);
+			this.previousLives = lives;
 		});
-		this.healthContainer.add([this.healthBorder, this.healthFill, this.healthText]);
-	
-		this.hudLifeContainer.add([
-			this.faceSprite,
-			this.healthContainer
-		]);
+
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
-		const containerWidth = this.scoreBox.displayWidth * scale;
+		const containerWidth = this.scoreBox.displayWidth * this.gameScale;
 		this.scoreText = this.add.text(0, 0, `${this.score}`, {
 				font: 'bold 40px Ari',
 				color: '#1e0800'
@@ -47,9 +83,14 @@ export default class UIScene extends Phaser.Scene {
 				this.scale.width - containerWidth - 30,
 				30
 		);
-		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(scale * .9);
+		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(this.gameScale * .9);
+	}
 
-		this.settings = this.add.image(20, 20, 'settings').setScale(.4).setOrigin(0, 0).setInteractive();
+	// ------------------------------------------------------------
+  // SETTINGS
+  // ------------------------------------------------------------
+	gameSettings() {
+		this.settings = this.add.image(20, 20, 'settings').setScale(.4 * this.gameScale).setOrigin(0, 0).setInteractive();
 
 		this.settings.on('pointerdown', () => {
 				this.scene.pause('GameScene');
@@ -57,13 +98,15 @@ export default class UIScene extends Phaser.Scene {
 				this.scene.launch('SettingsScene');
 				this.scene.bringToTop('SettingsScene');
 		});
+	}
 
-
-		if (GAME_SETTINGS.isMobile) {
-			// ——— JOYSTICK VIRTUALE (rex) ———
+	// ------------------------------------------------------------
+  // HUD
+  // ------------------------------------------------------------
+	gameHud() {
 			// @ts-ignore
 			this.joystick = this.rexVirtualJoystick.add(this, {
-				x: 80, y: this.scale.height - 70,
+				x: 100, y: this.scale.height - 80,
 				radius: 60,
 				base: this.add.circle(0, 0, 50, 0x888888, 0.4),
 				thumb: this.add.circle(0, 0, 25, 0xffffff, 0.8)
@@ -77,11 +120,11 @@ export default class UIScene extends Phaser.Scene {
 			});
 			
 			this.runButton = this.add.image(
-					this.scale.width - 130,
-					this.scale.height - 130, 
+					this.scale.width - 170,
+					this.scale.height - 120, 
 					'run'         
 			)
-			.setScale(scale * 0.6)
+			.setScale(this.gameScale * 0.6)
 			.setInteractive()
 			.setScrollFactor(0)
 			.on('pointerdown', () => {
@@ -102,11 +145,11 @@ export default class UIScene extends Phaser.Scene {
 			});
 
 			this.attackButton = this.add.image(
-					this.scale.width - 80,
+					this.scale.width - 90,
 					this.scale.height - 70, 
 					'attack'         
 			)
-			.setScale(scale * 0.7)
+			.setScale(this.gameScale * 0.7)
 			.setInteractive()
 			.setScrollFactor(0)
 			.on('pointerdown', () => {
@@ -125,75 +168,34 @@ export default class UIScene extends Phaser.Scene {
 					this.attackButton.clearTint();
 					this.game.events.emit('attack_up');
 			});
-		}
-
-		this.game.events.on('hpChanged', (hp = null) => {
-			this.showDamageFace(hp);
-			this.updateHP(hp);
-			this.updateHealthBar(hp);
-		});
-
-		this.game.events.on('hpRegenerate', (hp = null) => {
-			this.updateFace(hp);
-			this.updateHP(hp);
-			this.updateHealthBar(hp);
-		});
-
-		this.game.events.on('scoreChanged', (value = null) => {
-			this.score = this.score + value;
-      this.scoreText.setText(this.score);
-    });
-  }
-
-	/**
-   * @param {number} hp
-  */
-	updateHP(hp) {
-		this.healthText.setText(`HP ${hp}`);
 	}
 
 	/**
-   * @param {number} hp
+   * @param {number} lives
   */
-	updateFace(hp) {
-    if (hp > 75) this.faceSprite.setFrame(0);
-    else if (hp > 50) this.faceSprite.setFrame(1);
-    else if (hp > 25) this.faceSprite.setFrame(2);
-    else this.faceSprite.setFrame(3);
-  }
+	updateHearts(lives) {
+		this.hearts.forEach((heart, index) => {
+        heart.setTint(index < lives ? 0xffffff : 0x000000);
+    });
+	}
 
 	/**
-   * @param {number} hp
+   * @param {number} lives
   */
-	showDamageFace(hp) {
+	updateFace(lives) {
+		if (lives === GameState.maxLives) this.faceSprite.setFrame(0);
+		else if (lives === 2) this.faceSprite.setFrame(1);
+		else if (lives === 1) this.faceSprite.setFrame(3);
+	}
 
-		if (this.isTakingDamage) return;
-
-		this.isTakingDamage = true;
-
+	/**
+   * @param {number} lives
+  */
+	showDamageFace(lives) {
 		this.faceSprite.setFrame(4);
 
 		this.time.delayedCall(500, () => {
-			this.isTakingDamage = false;
-			this.updateFace(hp);
+			this.updateFace(lives);
 		});
 	}
-
-	/**
-   * @param {number} hp
-  */
-	updateHealthBar(hp) {
-		const maxWidth = 150;
-		const width = Phaser.Math.Clamp(hp, 0, 100) * (maxWidth / 100);
-
-		this.healthFill.clear();
-		
-		let color = 0x34a214;
-		if (hp <= 75) color = 0xffff00;
-		if (hp <= 25) color = 0xff0000;
-
-		this.healthFill.fillStyle(color);
-		this.healthFill.fillRect(0, 12, width, 16).setDepth(1);
-	}
-
 }

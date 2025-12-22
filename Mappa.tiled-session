@@ -5,9 +5,9 @@
     },
     "activeFile": "public/maps/mappa.json",
     "expandedProjectPaths": [
-        "public",
         ".",
-        "public/maps"
+        "public/maps",
+        "public"
     ],
     "file.lastUsedOpenFilter": "Tutti i file (*)",
     "fileStates": {
@@ -147,10 +147,10 @@
         },
         "public/maps/mappa.json": {
             "scale": 1,
-            "selectedLayer": 4,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 350,
-                "y": 2765.5
+                "x": 1499,
+                "y": 362.5
             }
         },
         "public/maps/mappa.json#1_terrain": {
@@ -164,7 +164,7 @@
         },
         "public/maps/mappa.json#general": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.75,
+            "scaleInDock": 3,
             "scaleInEditor": 0.75
         },
         "public/maps/mappa.json#house": {

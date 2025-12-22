@@ -16,7 +16,6 @@ export default class Quail {
         this.sprite.setImmovable(false);
         this.sprite.setCollideWorldBounds(true);
 
-				// FIXME andrà bene questa logica?
 				// @ts-ignore 
 				this.sprite.quail = this;
 

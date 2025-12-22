@@ -78,8 +78,8 @@ export default class LoadScene extends Phaser.Scene {
     this.load.image('settings', 'ui/settings.png');
     this.load.image('attack', 'ui/attack.png');
     this.load.image('run', 'ui/run.png');
-    this.load.image('star', 'sprites/star.png');
-    this.load.image('bomb', 'sprites/bomb.png');
+    this.load.image('heart', 'ui/heart.png');
+    this.load.image('wine', 'sprites/wine.png');
 		this.load.spritesheet('faces', 'ui/hud-faces.png', {
 			frameWidth: 128,
 			frameHeight: 128

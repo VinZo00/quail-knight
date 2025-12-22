@@ -5,9 +5,7 @@ export default class BootScene extends Phaser.Scene {
     super({ key: 'BootScene' });
   }
 
-  preload() {
-    this.load.image('logo', './assets/sprites/logo.png');
-  }
+  preload() {}
 
   create() {
 		this.scene.start('MenuScene');

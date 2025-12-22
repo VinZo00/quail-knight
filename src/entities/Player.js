@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GameState } from '../GameState.js';
 
 export default class Player {
 	/**
@@ -29,16 +30,6 @@ export default class Player {
     this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
-
-		this.maxHp = 100;
-    this.hp = this.maxHp;
-
-		this.regenDelay = 3000;      // 3 secondi prima di iniziare a curare
-    this.regenAmount = 1;        // quanto cura ogni tick
-    this.regenSpeed = 150;       // ogni quanto cura (ms)
-    this.regenTimer = null;      // timer che attende i 3s
-    this.regenLoop = null;       // loop che cura gradualmente
-
   }
 
   // ----------------------------------------------------------------------------
@@ -184,66 +175,34 @@ export default class Player {
     this.scene.time.delayedCall(150, () => this.sprite.clearTint());
     this.scene.time.delayedCall(500, () => this.isInvulnerable = false);
 
-    this.hp -= damage;
-    if (this.hp < 0) this.hp = 0;
+    GameState.takeDamage();
+    this.scene.game.events.emit('livesChanged', GameState.lives);
 
-    this.scene.game.events.emit('hpChanged', this.hp);
-
-    this.stopRegen(); 
-    this.startRegenAfterDelay();
-  }
-
-  // ------------------------------------------------------------
-  // RIGENERAZIONE DOPO DELAY
-  // ------------------------------------------------------------
-  startRegenAfterDelay() {
-    if (this.regenTimer) {
-      this.regenTimer.remove(false);
-    }
-
-    this.regenTimer = this.scene.time.delayedCall(this.regenDelay, () => {
-      this.startRegenLoop();
-    });
-  }
-
-  // ------------------------------------------------------------
-  // RIGENERAZIONE
-  // ------------------------------------------------------------
-  startRegenLoop() {
-    if (this.hp >= this.maxHp) return;
-
-    this.regenLoop = this.scene.time.addEvent({
-      delay: this.regenSpeed,
-      loop: true,
-      callback: () => {
-        this.hp += this.regenAmount;
-        if (this.hp > this.maxHp) this.hp = this.maxHp;
-
-        this.scene.game.events.emit('hpRegenerate', this.hp);
-
-        if (this.hp >= this.maxHp) {
-          this.stopRegen();
-        }
-      }
-    });
-  }
-
-  // ------------------------------------------------------------
-  // STOP RIGENERAZIONE
-  // ------------------------------------------------------------
-  stopRegen() {
-    if (this.regenTimer) {
-      this.regenTimer.remove(false);
-      this.regenTimer = null;
-    }
-    if (this.regenLoop) {
-      this.regenLoop.remove(false);
-      this.regenLoop = null;
+    if (GameState.lives === 0) {
+        this.die();
     }
   }
+
+
 
 	// ------------------------------------------------------------
-  // STOP SUONO CORSA
+  // ADD LIFE
+  // ------------------------------------------------------------
+	addLife() {
+    GameState.addLife();
+    this.scene.game.events.emit('livesChanged', GameState.lives);
+	}
+
+
+	// ------------------------------------------------------------
+  // DIE
+  // ------------------------------------------------------------
+	die() {
+
+	}
+
+	// ------------------------------------------------------------
+  // STOP RUN SOUND
   // ------------------------------------------------------------
 	pauseSounds() {
     if (this.soundRun?.isPlaying) {

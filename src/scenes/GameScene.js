@@ -2,6 +2,8 @@ import Phaser from 'phaser'
 import NPC from '../entities/NPC.js';
 import Player from '../entities/Player.js';
 import Quail from '../entities/Quail.js';
+import { GAME_SETTINGS } from '../Settings.js';
+import { GameState } from '../GameState.js';
 
 /**
  * @extends Phaser.Scene
@@ -33,11 +35,6 @@ export default class GameScene extends Phaser.Scene {
 		if (this.gameOver) return;
 
 		this.player.update(this.keys, this.cursorKeys);
-
-		// @todo il giocatore può raccogliere le verdure
-		// this.physics.world.collide(this.player.sprite, this.star, () => {
-		// 	console.log('Collisione (controllo manuale)');
-		// });
 
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
@@ -96,13 +93,25 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player.sprite, this.solidityLayer);
 		this.physics.add.collider(this.player.sprite, this.overlapLayer);
 		this.physics.add.collider(this.player.sprite, this.elementsLayer);
-		// this.physics.add.collider(this.player.sprite, this.collision);
-		// this.physics.add.collider(this.player.sprite, this.topLayer);
-		// this.physics.add.collider(this.player.sprite, this.npcGroup);
+
+		this.physics.add.overlap(this.player.sprite, this.wineGroup, this.collectLife, null, this);
+
 		this.physics.add.collider(this.quailGroup, this.solidityLayer);
 		this.physics.add.collider(this.quailGroup, this.overlapLayer);
 		this.physics.add.collider(this.quailGroup, this.elementsLayer);
-		// this.physics.add.collider(this.quailGroup, this.topLayer);
+	}
+
+	/**
+	 * Callback di overlap tra player e pickup vita.
+	 * Elimina il pickup e aggiorna lo stato globale delle vite.
+	 *
+	 * @param {Phaser.Types.Physics.Arcade.GameObjectWithBody} player
+	 * @param {Phaser.Types.Physics.Arcade.GameObjectWithBody} life
+	*/
+	collectLife(player, life) {
+    life.destroy();
+		GameState.addLife();
+		this.game.events.emit('livesChanged', GameState.lives);
 	}
 
 	// ----------------------------------------------------------------------------
@@ -280,8 +289,10 @@ export default class GameScene extends Phaser.Scene {
 		 			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
 					const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
 					const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
+					const elementsTile = this.elementsLayer.getTileAtWorldXY(x, y);
 		 			
 					if ((!solidityTile || !solidityTile.properties.collides) &&
+							(!elementsTile || !elementsTile.properties.noSpawn) &&
 							(!decorationTile || !decorationTile.properties.noSpawn)) {
 							safe = true;
 					}
@@ -290,7 +301,8 @@ export default class GameScene extends Phaser.Scene {
 		 		const quail = new Quail(this, x, y, 'quail');
 		 		// @ts-ignore
 		 		this.quailGroup.add(quail.sprite);
-		 }
+		}
+
 
 		// PLAYER
 		const playerSpawn = this.spawnLayer.objects.find(o => o.type === 'player');
@@ -300,8 +312,36 @@ export default class GameScene extends Phaser.Scene {
 		const spawnY = playerSpawn.y + tileH / 2;
 		this.player = new Player(this, spawnX, spawnY, 'player');
 
-		// Objects
-		this.star = this.physics.add.sprite(100, 200, 'star').setScale(2).setImmovable();
+		// WINE
+		this.wineGroup = this.physics.add.group({
+				allowGravity: false,
+				immovable: true
+		});
+		for (let i = 0; i < 50; i++) {
+			let x, y;
+			let safe = false;
+
+			while (!safe) {
+					x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+					y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+
+					const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
+					const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
+					const elementsTile = this.elementsLayer.getTileAtWorldXY(x, y);
+
+					if (
+							(!solidityTile || !solidityTile.properties.collides) &&
+							(!elementsTile || !elementsTile.properties.noSpawn) &&
+							(!decorationTile || !decorationTile.properties.noSpawn)
+					) {
+							safe = true;
+					}
+			}
+
+			const wine = this.wineGroup.create(x, y, 'wine');
+			wine.setOrigin(0.5, 0.5).setScale(.3);
+	}
+
 
 		// INSERISCO NPCS
 		this.npcGroup = this.physics.add.group();
@@ -365,44 +405,24 @@ export default class GameScene extends Phaser.Scene {
 	createMap() {
     const map = this.make.tilemap({ key: 'map' });
 		const terrain = map.addTilesetImage('general', 'general');
-		// const water = map.addTilesetImage('terrain', 'water');
 		const houses = map.addTilesetImage('houses', 'houses');
-		// const tree = map.addTilesetImage('trees', 'tree');
 
-		const terrainLayer = map.createLayer('terrain', [terrain]).setDepth(-3);
-		const decorationLayer = map.createLayer('decorations', [terrain]).setDepth(-2);
-		const elementsLayer = map.createLayer('elements', [terrain]).setDepth(-1);
-		const overlapLayer = map.createLayer('overlap', [terrain, houses]).setDepth(2);
-		const topLayer = map.createLayer('top', [terrain]).setDepth(2);
+		this.terrainlayer = map.createLayer('terrain', [terrain]).setDepth(-3);
+		this.decorationLayer = map.createLayer('decorations', [terrain]).setDepth(-2);
+		this.elementsLayer = map.createLayer('elements', [terrain]).setDepth(-1);
+		this.overlapLayer = map.createLayer('overlap', [terrain, houses]).setDepth(2);
+		this.topLayer = map.createLayer('top', [terrain]).setDepth(2);
 
-		const solidityLayer = map.createLayer('solidity', [terrain]);
-		const spawnLayer = map.getObjectLayer('spawns');
+		this.solidityLayer = map.createLayer('solidity', [terrain]);
+		this.spawnLayer = map.getObjectLayer('spawns');
 
-		solidityLayer.setCollisionByProperty({ collides: true });
-		elementsLayer.setCollisionByProperty({ collides: true });
-		overlapLayer.setCollisionByProperty({ collides: true });
+		this.solidityLayer.setCollisionByProperty({ collides: true });
+		this.elementsLayer.setCollisionByProperty({ collides: true });
+		this.overlapLayer.setCollisionByProperty({ collides: true });
 
-		solidityLayer.setVisible(false);
-
-		// const topLayer = map.createLayer('top', [terrain]).setDepth(2);
-		// const collision = map.createLayer('collision', [terrain]);
-		
-		// collision.setCollisionByExclusion([-1]);
-		// topLayer.setCollisionByProperty({ collision: true });
-
-		// topLayer.setTileLocationCallback(6, 9, 1, 1, () => {
-		// 	console.log('Sono sul pomodoro!');
-		// 	topLayer.setTileLocationCallback(6, 9, 1, 1, null);
-		// })
+		this.solidityLayer.setVisible(false);
 
 		this.map = map;
-		this.solidityLayer = solidityLayer;
-		this.elementsLayer = elementsLayer;
-		this.decorationLayer = decorationLayer;
-		this.overlapLayer = overlapLayer;
-		this.spawnLayer = spawnLayer;
-		// this.topLayer = topLayer;
-		// this.collision = collision;
 		this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
 
@@ -444,7 +464,11 @@ export default class GameScene extends Phaser.Scene {
   // ----------------------------------------------------------------------------
 	createCamera() {
 		this.cam = this.cameras.main;
-    this.cam.setZoom(1.5);
+		if (GAME_SETTINGS.isMobile) {
+    	this.cam.setZoom(1.2);
+		} else {
+			this.cam.setZoom(1.5);
+		}
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 	}
