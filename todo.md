@@ -26,11 +26,13 @@ CLASSE
 - [x] Giocatore hittato animazione
 - [x] Vite giocatore
 - [ ] Oggetti in mappa animati, si può fare?
-- [ ] Vite e non health bar
-- [ ] Vino che recupera la vita
+- [x] Vite e non health bar
+- [x] Vino che recupera la vita
 - [ ] Minimappa
 - [ ] Giocatore che muore
-- [ ] Collisione fixare
+- [x] Collisione fixare
+- [ ] Suono alla morte 
+- [ ] Scena di morte
 
 ## Fine del gioco
 - [x] Creare logo, sistemare menu

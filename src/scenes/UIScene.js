@@ -84,6 +84,11 @@ export default class UIScene extends Phaser.Scene {
 				30
 		);
 		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(this.gameScale * .9);
+
+		this.game.events.on('scoreChanged', (value = null) => {
+			this.score = this.score + value;
+      this.scoreText.setText(this.score);
+    });
 	}
 
 	// ------------------------------------------------------------
