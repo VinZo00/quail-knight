@@ -1044,6 +1044,15 @@
                         }]
                 }, 
                 {
+                 "id":291,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
                  "id":292,
                  "properties":[
                         {
@@ -1090,6 +1099,15 @@
                 }, 
                 {
                  "id":299,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":323,
                  "properties":[
                         {
                          "name":"noSpawn",
@@ -1557,6 +1575,15 @@
                         }]
                 }, 
                 {
+                 "id":458,
+                 "properties":[
+                        {
+                         "name":"noSpawn",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
                  "id":462,
                  "properties":[
                         {
@@ -1600,7 +1627,8 @@
                          "type":"bool",
                          "value":true
                         }]
-                }, 
+                },
+            
                 {
                  "id":470,
                  "properties":[
@@ -1627,8 +1655,7 @@
                          "type":"bool",
                          "value":true
                         }]
-                },
-            
+                }, 
                 {
                  "id":489,
                  "properties":[
@@ -2501,7 +2528,8 @@
                          "type":"bool",
                          "value":true
                         }]
-                }, 
+                },
+            
                 {
                  "id":1023,
                  "properties":[
