@@ -11,13 +11,13 @@
 - [x] Gestire meglio le animazioni, USARE CREATE DENTRO GAMESCENE E NON SINGOLE PER ONGI 
 - [x] Aggiungere lo speedrun per il giocatore
 - [x] Quaglie ali aperte quando muoiono
-- [ ] Decidere se audio farlo globale
+- [x] Decidere se audio farlo globale
 
 CLASSE
 - [x] Collider delle quaglie
 - [x] NPC, meglio tween o moveTimer
 - [x] Le quaglie attaccano
-- [ ] modificare Tileset
+- [x] modificare Tileset
 - [x] Bug sulla corsa e l'attacco
 
 ## Da implementare
@@ -25,10 +25,9 @@ CLASSE
 - [x] Galline morte animazione
 - [x] Giocatore hittato animazione
 - [x] Vite giocatore
-- [ ] Oggetti in mappa animati, si può fare?
+- [x] Oggetti in mappa animati, si può fare? NO
 - [x] Vite e non health bar
 - [x] Vino che recupera la vita
-- [ ] Minimappa
 - [ ] Giocatore che muore
 - [x] Collisione fixare
 - [ ] Suono alla morte 
@@ -36,11 +35,11 @@ CLASSE
 
 ## Fine del gioco
 - [x] Creare logo, sistemare menu
-- [ ] Creare una bella mappa e creare i vari personaggi
+- [ ] Aggiungere personaggi
 - [x] Tutto deve essere responsivo su mobile
 - [ ] Creare apk
 
 ## UPDATE 2.0
-- [ ] Interazione con i personaggi
-- [ ] Interazione con oggetti
-- [ ] Impostare quiet mode -> le quaglie non attaccano
+- [x] Interazione con i personaggi
+- [x] Interazione con oggetti -> Aggiunto vino come vita
+- [x] Impostare quiet mode -> le quaglie non attaccano
