@@ -109,9 +109,11 @@ export default class GameScene extends Phaser.Scene {
 	 * @param {Phaser.Types.Physics.Arcade.GameObjectWithBody} life
 	*/
 	collectLife(player, life) {
-    life.destroy();
-		GameState.addLife();
-		this.game.events.emit('livesChanged', GameState.lives);
+		if (GameState.lives != GameState.maxLives) {
+		  life.destroy();
+			GameState.addLife();
+			this.game.events.emit('livesChanged', GameState.lives);	
+		}
 	}
 
 	// ----------------------------------------------------------------------------
