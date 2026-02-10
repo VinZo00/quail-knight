@@ -20,6 +20,7 @@ export default class GameScene extends Phaser.Scene {
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 		this.events.on(Phaser.Scenes.Events.PAUSE, this.pause, this);
 		this.ui();		
+		this.quietModeSet();
 		this.addAudios();
 		this.createMap();
 		this.createGroup();
@@ -48,7 +49,9 @@ export default class GameScene extends Phaser.Scene {
 
 	shutdown() {
 		this.game.events.off('toggleMusic');
+		this.game.events.off('scoreChanged');
 		this.game.events.off('toggleQuiet');
+		GameState.reset();
 		this.sound.stopAll();
 	}
 
@@ -62,6 +65,17 @@ export default class GameScene extends Phaser.Scene {
     this.score = 0;
 		this.gameOver = false;
 		this.quietMode = false;
+	}
+
+	// ----------------------------------------------------------------------------
+	// QUIET MODE
+	// ----------------------------------------------------------------------------
+	quietModeSet() {
+		this.quietMode = false;
+
+		this.game.events.on('toggleQuiet', /** @param {boolean} enabled */ (enabled) => {
+				this.quietMode = enabled;
+    });
 	}
 
 	// ----------------------------------------------------------------------------

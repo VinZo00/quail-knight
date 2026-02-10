@@ -85,13 +85,14 @@ export default class Quail {
     update(player) {
 				if (this.isDead) return;
 				this.shadow.setPosition(this.sprite.x, this.sprite.y + this.sprite.displayHeight / 2 - 3);
-
-        const distance = Phaser.Math.Distance.Between(
+        
+				const distance = Phaser.Math.Distance.Between(
             this.sprite.x, this.sprite.y,
             player.sprite.x, player.sprite.y
         );
 
-        if (distance < this.chaseDistance) {
+				// @ts-ignore
+        if (distance < this.chaseDistance && !this.scene.quietMode) {
             this.isChasing = true;
             if (this.moveTimer) this.moveTimer.paused = true;
 
@@ -106,7 +107,7 @@ export default class Quail {
             } else {
                 this.scene.physics.velocityFromRotation(angle, this.chaseSpeed, this.sprite.body.velocity);
             }
-        }  else {
+        } else {
             this.isChasing = false;
             if (this.moveTimer) this.moveTimer.paused = false;
         }

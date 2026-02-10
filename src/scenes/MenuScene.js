@@ -54,7 +54,7 @@ export default class MenuScene extends Phaser.Scene {
 		const introMusic = this.sound.add('intro', { loop: true, volume: .5 });
 		introMusic.play();
 
-		const audioBtn = this.add.image(30, 30, 'audio').setScale(.3).setInteractive();
+		const audioBtn = this.add.image(30, 30, 'audio').setScale(.3).setInteractive({ useHandCursor: true });
 		let isMuted = false;
 
 		audioBtn.on('pointerdown', () => {
@@ -74,7 +74,7 @@ export default class MenuScene extends Phaser.Scene {
 	// PLAY BUTTON
 	// ----------------------------------------------------------------------------
 	playButton() {
-		const playButton = this.add.image(this.scale.width / 2, this.scale.height - 80, 'play').setOrigin(0.5).setScale(this.scaleGame).setInteractive();
+		const playButton = this.add.image(this.scale.width / 2, this.scale.height - 80, 'play').setOrigin(0.5).setScale(this.scaleGame).setInteractive({ useHandCursor: true });
 		this.logo = this.add.image(this.scale.width / 2, this.scaleGame * 150, 'logo').setOrigin(0.5).setScale(this.scaleGame * .8);
 
 		playButton.on('pointerdown', () => {
