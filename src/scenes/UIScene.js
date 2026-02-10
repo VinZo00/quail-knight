@@ -14,6 +14,7 @@ export default class UIScene extends Phaser.Scene {
 		if (GAME_SETTINGS.isMobile) {
 			this.gameHud();
 		}
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
   }
 
 	// ------------------------------------------------------------
@@ -56,17 +57,20 @@ export default class UIScene extends Phaser.Scene {
     ]);
 
 		/**
-		 * @param {string} lives
+		/** @type {(lives: number) => void} 
 		*/
-		this.game.events.on('livesChanged', (lives) => {
+		this.onLivesChanged = (lives) => {
 			if (lives < this.previousLives) {
 				this.showDamageFace(lives);
 			} else {
 				this.updateFace(lives);
 			}
-			 this.updateHearts(lives);
+			this.updateHearts(lives);
 			this.previousLives = lives;
-		});
+		};
+
+		this.game.events.on('livesChanged', this.onLivesChanged);
+
 
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
@@ -85,10 +89,14 @@ export default class UIScene extends Phaser.Scene {
 		);
 		this.scoreContainer.add([this.scoreBox, this.scoreText]).setScale(this.gameScale * .9);
 
-		this.game.events.on('scoreChanged', (value = null) => {
-			this.score = this.score + value;
-      this.scoreText.setText(this.score);
-    });
+		/** @type {(value: number) => void} */
+		this.onScoreChanged = (value = 0) => {
+			this.score += value;
+			this.scoreText.setText(`${this.score}`);
+		};
+
+		this.game.events.on('scoreChanged', this.onScoreChanged);
+
 	}
 
 	// ------------------------------------------------------------
@@ -202,5 +210,13 @@ export default class UIScene extends Phaser.Scene {
 		this.time.delayedCall(500, () => {
 			this.updateFace(lives);
 		});
+	}
+
+	/**
+	 * SHUTDOWN
+	 */
+	shutdown() {
+		this.game.events.off('livesChanged', this.onLivesChanged);
+		this.game.events.off('scoreChanged', this.onScoreChanged);
 	}
 }

@@ -17,7 +17,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 		this.events.on(Phaser.Scenes.Events.PAUSE, this.pause, this);
 		this.ui();		
 		this.quietModeSet();
@@ -30,6 +29,7 @@ export default class GameScene extends Phaser.Scene {
 		this.bindKeys();
 		this.createCamera();
 		this.generateCollision();
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 	}
 
 	update() {
@@ -48,9 +48,12 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	shutdown() {
-		this.game.events.off('toggleMusic');
-		this.game.events.off('scoreChanged');
-		this.game.events.off('toggleQuiet');
+    this.game.events.off('toggleMusic', this.onToggleMusic);
+    this.game.events.off('toggleQuiet', this.onToggleQuiet);
+    this.game.events.off('run_down', this.onRunDown);
+    this.game.events.off('run_up', this.onRunUp);
+    this.game.events.off('attack_down', this.onAttackDown);
+    this.game.events.off('attack_up', this.onAttackUp);
 		GameState.reset();
 		this.sound.stopAll();
 	}
@@ -71,33 +74,36 @@ export default class GameScene extends Phaser.Scene {
 	// QUIET MODE
 	// ----------------------------------------------------------------------------
 	quietModeSet() {
-		this.quietMode = false;
+			this.quietMode = false;
 
-		this.game.events.on('toggleQuiet', /** @param {boolean} enabled */ (enabled) => {
-				this.quietMode = enabled;
-    });
+			this.onToggleQuiet = /** @param {boolean} enabled */ (enabled) => {
+					this.quietMode = enabled;
+			};
+			
+			this.game.events.on('toggleQuiet', this.onToggleQuiet);
 	}
-
 	// ----------------------------------------------------------------------------
 	// AUDIO
 	// ----------------------------------------------------------------------------
 	addAudios() {
-		this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
-		this.soundBG.play();
-		this.musicEnabled = true;
-
-		this.game.events.on('toggleMusic', /** @param {boolean} enabled */ (enabled) => {
-				this.musicEnabled = enabled;
-        if (enabled) {
-            if (this.soundBG.isPaused) {
-                this.soundBG.resume();
-            } else if (!this.soundBG.isPlaying) {
-                this.soundBG.play();
-            }
-        } else {
-            this.soundBG.pause();
-        }
-    });
+			this.soundBG = this.sound.add('background', { loop: true, volume: 0.1 });
+			this.soundBG.play();
+			this.musicEnabled = true;
+			
+			this.onToggleMusic = /** @param {boolean} enabled */ (enabled) => {
+					this.musicEnabled = enabled;
+					if (enabled) {
+							if (this.soundBG.isPaused) {
+									this.soundBG.resume();
+							} else if (!this.soundBG.isPlaying) {
+									this.soundBG.play();
+							}
+					} else {
+							this.soundBG.pause();
+					}
+			};
+			
+			this.game.events.on('toggleMusic', this.onToggleMusic);
 	}
 
 	// ----------------------------------------------------------------------------
@@ -446,33 +452,46 @@ export default class GameScene extends Phaser.Scene {
   // PULSANTI
   // ----------------------------------------------------------------------------
 	bindKeys() {
-		// @ts-ignore
-		this.keys = this.input.keyboard.addKeys({
-				up: Phaser.Input.Keyboard.KeyCodes.W,
-				down: Phaser.Input.Keyboard.KeyCodes.S,
-				left: Phaser.Input.Keyboard.KeyCodes.A,
-				right: Phaser.Input.Keyboard.KeyCodes.D,
-				attack: Phaser.Input.Keyboard.KeyCodes.K,
-				talk: Phaser.Input.Keyboard.KeyCodes.T,
-				shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
-		});
-		this.cursorKeys = null;
-		this.game.events.once('ui_ready', /** @param {object} payload */ (payload) => {
-			this.cursorKeys = payload.cursorKeys;
-		});
-		this.isRunTouch = false;
-		this.game.events.on('run_down', () => {
-				this.isRunTouch = true;
-		});
-		this.game.events.on('run_up', () => {
-				this.isRunTouch = false;
-		});
-		this.game.events.on('attack_down', () => {
-				this.isAttackTouch = true;
-		});
-		this.game.events.on('attack_up', () => {
-				this.isAttackTouch = false;
-		});
+			// @ts-ignore
+			this.keys = this.input.keyboard.addKeys({
+					up: Phaser.Input.Keyboard.KeyCodes.W,
+					down: Phaser.Input.Keyboard.KeyCodes.S,
+					left: Phaser.Input.Keyboard.KeyCodes.A,
+					right: Phaser.Input.Keyboard.KeyCodes.D,
+					attack: Phaser.Input.Keyboard.KeyCodes.K,
+					talk: Phaser.Input.Keyboard.KeyCodes.T,
+					shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
+			});
+			
+			this.cursorKeys = null;
+			
+			// ✅ SALVA I RIFERIMENTI
+			this.onUIReady = (payload) => {
+					this.cursorKeys = payload.cursorKeys;
+			};
+			
+			this.onRunDown = () => {
+					this.isRunTouch = true;
+			};
+			
+			this.onRunUp = () => {
+					this.isRunTouch = false;
+			};
+			
+			this.onAttackDown = () => {
+					this.isAttackTouch = true;
+			};
+			
+			this.onAttackUp = () => {
+					this.isAttackTouch = false;
+			};
+			
+			// ✅ USA I RIFERIMENTI
+			this.game.events.once('ui_ready', this.onUIReady);
+			this.game.events.on('run_down', this.onRunDown);
+			this.game.events.on('run_up', this.onRunUp);
+			this.game.events.on('attack_down', this.onAttackDown);
+			this.game.events.on('attack_up', this.onAttackUp);
 	}
 
   // ----------------------------------------------------------------------------
