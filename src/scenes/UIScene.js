@@ -33,7 +33,6 @@ export default class UIScene extends Phaser.Scene {
 		this.previousLives = GameState.lives;
 		this.hudLifeContainer = this.add.container(40, 30).setScale(this.gameScale);
 		this.faceSprite = this.add.sprite(0, 0, 'faces', 0).setOrigin(0, 0);
-		this.score = 0;
     this.heartsContainer = this.add.container(this.faceSprite.width + 8, this.faceSprite.width / 2 - 20);
 
     this.maxLives = GameState.maxLives;
@@ -75,7 +74,7 @@ export default class UIScene extends Phaser.Scene {
 
 		this.scoreBox = this.add.image(0, 0, 'quailscore').setOrigin(0, 0);
 		const containerWidth = this.scoreBox.displayWidth * this.gameScale;
-		this.scoreText = this.add.text(0, 0, `${this.score}`, {
+		this.scoreText = this.add.text(0, 0, `${GameState.score}`, {
 				font: 'bold 40px Ari',
 				color: '#1e0800'
 		});
@@ -91,8 +90,8 @@ export default class UIScene extends Phaser.Scene {
 
 		/** @type {(value: number) => void} */
 		this.onScoreChanged = (value = 0) => {
-			this.score += value;
-			this.scoreText.setText(`${this.score}`);
+			GameState.addScore(value);
+			this.scoreText.setText(`${GameState.score}`);
 		};
 
 		this.game.events.on('scoreChanged', this.onScoreChanged);

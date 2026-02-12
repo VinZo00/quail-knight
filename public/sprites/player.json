@@ -2904,30 +2904,6 @@
         "y": 0.5
       }
     },
-    "player-attack-walk-up-6": {
-      "frame": {
-        "x": 120,
-        "y": 2022,
-        "w": 26,
-        "h": 46
-      },
-      "rotated": true,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 14,
-        "y": 16,
-        "w": 26,
-        "h": 46
-      },
-      "sourceSize": {
-        "w": 64,
-        "h": 64
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "player-attack-walk-right-5": {
       "frame": {
         "x": 49,
@@ -3048,9 +3024,33 @@
         "y": 0.5
       }
     },
-    "player-attack-walk-left-4": {
+    "player-attack-walk-up-6": {
       "frame": {
         "x": 77,
+        "y": 1601,
+        "w": 26,
+        "h": 46
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 14,
+        "y": 16,
+        "w": 26,
+        "h": 46
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "player-attack-walk-left-4": {
+      "frame": {
+        "x": 103,
         "y": 1601,
         "w": 25,
         "h": 46
@@ -3074,7 +3074,7 @@
     },
     "player-attack-walk-right-9": {
       "frame": {
-        "x": 102,
+        "x": 128,
         "y": 1601,
         "w": 25,
         "h": 46
@@ -3098,7 +3098,7 @@
     },
     "player-attack-walk-up-4": {
       "frame": {
-        "x": 127,
+        "x": 153,
         "y": 1601,
         "w": 25,
         "h": 46
@@ -3122,7 +3122,7 @@
     },
     "player-attack-walk-up-12": {
       "frame": {
-        "x": 152,
+        "x": 178,
         "y": 1601,
         "w": 23,
         "h": 45
@@ -3144,34 +3144,10 @@
         "y": 0.5
       }
     },
-    "player-hurt-5": {
+    "player-hurt-2": {
       "frame": {
         "x": 78,
         "y": 1693,
-        "w": 43,
-        "h": 36
-      },
-      "rotated": true,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 18,
-        "y": 28,
-        "w": 43,
-        "h": 36
-      },
-      "sourceSize": {
-        "w": 64,
-        "h": 64
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "player-hurt-2": {
-      "frame": {
-        "x": 96,
-        "y": 1647,
         "w": 30,
         "h": 43
       },
@@ -3195,7 +3171,7 @@
     "player-hurt-3": {
       "frame": {
         "x": 96,
-        "y": 1736,
+        "y": 1647,
         "w": 35,
         "h": 40
       },
@@ -3216,14 +3192,38 @@
         "y": 0.5
       }
     },
+    "player-hurt-5": {
+      "frame": {
+        "x": 96,
+        "y": 1736,
+        "w": 43,
+        "h": 36
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 28,
+        "w": 43,
+        "h": 36
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "player-hurt-4": {
       "frame": {
         "x": 117,
-        "y": 1690,
+        "y": 1687,
         "w": 37,
         "h": 32
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 19,
@@ -3746,7 +3746,7 @@
     },
     "player-attack-walk-up-5": {
       "frame": {
-        "x": 127,
+        "x": 153,
         "y": 1601,
         "w": 25,
         "h": 46
@@ -3770,7 +3770,7 @@
     },
     "player-attack-walk-up-9": {
       "frame": {
-        "x": 127,
+        "x": 153,
         "y": 1601,
         "w": 25,
         "h": 46
@@ -3800,7 +3800,7 @@
     "format": "RGBA8888",
     "size": {
       "w": 240,
-      "h": 2048
+      "h": 2040
     },
     "scale": 1
   }

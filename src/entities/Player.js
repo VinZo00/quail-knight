@@ -26,6 +26,7 @@ export default class Player {
     this.sprite.body.setSize(width * 0.5, height * 0.8);
     this.sprite.body.setOffset(width * 0.25, height * 0.2);
 
+		this.playerDie = false;
     this.speed = 80;
     this.speedRun = 160;
     this.lastDirection = 'down';
@@ -43,9 +44,9 @@ export default class Player {
    * @param {Phaser.Types.Input.Keyboard.CursorKeys} [cursorKeys] - Oggetto cursori standard di Phaser (opzionale).
   */
 	update(keys, cursorKeys) {
-    this.handleMovement(keys, cursorKeys);
-    this.handleAttack(keys);
-		this.shadow.setPosition(this.sprite.x, this.sprite.y + this.offsetY);
+		this.handleMovement(keys, cursorKeys);
+		this.handleAttack(keys);
+		this.shadow.setPosition(this.sprite.x, this.sprite.y + this.offsetY);	
   }
 
 	// ----------------------------------------------------------------------------
@@ -198,7 +199,13 @@ export default class Player {
   // DIE
   // ------------------------------------------------------------
 	die() {
-
+		this.sprite.anims.play('player-hurt');
+		this.playerDie = true;
+		this.sprite.setVelocity(0, 0);
+		this.pauseSounds();
+		this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+      this.scene.game.events.emit('gameOver');
+    });
 	}
 
 	// ------------------------------------------------------------

@@ -29,13 +29,14 @@ export default class GameScene extends Phaser.Scene {
 		this.bindKeys();
 		this.createCamera();
 		this.generateCollision();
+		this.game.events.on('gameOver', this.handleGameOver, this);
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 	}
 
-	update() {
-		if (this.gameOver) return;
-
-		this.player.update(this.keys, this.cursorKeys);
+	update() {		
+		if (!this.player.playerDie) {
+			this.player.update(this.keys, this.cursorKeys);			
+		}
 
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
@@ -54,10 +55,33 @@ export default class GameScene extends Phaser.Scene {
     this.game.events.off('run_up', this.onRunUp);
     this.game.events.off('attack_down', this.onAttackDown);
     this.game.events.off('attack_up', this.onAttackUp);
-		GameState.reset();
+		this.game.events.off('gameOver', this.handleGameOver);
+		GameState.resetLives();
 		this.sound.stopAll();
 	}
 
+	handleGameOver() {
+		this.gameOver = true;
+		this.sound.stopAll();
+
+		this.tweens.add({
+        targets: this.cam,
+        zoom: this.cam.zoom * 0.6,
+        duration: 1500,
+        ease: 'Power2'
+    });
+    
+    this.time.delayedCall(1000, () => {
+				this.scene.stop('UIScene');
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+    });
+	
+		this.time.delayedCall(2000, () => {
+			this.scene.start('GameOverScene', {
+				score: GameState.score
+			});
+		});
+	}
 
 	// ----------------------------------------------------------------------------
 	// UI
@@ -65,7 +89,6 @@ export default class GameScene extends Phaser.Scene {
 	ui() {
     this.scene.launch('UIScene'); 
     this.scene.bringToTop('UIScene'); 
-    this.score = 0;
 		this.gameOver = false;
 		this.quietMode = false;
 	}
@@ -204,6 +227,18 @@ export default class GameScene extends Phaser.Scene {
 			});
 		});
 
+		// Animazioni HURT (0–5)
+		this.anims.create({
+			key: `player-hurt`,
+			frames: this.anims.generateFrameNames('player', {
+				prefix: `player-hurt-`,
+				start: 0,
+				end: 5
+			}),
+			frameRate: 15,
+			repeat: 0
+		});
+		
 		// Animazioni ATTACK (0–5)
 		this.directions.forEach(dir => {
 			this.anims.create({
@@ -465,7 +500,6 @@ export default class GameScene extends Phaser.Scene {
 			
 			this.cursorKeys = null;
 			
-			// ✅ SALVA I RIFERIMENTI
 			this.onUIReady = (payload) => {
 					this.cursorKeys = payload.cursorKeys;
 			};
@@ -486,7 +520,6 @@ export default class GameScene extends Phaser.Scene {
 					this.isAttackTouch = false;
 			};
 			
-			// ✅ USA I RIFERIMENTI
 			this.game.events.once('ui_ready', this.onUIReady);
 			this.game.events.on('run_down', this.onRunDown);
 			this.game.events.on('run_up', this.onRunUp);

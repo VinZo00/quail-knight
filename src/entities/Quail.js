@@ -92,7 +92,7 @@ export default class Quail {
         );
 
 				// @ts-ignore
-        if (distance < this.chaseDistance && !this.scene.quietMode) {
+        if (distance < this.chaseDistance && !this.scene.quietMode && !player.playerDie) {
             this.isChasing = true;
             if (this.moveTimer) this.moveTimer.paused = true;
 
@@ -139,7 +139,6 @@ export default class Quail {
      * @param {number} distance - Distanza attuale dalla quaglia al player
      */
 		tryAttack(player, distance) {
-				if (this.isDead) return;
 				const now = this.scene.time.now;
 				if (distance < 50) {
 						if (this.nextAttackAllowedAt === 0) {
