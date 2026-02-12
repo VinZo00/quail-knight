@@ -153,7 +153,7 @@ export default class GameScene extends Phaser.Scene {
 			this.anims.create({
 				key: `player-idle-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
-					prefix: `player_idle_${dir}_`,
+					prefix: `player-idle-${dir}-`,
 					start: 0,
 					end: 1
 				}),
@@ -167,7 +167,7 @@ export default class GameScene extends Phaser.Scene {
 			this.anims.create({
 				key: `player-walk-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
-					prefix: `player_walk_${dir}_`,
+					prefix: `player-walk-${dir}-`,
 					start: 0,
 					end: 8
 				}),
@@ -181,7 +181,7 @@ export default class GameScene extends Phaser.Scene {
 			this.anims.create({
 				key: `player-run-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
-					prefix: `player_run_${dir}_`,
+					prefix: `player-run-${dir}-`,
 					start: 0,
 					end: 7
 				}),
@@ -195,7 +195,7 @@ export default class GameScene extends Phaser.Scene {
 			this.anims.create({
 				key: `player-attack-walk-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
-					prefix: `player_attack_walk_${dir}_`,
+					prefix: `player-attack-walk-${dir}-`,
 					start: 0,
 					end: 11
 				}),
@@ -209,7 +209,7 @@ export default class GameScene extends Phaser.Scene {
 			this.anims.create({
 				key: `player-attack-${dir}`,
 				frames: this.anims.generateFrameNames('player', {
-					prefix: `player_attack_${dir}_`,
+					prefix: `player-attack-${dir}-`,
 					start: 0,
 					end: 5
 				}),
