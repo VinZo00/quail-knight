@@ -2,6 +2,9 @@ export const GameState = {
 		score: 0,
     maxLives: 3,
     lives: 3,
+		zoomSet: false,
+		camMobile: 1.2,
+		camDesk: 1.5,
 
     resetLives() {
         this.lives = this.maxLives;

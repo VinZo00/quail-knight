@@ -130,6 +130,31 @@ export default class UIScene extends Phaser.Scene {
 				cursorKeys: this.cursorKeys,
 				joystick: this.joystick
 			});
+
+			this.zoomButton = this.add.image(
+					this.scale.width - 100,
+					200,
+					'zoom' 
+			)
+			.setScale(this.gameScale * 0.6)
+			.setInteractive()
+			.setScrollFactor(0)
+			.on('pointerdown', () => {
+				this.zoomButton.setTint(0x888888);
+				this.game.events.emit('zoom_down');
+			})
+			.on('pointerup', () => {
+				this.zoomButton.clearTint();
+				this.game.events.emit('zoom_up');
+			})
+			.on('pointerout', () => {
+					this.zoomButton.clearTint();
+					this.game.events.emit('zoom_up');
+			})
+			.on('pointerupoutside', () => {
+					this.zoomButton.clearTint();
+					this.game.events.emit('zoom_down');
+			});
 			
 			this.runButton = this.add.image(
 					this.scale.width - 170,
@@ -140,7 +165,7 @@ export default class UIScene extends Phaser.Scene {
 			.setInteractive()
 			.setScrollFactor(0)
 			.on('pointerdown', () => {
-				this.runButton.setTint(0x888888);
+					this.runButton.setTint(0x888888);
 					this.game.events.emit('run_down');
 			})
 			.on('pointerup', () => {

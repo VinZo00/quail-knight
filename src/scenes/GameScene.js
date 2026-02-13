@@ -38,6 +38,11 @@ export default class GameScene extends Phaser.Scene {
 			this.player.update(this.keys, this.cursorKeys);			
 		}
 
+		// @ts-ignore
+		if (Phaser.Input.Keyboard.JustDown(this.keys.zoom)) {
+			this.gameZoom();
+		}
+
 		this.quailGroup.getChildren().forEach(sprite => {
 				// @ts-ignore
         sprite.quail.update(this.player);
@@ -64,12 +69,14 @@ export default class GameScene extends Phaser.Scene {
 		this.gameOver = true;
 		this.sound.stopAll();
 
-		this.tweens.add({
-        targets: this.cam,
-        zoom: this.cam.zoom * 0.6,
-        duration: 1500,
-        ease: 'Power2'
-    });
+		if (!GameState.zoomSet) {
+			this.tweens.add({
+				targets: this.cam,
+				zoom: this.cam.zoom * 0.6,
+				duration: 1500,
+				ease: 'Power2'
+			});	
+		}
     
     this.time.delayedCall(1000, () => {
 				this.scene.stop('UIScene');
@@ -487,19 +494,19 @@ export default class GameScene extends Phaser.Scene {
   // PULSANTI
   // ----------------------------------------------------------------------------
 	bindKeys() {
-			// @ts-ignore
 			this.keys = this.input.keyboard.addKeys({
 					up: Phaser.Input.Keyboard.KeyCodes.W,
 					down: Phaser.Input.Keyboard.KeyCodes.S,
 					left: Phaser.Input.Keyboard.KeyCodes.A,
 					right: Phaser.Input.Keyboard.KeyCodes.D,
 					attack: Phaser.Input.Keyboard.KeyCodes.K,
-					talk: Phaser.Input.Keyboard.KeyCodes.T,
+					zoom: Phaser.Input.Keyboard.KeyCodes.C,
 					shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
 			});
 			
 			this.cursorKeys = null;
-			
+
+			/** @param {any} payload */
 			this.onUIReady = (payload) => {
 					this.cursorKeys = payload.cursorKeys;
 			};
@@ -519,23 +526,44 @@ export default class GameScene extends Phaser.Scene {
 			this.onAttackUp = () => {
 					this.isAttackTouch = false;
 			};
+
+			this.gameZoom = () => {
+
+					this.tweens.killTweensOf(this.cam);
+
+					const targetZoom = !GameState.zoomSet
+							? this.cam.zoom * 0.7
+							: GameState.camDesk;
+
+					this.tweens.add({
+							targets: this.cam,
+							zoom: targetZoom,
+							duration: 200
+					});
+
+					GameState.zoomSet = !GameState.zoomSet;
+			};
+
 			
 			this.game.events.once('ui_ready', this.onUIReady);
 			this.game.events.on('run_down', this.onRunDown);
 			this.game.events.on('run_up', this.onRunUp);
 			this.game.events.on('attack_down', this.onAttackDown);
 			this.game.events.on('attack_up', this.onAttackUp);
+			this.game.events.on('zoom_down', this.gameZoom);
+			this.game.events.on('zoom_up', this.gameZoom);
 	}
 
   // ----------------------------------------------------------------------------
   // CAMERA
   // ----------------------------------------------------------------------------
 	createCamera() {
+		/** @type {Phaser.Cameras.Scene2D.Camera} */
 		this.cam = this.cameras.main;
 		if (GAME_SETTINGS.isMobile) {
-    	this.cam.setZoom(1.2);
+    	this.cam.setZoom(GameState.camMobile);
 		} else {
-			this.cam.setZoom(1.5);
+			this.cam.setZoom(GameState.camDesk);
 		}
 		this.cam.startFollow(this.player.sprite);
 		this.cam.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
