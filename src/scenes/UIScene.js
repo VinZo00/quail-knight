@@ -131,11 +131,15 @@ export default class UIScene extends Phaser.Scene {
 				joystick: this.joystick
 			});
 
+			const bounds = this.scoreContainer.getBounds();
+			const spacing = 15;
+
 			this.zoomButton = this.add.image(
-					this.scale.width - 100,
-					200,
-					'zoom' 
+				bounds.right - 10,   
+				bounds.bottom + spacing, 
+				'zoom'
 			)
+			.setOrigin(1, 0)
 			.setScale(this.gameScale * 0.6)
 			.setInteractive()
 			.setScrollFactor(0)
