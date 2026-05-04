@@ -6,7 +6,10 @@
 
 ## About the Game
 
-**Quest of Quail Knight** è un piccolo gioco in **pixel art** realizzato per puro divertimento. Racconta le avventure di **Vito**, un cavaliere un po' goffo ma determinato, impegnato nella sua missione di **caccia alle quaglie**. Il progetto nasce come esperimento personale per esplorare **Phaser 3** e le moderne tecniche di sviluppo frontend applicate al game development. Semplice, ironico e volutamente rétro, *Quest of Quail Knight* è un tributo ai vecchi giochi arcade — con un tocco di umorismo e tanta passione per la pixel art.
+| 🇬🇧 English | 🇮🇹 Italiano |
+| :--- | :--- |
+| **Quest of Quail Knight** is a small **pixel art** game made purely for fun. It tells the adventures of **Vito**, a somewhat clumsy but determined knight, on his quest to **hunt quails**. | **Quest of Quail Knight** è un piccolo gioco in **pixel art** realizzato per puro divertimento. Racconta le avventure di **Vito**, un cavaliere un po' goffo ma determinato, impegnato nella sua missione di **caccia alle quaglie**. |
+| The project began as a personal experiment to explore **Phaser 3** and modern front-end development techniques applied to game development. Simple, ironic, and deliberately retro, *Quest of Quail Knight* is a tribute to old arcade games—with a touch of humor and a lot of passion for pixel art. | Il progetto nasce come esperimento personale per esplorare **Phaser 3** e le moderne tecniche di sviluppo frontend applicate al game development. Semplice, ironico e volutamente rétro, *Quest of Quail Knight* è un tributo ai vecchi giochi arcade — con un tocco di umorismo e tanta passione per la pixel art. |
 
 ---
 
