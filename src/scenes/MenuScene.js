@@ -36,6 +36,7 @@ export default class MenuScene extends Phaser.Scene {
 		this.bg = this.add.image(this.scale.width / 2, this.scale.height / 2, 'bg');
 		this.dir = 1;
 		this.vel = 0.2;
+		this.waiting = false;
 
 		this.overlay = this.add.rectangle(
 			this.scale.width / 2,
@@ -105,10 +106,10 @@ export default class MenuScene extends Phaser.Scene {
 			this.waiting = true;
 			this.dir = 0;
 
-			setTimeout(() => {
+			this.time.delayedCall(500, () => {
 				this.dir = (this.bg.x > centerX) ? -1 : 1;
 				this.waiting = false;
-			}, 500);
+			});
 		}
 	}
 }

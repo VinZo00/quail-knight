@@ -60,6 +60,8 @@ export default class GameScene extends Phaser.Scene {
     this.game.events.off('run_up', this.onRunUp);
     this.game.events.off('attack_down', this.onAttackDown);
     this.game.events.off('attack_up', this.onAttackUp);
+		this.game.events.off('zoom_down', this.gameZoom);
+		this.game.events.off('zoom_up', this.gameZoom);
 		this.game.events.off('gameOver', this.handleGameOver);
 		GameState.resetLives();
 		this.sound.stopAll();
@@ -220,20 +222,6 @@ export default class GameScene extends Phaser.Scene {
 			});
 		});
 
-		// Animazioni ATTACK WALK (0–7)
-		this.directions.forEach(dir => {
-			this.anims.create({
-				key: `player-attack-walk-${dir}`,
-				frames: this.anims.generateFrameNames('player', {
-					prefix: `player-attack-walk-${dir}-`,
-					start: 0,
-					end: 11
-				}),
-				frameRate: 20,
-				repeat: -1
-			});
-		});
-
 		// Animazioni HURT (0–5)
 		this.anims.create({
 			key: `player-hurt`,
@@ -343,28 +331,12 @@ export default class GameScene extends Phaser.Scene {
 
 		// QUAILS
 		this.quailGroup = this.physics.add.group()
-		
+
 		for (let i = 0; i < 50; i++) {
-		 		let x, y;
-		 		let safe = false;
-
-		 		while (!safe) {
-		 			x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
-		 			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
-					const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
-					const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
-					const elementsTile = this.elementsLayer.getTileAtWorldXY(x, y);
-		 			
-					if ((!solidityTile || !solidityTile.properties.collides) &&
-							(!elementsTile || !elementsTile.properties.noSpawn) &&
-							(!decorationTile || !decorationTile.properties.noSpawn)) {
-							safe = true;
-					}
-		 		}
-
-		 		const quail = new Quail(this, x, y, 'quail');
-		 		// @ts-ignore
-		 		this.quailGroup.add(quail.sprite);
+			const { x, y } = this.findSafeSpawnLocation();
+		 	const quail = new Quail(this, x, y, 'quail');
+		 	// @ts-ignore
+		 	this.quailGroup.add(quail.sprite);
 		}
 
 
@@ -382,44 +354,14 @@ export default class GameScene extends Phaser.Scene {
 				immovable: true
 		});
 		for (let i = 0; i < 50; i++) {
-			let x, y;
-			let safe = false;
-
-			while (!safe) {
-					x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
-					y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
-
-					const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
-					const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
-					const elementsTile = this.elementsLayer.getTileAtWorldXY(x, y);
-
-					if (
-							(!solidityTile || !solidityTile.properties.collides) &&
-							(!elementsTile || !elementsTile.properties.noSpawn) &&
-							(!decorationTile || !decorationTile.properties.noSpawn)
-					) {
-							safe = true;
-					}
-			}
-
+			const { x, y } = this.findSafeSpawnLocation();
 			const wine = this.wineGroup.create(x, y, 'wine');
 			wine.setOrigin(0.5, 0.5).setScale(.3);
-	}
+		}
 
 
 		// INSERISCO NPCS
 		this.npcGroup = this.physics.add.group();
-
-		// VINCENZO
-		// const vincenzo = new NPC(this, 180, 250, 'npc-vincenzo', {
-		// 	name: 'Vincenzo',
-		// 	dialogueText: 'Mi sa che stasera non esco',
-		// 	movementType: 'y', // 'x' | 'y' | 'idle'
-		// 	distance: 100,     // px
-		// 	speed: 50,         // px/s
-		// 	startDir: 'pos',   // opzionale: 'pos' (default) o 'neg'
-		// 	// idleDir: 'right',   // opzionale: se fermo, quale idle usare
-		// });
 
 		// GIOVANNI
 		this.spawnNPCFromPoint('spawn-npc-giovanni', 'npc-giovanni', {
@@ -464,6 +406,29 @@ export default class GameScene extends Phaser.Scene {
 	}
 
   // ----------------------------------------------------------------------------
+  // SPAWN HELPER
+  // ----------------------------------------------------------------------------
+	findSafeSpawnLocation() {
+		let x, y;
+		let safe = false;
+		while (!safe) {
+			x = Phaser.Math.Between(50, this.map.widthInPixels - 50);
+			y = Phaser.Math.Between(50, this.map.heightInPixels - 50);
+			const solidityTile = this.solidityLayer.getTileAtWorldXY(x, y);
+			const decorationTile = this.decorationLayer.getTileAtWorldXY(x, y);
+			const elementsTile = this.elementsLayer.getTileAtWorldXY(x, y);
+			if (
+				(!solidityTile || !solidityTile.properties.collides) &&
+				(!elementsTile || !elementsTile.properties.noSpawn) &&
+				(!decorationTile || !decorationTile.properties.noSpawn)
+			) {
+				safe = true;
+			}
+		}
+		return { x, y };
+	}
+
+  // ----------------------------------------------------------------------------
   // MAPPA
   // ----------------------------------------------------------------------------
 	createMap() {
@@ -471,7 +436,7 @@ export default class GameScene extends Phaser.Scene {
 		const terrain = map.addTilesetImage('general', 'general');
 		const houses = map.addTilesetImage('houses', 'houses');
 
-		this.terrainlayer = map.createLayer('terrain', [terrain]).setDepth(-3);
+		this.terrainLayer = map.createLayer('terrain', [terrain]).setDepth(-3);
 		this.decorationLayer = map.createLayer('decorations', [terrain]).setDepth(-2);
 		this.elementsLayer = map.createLayer('elements', [terrain]).setDepth(-1);
 		this.overlapLayer = map.createLayer('overlap', [terrain, houses]).setDepth(2);

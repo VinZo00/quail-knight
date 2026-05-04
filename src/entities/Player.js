@@ -31,6 +31,7 @@ export default class Player {
     this.speedRun = 160;
     this.lastDirection = 'down';
     this.isAttacking = false;
+    this.isInvulnerable = false;
   }
 
   // ----------------------------------------------------------------------------
@@ -73,7 +74,7 @@ export default class Player {
 		let velocityX = 0;
     let velocityY = 0;
 
-		if (isRunning && left || right || up || down) {
+		if (isRunning && (left || right || up || down)) {
 				if (!this.soundRun.isPlaying) {
 					this.soundRun.play();
 				}
@@ -121,15 +122,14 @@ export default class Player {
     if (this.isAttacking) return;
 		// @ts-ignore
     if (Phaser.Input.Keyboard.JustDown(keys.attack) || this.scene.isAttackTouch) {
-      const moving = this.sprite.body.velocity.x !== 0 || this.sprite.body.velocity.y !== 0;
-      this.attack(moving);
+      this.attack();
     }
   }
 
-  attack(moving = false) {
+  attack() {
     this.isAttacking = true;
 		this.soundAttack.play();
-    const animKey = moving ? `player-attack-${this.lastDirection}` : `player-attack-${this.lastDirection}`;
+    const animKey = `player-attack-${this.lastDirection}`;
     this.sprite.anims.play(animKey, false);
 
 		const width = this.sprite.body.width;

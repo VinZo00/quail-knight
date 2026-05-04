@@ -211,4 +211,13 @@ export default class NPC {
 			this.npcMessage.y = this.sprite.y - 50;
 		}
 	}
+
+	destroy() {
+		this.scene.events.off('update', this.onSceneUpdate);
+		this.movementTween?.stop();
+		this.npcMessage.destroy();
+		this.npcName.destroy();
+		this.shadow.destroy();
+		this.sprite.destroy();
+	}
 }

@@ -139,9 +139,7 @@ export default class SettingsScene extends Phaser.Scene {
             toggle.container.on('pointerdown', () => {
                 this[setting.stateKey] = !this[setting.stateKey];
                 updateToggleVisual(toggle, this[setting.stateKey]);
-								// console.log(`toggle${setting.key.charAt(0).toUpperCase() + setting.key.slice(1)}`);
-								// console.log(this[setting.stateKey]);
-                this.game.events.emit(`toggle${setting.key.charAt(0).toUpperCase() + setting.key.slice(1)}`, this[setting.stateKey]);
+		                this.game.events.emit(`toggle${setting.key.charAt(0).toUpperCase() + setting.key.slice(1)}`, this[setting.stateKey]);
             });
 
             this.toggles[setting.key] = toggle;

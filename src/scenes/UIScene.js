@@ -135,79 +135,54 @@ export default class UIScene extends Phaser.Scene {
 			const spacing = 15;
 
 			this.zoomButton = this.add.image(
-				bounds.right - 10,   
-				bounds.bottom + spacing, 
+ 				bounds.right - 10,
+				bounds.bottom + spacing,
 				'zoom'
 			)
 			.setOrigin(1, 0)
 			.setScale(this.gameScale * 0.6)
 			.setInteractive()
-			.setScrollFactor(0)
-			.on('pointerdown', () => {
-				this.zoomButton.setTint(0x888888);
-				this.game.events.emit('zoom_down');
-			})
-			.on('pointerup', () => {
-				this.zoomButton.clearTint();
-				this.game.events.emit('zoom_up');
-			})
-			.on('pointerout', () => {
-					this.zoomButton.clearTint();
-					this.game.events.emit('zoom_up');
-			})
-			.on('pointerupoutside', () => {
-					this.zoomButton.clearTint();
-					this.game.events.emit('zoom_down');
-			});
-			
+			.setScrollFactor(0);
+			this.addPressButtonEvents(this.zoomButton, 'zoom_down', 'zoom_up');
+
 			this.runButton = this.add.image(
 					this.scale.width - 170,
-					this.scale.height - 120, 
-					'run'         
+					this.scale.height - 120,
+					'run'
 			)
 			.setScale(this.gameScale * 0.6)
 			.setInteractive()
-			.setScrollFactor(0)
-			.on('pointerdown', () => {
-					this.runButton.setTint(0x888888);
-					this.game.events.emit('run_down');
-			})
-			.on('pointerup', () => {
-					this.runButton.clearTint();
-					this.game.events.emit('run_up');
-			})
-			.on('pointerout', () => {
-					this.runButton.clearTint();
-					this.game.events.emit('run_up');
-			})
-			.on('pointerupoutside', () => {
-					this.runButton.clearTint();
-					this.game.events.emit('run_up');
-			});
+			.setScrollFactor(0);
+			this.addPressButtonEvents(this.runButton, 'run_down', 'run_up');
 
 			this.attackButton = this.add.image(
 					this.scale.width - 90,
-					this.scale.height - 70, 
-					'attack'         
+					this.scale.height - 70,
+					'attack'
 			)
 			.setScale(this.gameScale * 0.7)
 			.setInteractive()
-			.setScrollFactor(0)
+			.setScrollFactor(0);
+			this.addPressButtonEvents(this.attackButton, 'attack_down', 'attack_up');
+	}
+
+	addPressButtonEvents(button, downEvent, upEvent) {
+		return button
 			.on('pointerdown', () => {
-				this.attackButton.setTint(0x888888);
-				this.game.events.emit('attack_down');
+				button.setTint(0x888888);
+				this.game.events.emit(downEvent);
 			})
 			.on('pointerup', () => {
-				this.attackButton.clearTint();
-				this.game.events.emit('attack_up');
+				button.clearTint();
+				this.game.events.emit(upEvent);
 			})
 			.on('pointerout', () => {
-					this.attackButton.clearTint();
-					this.game.events.emit('attack_up');
+				button.clearTint();
+				this.game.events.emit(upEvent);
 			})
 			.on('pointerupoutside', () => {
-					this.attackButton.clearTint();
-					this.game.events.emit('attack_up');
+				button.clearTint();
+				this.game.events.emit(upEvent);
 			});
 	}
 
